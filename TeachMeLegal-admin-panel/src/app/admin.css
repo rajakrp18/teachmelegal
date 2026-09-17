@@ -18,7 +18,8 @@
 
 .admin-layout {
   display: flex;
-  min-height: 100vh;
+  height: 100vh;
+  overflow: hidden;
   background-color: #f4f6f9;
   font-family: system-ui, -apple-system, sans-serif;
   color: var(--admin-text-main);
@@ -27,6 +28,7 @@
 /* Sidebar */
 .admin-sidebar {
   width: 260px;
+  height: 100vh;
   background: var(--admin-sidebar-bg);
   color: #fff;
   display: flex;
@@ -142,8 +144,10 @@
 /* Main Area */
 .admin-main {
   flex: 1;
+  height: 100vh;
   display: flex;
   flex-direction: column;
+  overflow-y: auto;
   overflow-x: hidden;
 }
 
