@@ -12,8 +12,7 @@ export default function RootLayout({ children }) {
     { label: 'Write New Blog', href: '/blogs/new', icon: '✍️' },
     { label: 'Manage Courses', href: '/courses', icon: '🎓' },
     { label: 'Manage Books & Notes', href: '/books', icon: '📖' },
-    { label: 'Analytics & Traffic', href: '/analytics', icon: '📈' },
-    { label: 'Back to Website', href: 'http://localhost:3000', icon: '🌐' }
+    { label: 'Analytics & Traffic', href: '/analytics', icon: '📈' }
   ];
 
   return (
@@ -26,7 +25,6 @@ export default function RootLayout({ children }) {
               <span style={{ fontSize: '1.8rem' }}>⚖️</span>
               <div>
                 <div className="admin-brand-title">Teach Me <span>Legal</span></div>
-                <div className="admin-brand-tag">Standalone Admin (Port 3001)</div>
               </div>
             </Link>
 

@@ -12,8 +12,7 @@ export default function AdminLayout({ children }) {
     { label: 'Write New Blog', href: '/admin/blogs/new', icon: '✍️' },
     { label: 'Manage Courses', href: '/admin/courses', icon: '🎓' },
     { label: 'Manage Books & Notes', href: '/admin/books', icon: '📖' },
-    { label: 'Analytics & Traffic', href: '/admin/analytics', icon: '📈' },
-    { label: 'Back to Website', href: '/', icon: '🌐' }
+    { label: 'Analytics & Traffic', href: '/admin/analytics', icon: '📈' }
   ];
 
   return (
@@ -24,7 +23,6 @@ export default function AdminLayout({ children }) {
           <span style={{ fontSize: '1.8rem' }}>⚖️</span>
           <div>
             <div className="admin-brand-title">Teach Me <span>Legal</span></div>
-            <div className="admin-brand-tag">Admin Console</div>
           </div>
         </Link>
 
