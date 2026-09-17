@@ -1,36 +1,37 @@
-@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Montserrat:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700;800&display=swap');
 @import "tailwindcss";
 
 :root {
-  /* Color Palette — Premium Legal Brand */
-  --primary-navy: #061021;
-  --secondary-navy: #0a1b38;
+  /* Color Palette — TeachMeLegal Royal Blue Brand */
+  --primary-blue: #1d6bf3;
+  --primary-blue-hover: #1557d0;
+  --primary-navy: #08182f;
+  --secondary-navy: #0e223d;
+  --accent-blue-light: rgba(29, 107, 243, 0.08);
   --accent-gold: #cba863;
-  --accent-gold-hover: #e0c184;
-  --accent-gold-light: rgba(203, 168, 99, 0.12);
-  --text-main: #ccd6f6;
-  --text-muted: #8b9bb4;
-  --bg-main: #f9fbfd;
+  --text-main: #1e293b;
+  --text-muted: #64748b;
+  --bg-main: #f8fafc;
   --bg-card: #ffffff;
-  --bg-hero: linear-gradient(150deg, #f8fafc 0%, #f1f5f9 50%, #e2e8f0 100%);
-  --bg-section-alt: #f1f4f8;
+  --bg-hero: linear-gradient(150deg, #08182f 0%, #0e223d 100%);
+  --bg-section-alt: #f1f5f9;
   --text-dark: #0f172a;
   --text-heading: #0f172a;
   --text-body: #334155;
   --border-light: #e2e8f0;
 
   /* Typography */
-  --font-heading: 'Cormorant Garamond', Georgia, serif;
-  --font-body: 'Montserrat', -apple-system, sans-serif;
+  --font-heading: 'Plus Jakarta Sans', 'Inter', -apple-system, sans-serif;
+  --font-body: 'Inter', 'Plus Jakarta Sans', -apple-system, sans-serif;
 
   /* Utilities */
-  --transition: all 0.28s cubic-bezier(0.4, 0, 0.2, 1);
-  --radius: 10px;
-  --radius-lg: 16px;
-  --shadow-sm: 0 1px 3px rgba(0,0,0,0.07), 0 1px 2px rgba(0,0,0,0.06);
-  --shadow: 0 4px 12px rgba(0,0,0,0.08), 0 2px 4px rgba(0,0,0,0.05);
-  --shadow-hover: 0 20px 40px rgba(0,0,0,0.12), 0 8px 16px rgba(0,0,0,0.08);
-  --shadow-gold: 0 8px 24px rgba(203, 168, 99, 0.25);
+  --transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  --radius: 8px;
+  --radius-lg: 14px;
+  --shadow-sm: 0 1px 3px rgba(0,0,0,0.06);
+  --shadow: 0 4px 14px rgba(0,0,0,0.06);
+  --shadow-hover: 0 14px 30px rgba(0,0,0,0.1);
+  --shadow-blue: 0 6px 20px rgba(29, 107, 243, 0.25);
 }
 
 .dark,

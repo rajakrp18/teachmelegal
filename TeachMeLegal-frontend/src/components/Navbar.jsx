@@ -16,7 +16,6 @@ const Navbar = () => {
     { name: 'Home', href: '/' },
     { name: 'About Us', href: '/about' },
     { name: 'Courses', href: '/courses' },
-    { name: 'Books', href: '/books' },
     { name: 'Blog', href: '/blog' },
     { name: 'Contact', href: '/contact' },
   ];
@@ -27,15 +26,15 @@ const Navbar = () => {
         <div className="container nav-container">
           <Link href="/" className="logo">
             <Image
-              src="/logo.svg"
+              src="/logo.png"
               alt="Teach Me Legal Logo"
-              width={40}
-              height={40}
+              width={42}
+              height={42}
               className="logo-img"
               priority
             />
             <span className="logo-text">
-              Teach Me <span className="highlight">Legal</span>
+              Teach<span className="highlight">Me</span>Legal
             </span>
           </Link>
           
@@ -55,7 +54,14 @@ const Navbar = () => {
           </div>
 
           <div className="nav-actions">
-            <ThemeToggle />
+            {/* Browse Categories Dropdown */}
+            <div className="browse-cat-dropdown desktop-only">
+              <Link href="/books" className="btn-browse-cat">
+                <span className="cat-icon">🪟</span>
+                <span>Browse Categories</span>
+                <span className="chevron-down">▾</span>
+              </Link>
+            </div>
 
             {/* Shopping Cart Button */}
             <button
@@ -63,19 +69,18 @@ const Navbar = () => {
               className="btn-cart"
               aria-label="View Shopping Cart"
             >
-              <span className="cart-icon-symbol">🛒</span>
-              <span className="cart-text">Cart</span>
+              <span className="cart-icon-symbol">🛍️</span>
               <span className="cart-count-badge">{totalCount}</span>
             </button>
 
             {user ? (
               <div className="user-profile-menu">
-                <span className="user-name">👤 {user.name || 'Student'}</span>
+                <Link href="/account" className="nav-account-link">My Account</Link>
                 <button onClick={logoutUser} className="btn-logout" title="Log Out">Exit</button>
               </div>
             ) : (
               <div className="auth-btns desktop-only">
-                <Link href="/login" className="btn btn-login">Log In</Link>
+                <Link href="/login" className="nav-account-link">My Account</Link>
                 <Link href="/signup" className="btn btn-signup">Sign Up</Link>
               </div>
             )}

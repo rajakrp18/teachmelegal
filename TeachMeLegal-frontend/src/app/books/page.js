@@ -9,100 +9,139 @@ const DEFAULT_BOOKS = [
   {
     id: "book-1",
     title: 'Prevention of Money Laundering Act, 2002',
-    category: 'Exam Material',
-    originalPrice: '₹299',
-    salePrice: '₹99',
-    badge: 'Sale',
-    badgeColor: '#22c55e',
-    coverColor: '#1e3a5f',
-    icon: '📘'
+    category: 'Exam Materials',
+    originalPrice: '₹299.00',
+    salePrice: '₹99.00',
+    numericPrice: 99,
+    badge: 'Sale!',
+    image: '/books/money-laundering-act-2002.png',
+    author: 'Adv. Prashant Jha',
+    active: true
   },
   {
     id: "book-2",
     title: 'Question Bank of Indian Legal and Constitutional History',
     category: 'Question Bank',
-    originalPrice: '₹199',
-    salePrice: '₹49',
-    badge: 'Sale',
-    badgeColor: '#22c55e',
-    coverColor: '#3b82f6',
-    icon: '📙'
+    originalPrice: '₹199.00',
+    salePrice: '₹49.00',
+    numericPrice: 49,
+    badge: 'Sale!',
+    image: '/books/question-bank-constitutional-history.png',
+    author: 'Adv. Prashant Jha',
+    active: true
   },
   {
     id: "book-3",
     title: 'Question Bank of Environmental Law',
     category: 'Question Bank',
-    originalPrice: '₹199',
-    salePrice: '₹49',
-    badge: '49% Off',
-    badgeColor: '#f59e0b',
-    coverColor: '#16a34a',
-    icon: '📗'
+    originalPrice: '₹199.00',
+    salePrice: '₹49.00',
+    numericPrice: 49,
+    badge: 'Sale!',
+    image: '/books/question-bank-environmental-law.png',
+    author: 'Adv. Prashant Jha',
+    active: true
   },
   {
     id: "book-4",
     title: 'Question Bank of Jurisprudence',
     category: 'Question Bank',
-    originalPrice: '₹199',
-    salePrice: '₹99',
-    badge: 'Hot',
-    badgeColor: '#ef4444',
-    coverColor: '#7c3aed',
-    icon: '📕'
+    originalPrice: '₹149.00',
+    salePrice: '₹49.00',
+    numericPrice: 49,
+    badge: 'Sale!',
+    image: '/books/question-bank-jurisprudence.png',
+    author: 'Adv. Prashant Jha',
+    active: true
   },
   {
     id: "book-5",
     title: 'Revision Book of Jurisprudence',
     category: 'Revision Chart',
-    originalPrice: '₹350',
-    salePrice: '₹45',
-    badge: 'Sale',
-    badgeColor: '#22c55e',
-    coverColor: '#92400e',
-    icon: '📔'
+    originalPrice: '₹350.00',
+    salePrice: '₹45.00',
+    numericPrice: 45,
+    badge: 'Sale!',
+    image: '/books/revision-jurisprudence.jpeg',
+    author: 'Adv. Prashant Jha',
+    active: true
   },
   {
     id: "book-6",
-    title: 'Jurisprudence Notes & Case Briefs',
-    category: 'Exam Material',
-    originalPrice: '₹600',
-    salePrice: '₹99',
-    badge: 'Bestseller',
-    badgeColor: '#3b82f6',
-    coverColor: '#1e3a5f',
-    icon: '⚖️'
+    title: 'Jurisprudence Notes',
+    category: 'Subject wise Notes',
+    originalPrice: '₹600.00',
+    salePrice: '₹99.00',
+    numericPrice: 99,
+    badge: 'Sale!',
+    image: '/books/jurisprudence-notes.jpg',
+    author: 'Adv. Prashant Jha',
+    active: true
   },
   {
     id: "book-7",
-    title: 'Revision Book of Environmental Law',
-    category: 'Revision Chart',
-    originalPrice: '₹199',
-    salePrice: '₹47',
-    badge: 'Sale',
-    badgeColor: '#22c55e',
-    coverColor: '#166534',
-    icon: '🌿'
+    title: 'Banking Law Notes',
+    category: 'Subject wise Notes',
+    originalPrice: '₹299.00',
+    salePrice: '₹99.00',
+    numericPrice: 99,
+    badge: 'Sale!',
+    image: '/books/banking-law-notes.jpg',
+    author: 'Adv. Prashant Jha',
+    active: true
   },
   {
     id: "book-8",
-    title: 'International Law Notes',
-    category: 'Exam Material',
-    originalPrice: '₹400',
-    salePrice: '₹49',
-    badge: 'Sale',
-    badgeColor: '#22c55e',
-    coverColor: '#0369a1',
-    icon: '🌐'
+    title: 'Environmental Law in India',
+    category: 'Exam Materials',
+    originalPrice: '₹299.00',
+    salePrice: '₹99.00',
+    numericPrice: 99,
+    badge: 'Sale!',
+    image: '/books/environmental-law-in-india.png',
+    author: 'Adv. Prashant Jha',
+    active: true
+  },
+  {
+    id: "book-9",
+    title: 'Revision Book of Environmental Law',
+    category: 'Revision Chart',
+    originalPrice: '₹249.00',
+    salePrice: '₹49.00',
+    numericPrice: 49,
+    badge: 'Sale!',
+    image: '/books/revision-environmental-law.jpeg',
+    author: 'Adv. Prashant Jha',
+    active: true
+  },
+  {
+    id: "book-10",
+    title: 'Indian Legal & Constitutional History',
+    category: 'Subject wise Notes',
+    originalPrice: '₹399.00',
+    salePrice: '₹99.00',
+    numericPrice: 99,
+    badge: 'Sale!',
+    image: '/books/indian-legal-constitutional-history.png',
+    author: 'Adv. Prashant Jha',
+    active: true
   }
 ];
 
-const CATEGORIES = ['All', 'Exam Material', 'Question Bank', 'Revision Chart'];
+const CATEGORIES_LIST = [
+  { name: 'Exam Materials', count: 2 },
+  { name: 'Question Bank', count: 3 },
+  { name: 'Revision Chart', count: 2 },
+  { name: 'Subject wise Notes', count: 3 },
+  { name: 'Video Lectures', count: 0 },
+];
 
 export default function BooksPage() {
   const { addToCart } = useCart();
   const [booksList, setBooksList] = useState(DEFAULT_BOOKS);
-  const [activeFilter, setActiveFilter] = useState('All');
+  const [activeCategory, setActiveCategory] = useState('All');
   const [searchQuery, setSearchQuery] = useState('');
+  const [priceRange, setPriceRange] = useState(199);
   const [addedIds, setAddedIds] = useState([]);
 
   useEffect(() => {
@@ -121,9 +160,11 @@ export default function BooksPage() {
   }, []);
 
   const filtered = booksList.filter(book => {
-    const matchesCategory = activeFilter === 'All' || book.category === activeFilter;
+    const matchesCategory = activeCategory === 'All' || book.category.toLowerCase().trim() === activeCategory.toLowerCase().trim();
     const matchesSearch = !searchQuery || book.title.toLowerCase().includes(searchQuery.toLowerCase());
-    return matchesCategory && matchesSearch;
+    const bookPrice = book.numericPrice || parseFloat(book.salePrice?.replace(/[^0-9.]/g, '') || 99);
+    const matchesPrice = bookPrice <= priceRange;
+    return matchesCategory && matchesSearch && matchesPrice;
   });
 
   const handleAddToCart = (book) => {
@@ -135,105 +176,190 @@ export default function BooksPage() {
   };
 
   return (
-    <main className="books-page">
+    <main className="books-page-wrapper">
       <Navbar />
 
-      {/* Hero Header */}
-      <section className="books-hero">
-        <div className="books-hero-bg" aria-hidden="true" />
-        <div className="container books-hero-container">
-          <span className="books-badge">📚 LEGAL STUDY MATERIAL</span>
-          <h1 className="books-hero-title">Books & Notes by Adv. Prashant Jha</h1>
-          <p className="books-hero-sub">
-            Syllabus-aligned subject notes, jurisprudence revision charts, and question banks compiled from real courtroom advocacy experience.
-          </p>
-
-          {/* Search Box */}
-          <div className="books-search-wrapper">
-            <input
-              type="text"
-              placeholder="Search books, notes, or topics (e.g. Jurisprudence, Money Laundering)..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className="books-search-input"
-            />
-            <span className="books-search-icon">🔍</span>
-          </div>
+      {/* Top Banner / Hero Header */}
+      <section className="books-hero-header">
+        <div className="hero-overlay"></div>
+        <div className="container hero-content">
+          <h1 className="hero-main-title">Courses</h1>
         </div>
       </section>
 
-      {/* Main Books Catalog */}
-      <section className="books-catalog-section">
-        <div className="container">
+      {/* Main Storefront Area (Sidebar + Grid) */}
+      <section className="storefront-section">
+        <div className="container storefront-container">
 
-          {/* Discount Banner Strip */}
-          <div className="discount-strip">
-            <div className="discount-strip-icon">🎁</div>
-            <div className="discount-strip-text">
-              <strong>10% INSTANT DISCOUNT</strong> on purchasing 3 or more Subject-wise Notes! Discount applies automatically in cart.
+          {/* Left Sidebar */}
+          <aside className="storefront-sidebar">
+
+            {/* Search Courses */}
+            <div className="sidebar-box search-box">
+              <h4 className="sidebar-box-title">Search Courses..</h4>
+              <div className="search-input-group">
+                <input
+                  type="text"
+                  placeholder="Search products..."
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  className="sidebar-search-input"
+                />
+                <button className="search-submit-btn" aria-label="Search">🔍</button>
+              </div>
             </div>
-          </div>
 
-          {/* Filter Bar */}
-          <div className="books-filter-bar">
-            {CATEGORIES.map(cat => (
-              <button
-                key={cat}
-                className={`books-filter-btn ${activeFilter === cat ? 'active' : ''}`}
-                onClick={() => setActiveFilter(cat)}
-              >
-                {cat}
-              </button>
-            ))}
-          </div>
-
-          {/* Empty Search Fallback */}
-          {filtered.length === 0 && (
-            <div className="books-empty-state">
-              <span style={{ fontSize: '3rem' }}>🔍</span>
-              <h3>No Books or Notes Found</h3>
-              <p>We couldn't find any study materials matching "{searchQuery}". Try searching for another subject.</p>
-              <button onClick={() => { setSearchQuery(''); setActiveFilter('All'); }} className="btn btn-secondary" style={{ marginTop: '15px' }}>
-                Reset Filters
-              </button>
-            </div>
-          )}
-
-          {/* Books Grid */}
-          <div className="books-grid">
-            {filtered.map(book => {
-              const isAdded = addedIds.includes(book.id);
-              return (
-                <div key={book.id} className="book-card">
-                  <div className="book-cover" style={{ backgroundColor: book.coverColor || '#1e3a5f' }}>
-                    <span className="book-cover-icon">{book.icon || '📖'}</span>
-                    {book.badge && (
-                      <span className="book-badge" style={{ backgroundColor: book.badgeColor || '#22c55e' }}>
-                        {book.badge}
-                      </span>
-                    )}
-                  </div>
-                  <div className="book-info">
-                    <span className="book-category">{book.category}</span>
-                    <h3 className="book-title">{book.title}</h3>
-                    <div className="book-pricing">
-                      {book.originalPrice && (
-                        <span className="book-original-price">{book.originalPrice}</span>
-                      )}
-                      <span className="book-sale-price">{book.salePrice}</span>
-                    </div>
-                    <button
-                      className={`book-buy-btn ${isAdded ? 'added' : ''}`}
-                      onClick={() => handleAddToCart(book)}
-                    >
-                      {isAdded ? '✓ Added to Cart!' : '🛒 Add to Cart'}
-                    </button>
-                  </div>
+            {/* Price Filter */}
+            <div className="sidebar-box filter-box">
+              <h4 className="sidebar-box-title">Filter</h4>
+              <div className="price-slider-wrapper">
+                <input
+                  type="range"
+                  min="40"
+                  max="199"
+                  value={priceRange}
+                  onChange={(e) => setPriceRange(Number(e.target.value))}
+                  className="price-range-slider"
+                />
+                <div className="price-slider-labels">
+                  <span className="price-badge">₹40</span>
+                  <span className="price-badge active-price">₹{priceRange}</span>
                 </div>
-              );
-            })}
+              </div>
+              <button className="btn-apply-filter" onClick={() => {}}>Filter</button>
+            </div>
+
+            {/* Categories */}
+            <div className="sidebar-box categories-box">
+              <h4 className="sidebar-box-title">Categories</h4>
+              <ul className="categories-list">
+                <li
+                  className={`category-item ${activeCategory === 'All' ? 'active' : ''}`}
+                  onClick={() => setActiveCategory('All')}
+                >
+                  <span className="cat-name">All Products</span>
+                  <span className="cat-count">({booksList.length})</span>
+                </li>
+                {CATEGORIES_LIST.map(cat => (
+                  <li
+                    key={cat.name}
+                    className={`category-item ${activeCategory === cat.name ? 'active' : ''}`}
+                    onClick={() => setActiveCategory(cat.name)}
+                  >
+                    <span className="cat-name">{cat.name}</span>
+                    <span className="cat-count">({cat.count})</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+          </aside>
+
+          {/* Right Product Grid Area */}
+          <div className="storefront-main">
+
+            {filtered.length === 0 ? (
+              <div className="books-empty-state">
+                <span className="empty-icon">🔍</span>
+                <h3>No Courses or Books Found</h3>
+                <p>We couldn't find any items matching your filter criteria.</p>
+                <button
+                  onClick={() => { setSearchQuery(''); setActiveCategory('All'); setPriceRange(199); }}
+                  className="btn-reset-filters"
+                >
+                  Reset Filters
+                </button>
+              </div>
+            ) : (
+              <>
+                <div className="products-grid">
+                  {filtered.map(book => {
+                    const isAdded = addedIds.includes(book.id);
+                    return (
+                      <div key={book.id} className="product-card">
+                        <div className="card-top-image">
+                          {book.badge && <span className="sale-ribbon">{book.badge}</span>}
+                          <img
+                            src={book.image}
+                            alt={book.title}
+                            className="book-cover-image"
+                          />
+                          {/* Hover action overlay */}
+                          <div className="card-hover-actions">
+                            <button
+                              onClick={() => handleAddToCart(book)}
+                              className="hover-action-btn"
+                              title="Add to Cart"
+                            >
+                              🛍️
+                            </button>
+                            <button className="hover-action-btn" title="Compare">
+                              ⚖️
+                            </button>
+                            <button className="hover-action-btn" title="Quick View">
+                              🔗
+                            </button>
+                          </div>
+                        </div>
+
+                        <div className="card-body">
+                          <div className="product-pricing">
+                            {book.originalPrice && (
+                              <span className="original-price">{book.originalPrice}</span>
+                            )}
+                            <span className="sale-price">{book.salePrice}</span>
+                          </div>
+
+                          <h3 className="product-title" title={book.title}>
+                            {book.title}
+                          </h3>
+
+                          <button
+                            className={`btn-add-cart-main ${isAdded ? 'added' : ''}`}
+                            onClick={() => handleAddToCart(book)}
+                          >
+                            {isAdded ? '✓ Added' : 'Add to Cart'}
+                          </button>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+
+                {/* Load More Button */}
+                <div className="load-more-wrapper">
+                  <button className="btn-load-more">Load More</button>
+                </div>
+              </>
+            )}
+
           </div>
 
+        </div>
+      </section>
+
+      {/* Sub-Hero Section ("Learn Law with Adv. Prashant") */}
+      <section className="teacher-feature-section">
+        <div className="container teacher-feature-container">
+          <span className="feature-small-label">Courses</span>
+          <div className="dots-divider">
+            <span></span><span></span><span></span>
+          </div>
+          <span className="feature-sub-title">Enroll Now & Master Law</span>
+          <h2 className="teacher-main-heading">
+            Learn Law with <span className="highlight-blue">Adv. Prashant</span>
+          </h2>
+          <p className="teacher-description">
+            At <strong>Teach Me Legal</strong>, Advocate Prashant Jha, have carefully designed a range of <strong>comprehensive law courses</strong> to help students and aspiring legal professionals build strong conceptual clarity and practical understanding.
+          </p>
+          <p className="teacher-description secondary">
+            These courses are not just theoretical—they are enriched with real <strong>courtroom insights, practical examples, and exam-oriented guidance</strong>, making them ideal for law students, judiciary aspirants, and anyone serious about mastering law.
+          </p>
+
+          <div className="teacher-cta-buttons">
+            <button className="btn-view-course">VIEW COURSE</button>
+            <button className="btn-download-app">DOWNLOAD APP</button>
+          </div>
         </div>
       </section>
 
