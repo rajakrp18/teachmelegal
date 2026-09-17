@@ -1,0 +1,151 @@
+.reviews-section {
+  padding: 90px 0;
+  background: linear-gradient(180deg, #f8fafc 0%, #f1f5f9 100%);
+}
+
+[data-theme='dark'] .reviews-section {
+  background: linear-gradient(180deg, #0b1727 0%, #0a1628 100%);
+}
+
+.reviews-header {
+  text-align: center;
+  max-width: 650px;
+  margin: 0 auto 50px;
+}
+
+.reviews-badge {
+  display: inline-block;
+  background: rgba(197, 160, 89, 0.15);
+  color: #c5a059;
+  border: 1px solid rgba(197, 160, 89, 0.3);
+  padding: 6px 18px;
+  border-radius: 20px;
+  font-size: 0.82rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 16px;
+}
+
+.reviews-title {
+  font-size: clamp(2rem, 3.5vw, 2.8rem);
+  color: #0a1628;
+  font-weight: 800;
+  margin-bottom: 14px;
+}
+
+[data-theme='dark'] .reviews-title {
+  color: #ffffff;
+}
+
+.reviews-sub {
+  color: #64748b;
+  font-size: 1.05rem;
+}
+
+/* Reviews Multi-card Grid */
+.reviews-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 28px;
+}
+
+.review-card {
+  background: #ffffff;
+  border-radius: 18px;
+  padding: 30px;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+[data-theme='dark'] .review-card {
+  background: #112238;
+  border-color: rgba(255, 255, 255, 0.08);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+.review-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 20px 40px rgba(10, 22, 40, 0.1);
+}
+
+.review-card-top {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 20px;
+}
+
+.review-avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: rgba(197, 160, 89, 0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.4rem;
+  flex-shrink: 0;
+}
+
+.review-author {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #0a1628;
+  margin-bottom: 2px;
+}
+
+[data-theme='dark'] .review-author {
+  color: #ffffff;
+}
+
+.review-role {
+  font-size: 0.8rem;
+  color: #64748b;
+}
+
+.review-rating {
+  margin-left: auto;
+  color: #f59e0b;
+  font-size: 1.1rem;
+}
+
+.review-text {
+  font-size: 0.98rem;
+  color: #475569;
+  line-height: 1.7;
+  margin-bottom: 24px;
+  font-style: italic;
+  flex: 1;
+}
+
+[data-theme='dark'] .review-text {
+  color: #cbd5e1;
+}
+
+.review-card-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 16px;
+  border-top: 1px solid #f1f5f9;
+  font-size: 0.8rem;
+}
+
+[data-theme='dark'] .review-card-footer {
+  border-top-color: rgba(255, 255, 255, 0.08);
+}
+
+.review-course-badge {
+  color: #3b82f6;
+  font-weight: 600;
+}
+
+.verified-badge {
+  color: #10b981;
+  font-weight: 600;
+}

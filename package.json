@@ -1,0 +1,24 @@
+{
+  "name": "teachmelegal-root",
+  "version": "1.0.0",
+  "private": true,
+  "workspaces": [
+    "TeachMeLegal-frontend",
+    "TeachMeLegal-admin-panel",
+    "TeachMeLegal-backend"
+  ],
+  "scripts": {
+    "dev": "npx concurrently -n \"BACKEND,FRONTEND,ADMIN\" -c \"cyan.bold,green.bold,yellow.bold\" \"npm run dev --prefix TeachMeLegal-backend\" \"npm run dev --prefix TeachMeLegal-frontend\" \"npm run dev --prefix TeachMeLegal-admin-panel\"",
+    "dev:backend": "npm run dev --prefix TeachMeLegal-backend",
+    "dev:frontend": "npm run dev --prefix TeachMeLegal-frontend",
+    "dev:admin": "npm run dev --prefix TeachMeLegal-admin-panel"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  }
+}

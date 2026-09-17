@@ -1,0 +1,90 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(cuid())
+  name      String?
+  email     String   @unique
+  createdAt DateTime @default(now())
+  orders    Order[]
+}
+
+model Course {
+  id           String   @id @default(cuid())
+  title        String
+  category     String   @default("Course")
+  price        String   @default("₹499")
+  numericPrice Float    @default(499.0)
+  rating       String   @default("4.9")
+  students     String   @default("100+")
+  image        String?
+  description  String?
+  active       Boolean  @default(true)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  orders       Order[]
+}
+
+model Book {
+  id            String   @id @default(cuid())
+  title         String
+  category      String   // Exam Material, Question Bank, Revision Chart
+  originalPrice String   @default("₹299")
+  salePrice     String   @default("₹99")
+  numericPrice  Float    @default(99.0)
+  badge         String   @default("Sale")
+  badgeColor    String   @default("#22c55e")
+  coverColor    String   @default("#1e3a5f")
+  icon          String   @default("📘")
+  downloadUrl   String?
+  active        Boolean  @default(true)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+}
+
+model BlogPost {
+  id            String   @id @default(cuid())
+  slug          String   @unique
+  title         String
+  category      String   @default("Banking Law")
+  categoryColor String   @default("#3b82f6")
+  author        String   @default("Advocate Prashant Jha")
+  readTime      String   @default("5 min read")
+  excerpt       String?
+  content       String
+  coverImage    String?
+  published     Boolean  @default(true)
+  views         Int      @default(0)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+}
+
+model Order {
+  id              String   @id @default(cuid())
+  userId          String
+  courseId        String
+  razorpayOrderId String   @unique
+  paymentId       String?
+  signature       String?
+  amount          Float
+  status          String   @default("PENDING")
+  createdAt       DateTime @default(now())
+  
+  user            User     @relation(fields: [userId], references: [id])
+  course          Course   @relation(fields: [courseId], references: [id])
+}
+
+model AnalyticsEvent {
+  id        String   @id @default(cuid())
+  path      String
+  referrer  String?
+  userAgent String?
+  ip        String?
+  createdAt DateTime @default(now())
+}
