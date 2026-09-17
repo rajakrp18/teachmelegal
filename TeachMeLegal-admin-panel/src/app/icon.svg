@@ -1,0 +1,20 @@
+<svg width="256" height="256" viewBox="0 0 256 256" xmlns="http://www.w3.org/2000/svg">
+  <rect width="256" height="256" rx="56" fill="#0f172a" />
+  <!-- Scales of Justice Emblem in Premium Gold -->
+  <g stroke="#c5a059" stroke-width="13" stroke-linecap="round" stroke-linejoin="round" fill="none">
+    <!-- Main Pillar -->
+    <path d="M128 48V195" />
+    <path d="M90 195H166" />
+    <!-- Beam -->
+    <path d="M128 48L58 88" />
+    <path d="M128 48L198 88" />
+    <!-- Left Scale Bowl -->
+    <path d="M58 88L28 148" />
+    <path d="M58 88L88 148" />
+    <path d="M25 148C25 162 40 170 58 170C76 170 91 162 91 148Z" fill="#c5a059" fill-opacity="0.15" />
+    <!-- Right Scale Bowl -->
+    <path d="M198 88L168 148" />
+    <path d="M198 88L228 148" />
+    <path d="M165 148C165 162 180 170 198 170C216 170 231 162 231 148Z" fill="#c5a059" fill-opacity="0.15" />
+  </g>
+</svg>

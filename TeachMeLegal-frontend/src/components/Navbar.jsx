@@ -27,12 +27,11 @@ const Navbar = () => {
         <div className="container nav-container">
           <Link href="/" className="logo">
             <Image
-              src="/logo.png"
+              src="/logo.svg"
               alt="Teach Me Legal Logo"
-              width={42}
-              height={42}
+              width={40}
+              height={40}
               className="logo-img"
-              style={{ width: 'auto', height: 'auto' }}
               priority
             />
             <span className="logo-text">
