@@ -3,7 +3,6 @@ import { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
-import ThemeToggle from './ThemeToggle';
 import { useCart } from '../context/CartContext';
 import './Navbar.css';
 
@@ -16,20 +15,22 @@ const Navbar = () => {
     { name: 'Home', href: '/' },
     { name: 'About Us', href: '/about' },
     { name: 'Courses', href: '/courses' },
+    { name: 'Books', href: '/books' },
     { name: 'Blog', href: '/blog' },
     { name: 'Contact', href: '/contact' },
   ];
 
   return (
     <header className="site-header">
-      <nav className="navbar">
-        <div className="container nav-container">
+      <div className="nav-capsule-wrapper container">
+        <nav className="navbar nav-capsule">
+          {/* Logo */}
           <Link href="/" className="logo">
             <Image
               src="/logo.png"
               alt="Teach Me Legal Logo"
-              width={42}
-              height={42}
+              width={38}
+              height={38}
               className="logo-img"
               priority
             />
@@ -38,6 +39,7 @@ const Navbar = () => {
             </span>
           </Link>
           
+          {/* Desktop Nav Links Pill Bar */}
           <div className="nav-links desktop-only">
             {navLinks.map((link) => {
               const isActive = pathname === link.href;
@@ -53,24 +55,17 @@ const Navbar = () => {
             })}
           </div>
 
+          {/* Right Actions & Gold Arrow Button */}
           <div className="nav-actions">
-            {/* Browse Categories Dropdown */}
-            <div className="browse-cat-dropdown desktop-only">
-              <Link href="/books" className="btn-browse-cat">
-                <span className="cat-icon">🪟</span>
-                <span>Browse Categories</span>
-                <span className="chevron-down">▾</span>
-              </Link>
-            </div>
-
             {/* Shopping Cart Button */}
             <button
               onClick={() => setIsCartOpen(true)}
               className="btn-cart"
               aria-label="View Shopping Cart"
+              title="Shopping Cart"
             >
               <span className="cart-icon-symbol">🛍️</span>
-              <span className="cart-count-badge">{totalCount}</span>
+              {totalCount > 0 && <span className="cart-count-badge">{totalCount}</span>}
             </button>
 
             {user ? (
@@ -80,8 +75,10 @@ const Navbar = () => {
               </div>
             ) : (
               <div className="auth-btns desktop-only">
-                <Link href="/login" className="nav-account-link">My Account</Link>
-                <Link href="/signup" className="btn btn-signup">Sign Up</Link>
+                <Link href="/courses" className="btn btn-gold btn-nav-cta">
+                  <span>Start Learning</span>
+                  <span className="btn-arrow-icon">↗</span>
+                </Link>
               </div>
             )}
 
@@ -96,34 +93,37 @@ const Navbar = () => {
               <span className="bar"></span>
             </button>
           </div>
-        </div>
+        </nav>
+      </div>
 
-        {/* Mobile Dropdown */}
-        {mobileOpen && (
-          <div className="mobile-menu-drawer">
-            <div className="mobile-nav-links">
-              {navLinks.map((link) => (
-                <Link
-                  key={link.href}
-                  href={link.href}
-                  className={`mobile-nav-link ${pathname === link.href ? 'active' : ''}`}
-                  onClick={() => setMobileOpen(false)}
-                >
-                  {link.name}
+      {/* Mobile Dropdown */}
+      {mobileOpen && (
+        <div className="mobile-menu-drawer container">
+          <div className="mobile-nav-links">
+            {navLinks.map((link) => (
+              <Link
+                key={link.href}
+                href={link.href}
+                className={`mobile-nav-link ${pathname === link.href ? 'active' : ''}`}
+                onClick={() => setMobileOpen(false)}
+              >
+                {link.name}
+              </Link>
+            ))}
+            {!user && (
+              <div className="mobile-auth-btns">
+                <Link href="/courses" className="btn btn-gold w-full" onClick={() => setMobileOpen(false)}>
+                  <span>Start Learning</span>
+                  <span className="btn-arrow-icon">↗</span>
                 </Link>
-              ))}
-              {!user && (
-                <div className="mobile-auth-btns">
-                  <Link href="/login" className="btn btn-login w-full" onClick={() => setMobileOpen(false)}>Log In</Link>
-                  <Link href="/signup" className="btn btn-signup w-full" onClick={() => setMobileOpen(false)}>Sign Up</Link>
-                </div>
-              )}
-            </div>
+              </div>
+            )}
           </div>
-        )}
-      </nav>
+        </div>
+      )}
     </header>
   );
 };
 
 export default Navbar;
+

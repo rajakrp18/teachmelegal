@@ -6,36 +6,24 @@ import './BlogPreview.css';
 const INITIAL_PREVIEW_POSTS = [
   {
     slug: 'state-bank-of-india-act-1955',
-    category: 'Banking Law',
-    categoryColor: '#3b82f6',
-    title: 'State Bank of India Act, 1955',
-    date: 'November 3, 2021',
+    category: 'BANKING LAW',
+    title: 'State Bank of India Act, 1955 — Banking Governance & Law',
+    date: 'NOV 2021',
     author: 'Advocate Prashant Jha',
-    readTime: '5 min read',
-    excerpt: "The State Bank of India Act, 1955 is a landmark legislation that governs the functioning of India's largest public sector bank.",
-    icon: '🏛️'
   },
   {
     slug: 'right-of-set-off-in-banking',
-    category: 'Banking Law',
-    categoryColor: '#3b82f6',
-    title: 'Right of Set-Off in Banking',
-    date: 'October 16, 2021',
+    category: 'BANKING LAW',
+    title: 'Right of Set-Off in Banking: Statutory & Common Law Principles',
+    date: 'OCT 2021',
     author: 'Advocate Prashant Jha',
-    readTime: '7 min read',
-    excerpt: 'Right of Set-Off is a legal right of a creditor to collect what is owed to him by withholding payment of an amount owed to the debtor.',
-    icon: '⚖️'
   },
   {
     slug: 'why-teachmelegal-journey-making-law-simple',
-    category: 'Teachmelegal',
-    categoryColor: '#c5a059',
-    title: 'Why Teachmelegal? – The Journey of Making Law Simple',
-    date: 'December 21, 2020',
+    category: 'LEGAL EDUCATION',
+    title: 'Why Teachmelegal? – The Journey of Making Law Accessible',
+    date: 'DEC 2020',
     author: 'Advocate Prashant Jha',
-    readTime: '4 min read',
-    excerpt: 'Some time ago someone asked me why do people search for others to teach them? Because we taught ourselves. That motivated me to start Teachmelegal...',
-    icon: '📖'
   },
 ];
 
@@ -48,60 +36,73 @@ const BlogPreview = () => {
         const res = await fetch('/api/admin/blogs');
         const data = await res.json();
         if (data.success && data.posts && data.posts.length > 0) {
-          setPosts(data.posts.filter(p => p.published).slice(0, 3));
+          const mapped = data.posts.slice(0, 4).map(p => ({
+            slug: p.slug,
+            category: (p.category || 'LEGAL ARTICLE').toUpperCase(),
+            title: p.title,
+            date: p.date || 'NOV 2021',
+            author: p.author || 'Advocate Prashant Jha'
+          }));
+          setPosts(mapped);
         }
       } catch (err) {
-        // Fallback to initial preview posts if API unavailable
+        // Fallback to static initial preview posts
       }
     }
     loadLatestPosts();
   }, []);
 
   return (
-    <section className="blog-preview-section">
+    <section className="legal-works-section">
       <div className="container">
-        <div className="blog-preview-header">
+        {/* Header Row */}
+        <div className="works-header-row">
           <div>
-            <span className="blog-preview-badge">📝 From the Blog</span>
-            <h2 className="blog-preview-title">Latest Legal Insights</h2>
-            <p className="blog-preview-sub">Read practical legal analysis, case summaries, and exam guidance by Advocate Prashant Jha</p>
+            <span className="capsule-badge-outline mb-3">THE WORKS I AM PROUD OF</span>
+            <h2 className="works-title">Some Of My Legal Works</h2>
           </div>
-          <Link href="/blog" className="btn btn-outline blog-preview-all-btn">
-            View All Articles →
-          </Link>
+
+          <div className="works-header-right">
+            <p className="works-sub">
+              Explore a curated selection of legal articles, case analyses, and landmark statute guides written by Advocate Prashant Jha.
+            </p>
+            <Link href="/blog" className="btn btn-gold">
+              <span>See All Articles</span>
+              <span className="btn-arrow-icon">↗</span>
+            </Link>
+          </div>
         </div>
 
-        <div className="blog-preview-grid">
-          {posts.map(post => (
-            <article key={post.slug} className="blog-preview-card">
-              <div className="blog-preview-card-top">
-                <span className="blog-preview-cat-badge" style={{ background: post.categoryColor || '#3b82f6' }}>
-                  {post.category}
-                </span>
-                <span className="blog-preview-readtime">⏱ {post.readTime || '5 min read'}</span>
-              </div>
+        {/* Minimalist Works Table */}
+        <div className="works-table-wrapper">
+          <div className="works-table-header">
+            <span className="col-title">Title</span>
+            <span className="col-category">Category</span>
+            <span className="col-date">Date</span>
+            <span className="col-action">Action</span>
+          </div>
 
-              <div className="blog-preview-body">
-                <div className="blog-preview-meta">
-                  <span>📅 {post.date}</span>
-                  <span>👤 {post.author || 'Advocate Prashant Jha'}</span>
+          <div className="works-table-body">
+            {posts.map(post => (
+              <Link key={post.slug} href={`/blog/${post.slug}`} className="works-table-row">
+                <div className="row-cell-title">
+                  <h3>{post.title}</h3>
                 </div>
 
-                <Link href={`/blog/${post.slug}`} className="blog-preview-title-link">
-                  <h3 className="blog-preview-post-title">{post.title}</h3>
-                </Link>
+                <div className="row-cell-category">
+                  <span className="cat-capsule">{post.category}</span>
+                </div>
 
-                <p className="blog-preview-excerpt">{post.excerpt}</p>
-              </div>
+                <div className="row-cell-date">
+                  <span>{post.date}</span>
+                </div>
 
-              <div className="blog-preview-footer">
-                <Link href={`/blog/${post.slug}`} className="blog-preview-read-btn">
-                  <span>Read Article</span>
-                  <span className="arrow">→</span>
-                </Link>
-              </div>
-            </article>
-          ))}
+                <div className="row-cell-action">
+                  <span className="row-arrow-circle">↗</span>
+                </div>
+              </Link>
+            ))}
+          </div>
         </div>
       </div>
     </section>

@@ -1,59 +1,62 @@
+"use client";
 import Image from 'next/image';
 import Link from 'next/link';
+import { motion } from 'framer-motion';
 import './InstructorProfile.css';
 
 const InstructorProfile = () => {
   return (
     <section id="about" className="instructor-section">
       <div className="container">
-        <div className="instructor-content">
-          <div className="instructor-image-wrapper">
-            <Image
-              src="/prashant-jha.jpg"
-              alt="Advocate Prashant Jha at Supreme Court of India"
-              width={450}
-              height={540}
-              className="instructor-photo"
-              style={{ width: 'auto', height: 'auto' }}
-              priority
-            />
-            <div className="experience-badge">
-              <span className="years">5+</span>
-              <span className="text">Years of<br/>Legal Practice</span>
-            </div>
-          </div>
-          
-          <div className="instructor-info">
-            <h2 className="section-title">Meet Your Instructor</h2>
-            <h3 className="instructor-name">Advocate Prashant Jha</h3>
-            <p className="instructor-bio">
-              A practicing lawyer in Delhi, Advocate Prashant Jha appears before the <strong>Supreme Court of India</strong>, the <strong>High Court of Delhi</strong>, District Courts, and various Tribunals. He founded Teachmelegal during the 2020 lockdown to make quality legal education accessible to everyone across India.
-            </p>
+        <div className="instructor-grid">
+          {/* Left Column: Heading & Tag */}
+          <motion.div 
+            className="instructor-left"
+            initial={{ opacity: 0, x: -30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+          >
+            <span className="capsule-badge-outline mb-4">ABOUT TEACHMELEGAL</span>
             
-            <div className="stats-grid">
-              <div className="stat-item">
-                <span className="stat-number">30K+</span>
-                <span className="stat-label">Enrolled Students</span>
-              </div>
-              <div className="stat-item">
-                <span className="stat-number">50+</span>
-                <span className="stat-label">Courses & Books</span>
-              </div>
-              <div className="stat-item">
-                <span className="stat-number">5+</span>
-                <span className="stat-label">Years Experience</span>
-              </div>
-            </div>
+            <h2 className="instructor-main-heading">
+              Built On Integrity,<br />
+              Driven By Justice
+            </h2>
+          </motion.div>
 
-            <div className="instructor-actions">
-              <a href="https://www.youtube.com/watch?v=hy5ji_1vu2M" target="_blank" rel="noopener noreferrer" className="btn btn-primary">
-                Watch Free Lectures
-              </a>
-              <Link href="/about" className="btn btn-outline">
-                Learn More
+          {/* Right Column: Bio Narrative & Call-To-Action */}
+          <motion.div 
+            className="instructor-right"
+            initial={{ opacity: 0, x: 30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.1 }}
+          >
+            <p className="instructor-description">
+              TeachMeLegal is an advocate-led legal education practice dedicated to making complex Indian jurisprudence crystal clear. Practicing before the <strong>Supreme Court of India</strong> and the <strong>High Court of Delhi</strong>, Advocate Prashant Jha combines strategic legal thinking with structured learning to empower students, legal professionals, and everyday citizens.
+            </p>
+
+            <p className="instructor-sub-description">
+              Our approach is grounded in professional discretion, exam precision, and a deep commitment to achieving deep understanding—because your legal journey deserves more than notes, it deserves mastery.
+            </p>
+
+            <div className="instructor-cta-row">
+              <Link href="/about" className="btn btn-gold">
+                <span>Learn More About Us</span>
+                <span className="btn-arrow-icon">↗</span>
               </Link>
+
+              <a 
+                href="https://www.youtube.com/watch?v=hy5ji_1vu2M" 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                className="btn btn-outline"
+              >
+                ▶ Watch Free Lectures
+              </a>
             </div>
-          </div>
+          </motion.div>
         </div>
       </div>
     </section>
