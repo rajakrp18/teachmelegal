@@ -2,84 +2,74 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import PdfPreviewModal from './PdfPreviewModal';
-import { GridSkeleton } from './SkeletonLoader';
 import './Courses.css';
 
-const MOCK_COURSES = [
+const REAL_BOOKS = [
   {
-    id: 1,
-    title: 'Corporate & Business Law',
-    category: 'CORPORATE',
-    type: 'Course',
-    image: 'https://images.unsplash.com/photo-1507679799987-c73779587ccf?auto=format&fit=crop&q=80&w=800',
-    price: '₹899',
-    numericPrice: 899,
-    rating: '5.0',
-    students: '1.2k',
-    description: 'Comprehensive legal support for startups, SMEs, and established businesses. From company formation to contract drafting.'
-  },
-  {
-    id: 2,
-    title: 'Civil & Criminal Litigation',
-    category: 'LITIGATION',
-    type: 'Course',
-    image: 'https://images.unsplash.com/photo-1589829085413-56de8ae18c73?auto=format&fit=crop&q=80&w=800',
-    price: '₹499',
-    numericPrice: 499,
-    rating: '4.9',
-    students: '2.5k',
-    description: 'Strong representation in civil disputes, IPC, & CrPC. Master every stage of court litigation, evidence, and cross-examination.'
-  },
-  {
-    id: 3,
-    title: 'Criminal Defense & Evidence',
-    category: 'DEFENSE',
-    type: 'Course',
-    image: 'https://images.unsplash.com/photo-1423592707957-3b212afa6733?auto=format&fit=crop&q=80&w=800',
-    price: '₹699',
-    numericPrice: 699,
-    rating: '4.8',
-    students: '1.8k',
-    description: 'Dedicated criminal law defense & Evidence Act insights. We focus on protecting constitutional rights and defense strategy.'
-  },
-  {
-    id: 4,
-    title: 'The Constitution Explained',
-    category: 'CONSTITUTIONAL',
+    id: "book-1",
+    title: 'Prevention of Money Laundering Act, 2002',
+    category: 'EXAM MATERIALS',
     type: 'Book',
-    image: 'https://images.unsplash.com/photo-1585829365295-ab7cd400c167?auto=format&fit=crop&q=80&w=800',
-    price: '₹249',
+    image: '/books/money-laundering-act-2002.png',
+    price: '₹299',
     salePrice: '₹99',
     numericPrice: 99,
-    rating: '4.8',
-    students: '5k+',
-    description: 'Complete Article-by-Article revision chart, landmark judgments summary, and fundamental rights handbook.'
+    description: 'Comprehensive statutory guide, key case laws, and exam notes for Money Laundering Act 2002.'
   },
   {
-    id: 5,
-    title: 'JAIIB / CAIIB Legal Guide',
-    category: 'BANKING',
+    id: "book-7",
+    title: 'Banking Law Notes',
+    category: 'SUBJECT NOTES',
     type: 'Book',
-    image: 'https://images.unsplash.com/photo-1450101499163-c8848c66cb85?auto=format&fit=crop&q=80&w=800',
-    price: '₹599',
-    salePrice: '₹149',
-    numericPrice: 149,
-    rating: '4.9',
-    students: '4.1k',
-    description: 'Banking regulatory operations, SBI Act 1955, set-off rights, and banking law exam prep guide.'
+    image: '/books/banking-law-notes.jpg',
+    price: '₹299',
+    salePrice: '₹99',
+    numericPrice: 99,
+    description: 'Complete Banking Law study notes, SBI Act 1955, rights of set-off, and RBI regulation.'
   },
   {
-    id: 6,
-    title: 'Rights & Remedies Handbook',
-    category: 'PROPERTY',
+    id: "book-6",
+    title: 'Jurisprudence Notes',
+    category: 'SUBJECT NOTES',
     type: 'Book',
-    image: 'https://images.unsplash.com/photo-1521587760476-6c12a4b040da?auto=format&fit=crop&q=80&w=800',
+    image: '/books/jurisprudence-notes.jpg',
+    price: '₹600',
+    salePrice: '₹99',
+    numericPrice: 99,
+    description: 'Master legal theory, schools of jurisprudence, rights, duties, and judicial precedents.'
+  },
+  {
+    id: "book-8",
+    title: 'Environmental Law in India',
+    category: 'EXAM MATERIALS',
+    type: 'Book',
+    image: '/books/environmental-law-in-india.png',
+    price: '₹299',
+    salePrice: '₹99',
+    numericPrice: 99,
+    description: 'Comprehensive guide to Environmental Protection Act, NGT judgments, and constitutional writs.'
+  },
+  {
+    id: "book-2",
+    title: 'Question Bank of Legal History',
+    category: 'QUESTION BANK',
+    type: 'Book',
+    image: '/books/question-bank-constitutional-history.png',
     price: '₹199',
-    salePrice: '₹99',
-    numericPrice: 99,
-    rating: '4.9',
-    students: '8k+',
-    description: 'Practical guide to consumer protection, property rights, writs, and immediate legal remedies in India.'
+    salePrice: '₹49',
+    numericPrice: 49,
+    description: 'High-yield previous year question bank with solved model answers for constitutional history.'
+  },
+  {
+    id: "book-5",
+    title: 'Revision Book of Jurisprudence',
+    category: 'REVISION CHART',
+    type: 'Book',
+    image: '/books/revision-jurisprudence.jpeg',
+    price: '₹350',
+    salePrice: '₹45',
+    numericPrice: 45,
+    description: 'Quick revision charts and exam summaries for last-minute judiciary preparation.'
   }
 ];
 
@@ -98,32 +88,35 @@ const loadRazorpayScript = () => {
 };
 
 const Courses = () => {
-  const [courses, setCourses] = useState(MOCK_COURSES);
-  const [filter, setFilter] = useState('All');
+  const [courses, setCourses] = useState(REAL_BOOKS);
   const [loadingId, setLoadingId] = useState(null);
   const [selectedBookForPreview, setSelectedBookForPreview] = useState(null);
 
   React.useEffect(() => {
-    async function loadCourses() {
+    async function loadBooks() {
       try {
-        const res = await fetch('/api/admin/courses');
+        const res = await fetch('/api/admin/books');
         const data = await res.json();
-        if (data.success && data.courses && data.courses.length > 0) {
-          setCourses(data.courses.filter(c => c.active));
+        if (data.success && data.books && data.books.length > 0) {
+          const mapped = data.books.slice(0, 6).map(b => ({
+            id: b.id || b._id,
+            title: b.title,
+            category: (b.category || 'EXAM MATERIAL').toUpperCase(),
+            type: 'Book',
+            image: b.image || '/books/money-laundering-act-2002.png',
+            price: b.originalPrice || '₹299',
+            salePrice: b.salePrice || '₹99',
+            numericPrice: b.numericPrice || 99,
+            description: b.description || 'Structured law notes and exam revision chart by Advocate Prashant Jha.'
+          }));
+          setCourses(mapped);
         }
       } catch (err) {
-        // Fallback to static list
+        // Fallback to real static books list
       }
     }
-    loadCourses();
+    loadBooks();
   }, []);
-
-  const filteredItems = courses.filter(item => {
-    if (filter === 'All') return true;
-    if (filter === 'Courses') return item.type === 'Course';
-    if (filter === 'Books') return item.type === 'Book';
-    return item.category === filter;
-  });
 
   const handleCheckout = async (course) => {
     setLoadingId(course.id);
@@ -173,28 +166,27 @@ const Courses = () => {
   return (
     <section id="courses" className="courses-section">
       <div className="container">
-        {/* Dark Rounded Container Box Wrapping the Section */}
+        {/* Dark Rounded Container Box */}
         <div className="dark-container-wrapper">
+
+          {/* Section Header */}
           <div className="courses-header-row">
             <div>
-              <span className="capsule-badge mb-3">MY SERVICES & PRACTICE AREAS</span>
-              <h2 className="dark-section-title">Trusted Expertise</h2>
+              <span className="capsule-badge-gold">📚 FEATURED COURSES & STUDY MATERIALS</span>
+              <h2 className="dark-section-title">Master Indian Law</h2>
             </div>
-            
+
             <div className="header-right-controls">
               <p className="dark-section-sub">
-                Delivering trusted legal courses & study resources with proven experience and a results-driven focus.
+                Explore curated legal courses, statutory study books, and judiciary exam charts created by practicing Advocate Prashant Jha.
               </p>
-              
-              <div className="filter-capsules" style={{ display: 'none' }}>
-              </div>
             </div>
           </div>
 
-          {/* Cards Grid / Carousel */}
+          {/* Cards Grid */}
           <motion.div className="practice-cards-grid" layout>
             <AnimatePresence>
-              {filteredItems.map((item, idx) => (
+              {courses.map((item, idx) => (
                 <motion.div 
                   key={item.id}
                   className={`practice-card ${idx === 1 ? 'featured-active' : ''}`}
@@ -205,22 +197,21 @@ const Courses = () => {
                   whileHover={{ y: -6 }}
                   transition={{ duration: 0.3 }}
                 >
-                  {/* Card Image Banner */}
-                  <div className="card-image-bg" style={{ backgroundImage: `url(${item.image})` }}>
+                  {/* Card Image Banner - Uncropped Full View */}
+                  <div className="card-image-wrapper">
+                    <img src={item.image} alt={item.title} className="card-book-img" />
                     <div className="card-overlay" />
                     <span className="category-pill-tag">{item.category}</span>
 
-                    {item.type === 'Book' && (
-                      <button 
-                        className="btn-sample-badge"
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          setSelectedBookForPreview(item);
-                        }}
-                      >
-                        👁️ Sample PDF
-                      </button>
-                    )}
+                    <button 
+                      className="btn-sample-badge"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setSelectedBookForPreview(item);
+                      }}
+                    >
+                      👁️ Sample PDF
+                    </button>
                   </div>
 
                   {/* Card Content Body */}

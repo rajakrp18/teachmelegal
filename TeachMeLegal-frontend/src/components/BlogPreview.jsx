@@ -58,7 +58,7 @@ const BlogPreview = () => {
         {/* Header Row */}
         <div className="works-header-row">
           <div>
-            <span className="capsule-badge-outline mb-3">THE WORKS I AM PROUD OF</span>
+            <span className="capsule-badge-gold">THE WORKS I AM PROUD OF</span>
             <h2 className="works-title">Some Of My Legal Works</h2>
           </div>
 

@@ -19,8 +19,9 @@ const ContactForm = () => {
     <section className="contact-section">
       <div className="container contact-layout">
 
-        {/* Left Info */}
+        {/* Left Info Column */}
         <div className="contact-info-col">
+          <span className="capsule-badge-gold mb-3">💬 WE'RE HERE TO HELP</span>
           <h2 className="contact-info-title">Keep In Touch With Us</h2>
           <div className="contact-info-divider" />
           <p className="contact-info-desc">
@@ -31,15 +32,15 @@ const ContactForm = () => {
             <div className="contact-detail-item">
               <div className="contact-icon-bubble">📍</div>
               <div>
-                <strong>Our Address</strong>
-                <p>Nawada Housing Complex, Vipin Garden,<br/>Dwarka Mor, Delhi 110059</p>
+                <strong>OUR ADDRESS</strong>
+                <p>Nawada Housing Complex, Vipin Garden,<br/>Dwarka Mor, Delhi - 110059</p>
               </div>
             </div>
 
             <div className="contact-detail-item">
               <div className="contact-icon-bubble">📞</div>
               <div>
-                <strong>Phone</strong>
+                <strong>DIRECT PHONE</strong>
                 <p>+91 94725 68264</p>
               </div>
             </div>
@@ -47,22 +48,35 @@ const ContactForm = () => {
             <div className="contact-detail-item">
               <div className="contact-icon-bubble">✉️</div>
               <div>
-                <strong>Email</strong>
+                <strong>OFFICIAL EMAIL</strong>
                 <p>info@teachmelegal.com<br/>prashant@teachmelegal.com</p>
               </div>
             </div>
+
+            <div className="contact-detail-item">
+              <div className="contact-icon-bubble">🕒</div>
+              <div>
+                <strong>CHAMBER HOURS</strong>
+                <p>Mon - Sat: 10:00 AM - 7:00 PM IST</p>
+              </div>
+            </div>
+          </div>
+
+          <div className="guarantee-badge">
+            ⚡ Guaranteed response within 24 business hours.
           </div>
         </div>
 
-        {/* Right Form */}
+        {/* Right Form Column */}
         <div className="contact-form-col">
           <div className="contact-form-card">
             <h3 className="form-card-title">Get in Touch</h3>
             <div className="form-card-divider" />
+            <p className="form-card-sub">Fill in your details below and we will get back to you promptly.</p>
 
             {submitted && (
               <div className="form-success-banner">
-                ✅ Message sent! We'll get back to you shortly.
+                ✅ Message sent! Advocate Prashant Jha's team will contact you shortly.
               </div>
             )}
 
@@ -71,7 +85,7 @@ const ContactForm = () => {
                 <input
                   type="text"
                   name="name"
-                  placeholder="Name"
+                  placeholder="Your Full Name *"
                   value={form.name}
                   onChange={handleChange}
                   required
@@ -80,7 +94,7 @@ const ContactForm = () => {
                 <input
                   type="email"
                   name="email"
-                  placeholder="Email *"
+                  placeholder="Email Address *"
                   value={form.email}
                   onChange={handleChange}
                   required
@@ -91,7 +105,7 @@ const ContactForm = () => {
                 <input
                   type="tel"
                   name="phone"
-                  placeholder="Phone"
+                  placeholder="Phone Number"
                   value={form.phone}
                   onChange={handleChange}
                   className="form-input"
@@ -99,7 +113,7 @@ const ContactForm = () => {
                 <input
                   type="text"
                   name="subject"
-                  placeholder="Subject *"
+                  placeholder="Subject / Topic *"
                   value={form.subject}
                   onChange={handleChange}
                   required
@@ -108,15 +122,16 @@ const ContactForm = () => {
               </div>
               <textarea
                 name="message"
-                placeholder="Your Message *"
+                placeholder="How can we assist you with legal learning or courses? *"
                 value={form.message}
                 onChange={handleChange}
                 required
                 rows={5}
                 className="form-input form-textarea"
               />
-              <button type="submit" className="form-submit-btn">
-                SEND MESSAGE
+              <button type="submit" className="btn btn-gold form-submit-btn">
+                <span>Send Message</span>
+                <span className="btn-arrow-icon">↗</span>
               </button>
             </form>
           </div>

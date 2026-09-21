@@ -7,7 +7,7 @@
   position: relative;
   overflow: hidden;
   padding-top: 110px;
-  color: #ffffff;
+  color: var(--text-body);
 }
 
 /* Background Backdrops */
@@ -50,7 +50,7 @@
 
 .hero-title {
   font-size: clamp(2.5rem, 5vw, 4.2rem);
-  color: #ffffff;
+  color: var(--text-heading);
   font-family: var(--font-heading);
   font-weight: 800;
   line-height: 1.08;
@@ -67,7 +67,7 @@
 
 .hero-subtitle {
   font-size: 1.08rem;
-  color: #94a3b8;
+  color: var(--text-muted);
   line-height: 1.75;
   margin-bottom: 38px;
   max-width: 520px;
@@ -132,11 +132,11 @@
   gap: 12px;
   padding: 12px 18px;
   border-radius: 100px;
-  background: rgba(9, 19, 30, 0.95) !important;
+  background: var(--bg-card) !important;
   backdrop-filter: blur(24px) saturate(180%);
   -webkit-backdrop-filter: blur(24px) saturate(180%);
-  border: 1px solid rgba(207, 168, 86, 0.35);
-  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+  border: 1px solid var(--accent-gold-border);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
   z-index: 5;
 }
 
@@ -159,16 +159,16 @@
 
 .badge-text-group span {
   font-size: 0.7rem;
-  color: #94a3b8;
+  color: var(--text-muted);
   font-weight: 600;
 }
 
 /* Horizontal Metric Strip Bar */
 .hero-metrics-strip {
   width: 100%;
-  background: rgba(6, 14, 23, 0.85);
+  background: var(--bg-section-dark);
   backdrop-filter: blur(12px);
-  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  border-top: 1px solid var(--border-light);
   padding: 24px 0;
   z-index: 3;
 }
@@ -202,13 +202,13 @@
   font-family: var(--font-heading);
   font-size: 1.35rem;
   font-weight: 800;
-  color: #ffffff;
+  color: var(--text-heading);
   line-height: 1.1;
 }
 
 .metric-text span {
   font-size: 0.78rem;
-  color: #94a3b8;
+  color: var(--text-muted);
   font-weight: 500;
   text-transform: uppercase;
   letter-spacing: 0.05em;
@@ -217,7 +217,7 @@
 .metric-divider {
   width: 1px;
   height: 38px;
-  background: rgba(255, 255, 255, 0.1);
+  background: var(--border-light);
 }
 
 /* Mobile & Tablet Responsiveness */

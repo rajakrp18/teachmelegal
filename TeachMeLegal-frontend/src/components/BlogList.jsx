@@ -8,72 +8,72 @@ const DEFAULT_POSTS = [
   {
     slug: "state-bank-of-india-act-1955",
     category: "Banking Law",
-    categoryColor: "#3b82f6",
-    title: "State Bank of India Act, 1955",
-    author: "Prashant Jha",
+    categoryColor: "rgba(207, 168, 86, 0.15)",
+    title: "State Bank of India Act, 1955 — Governance & Regulatory Framework",
+    author: "Adv. Prashant Jha",
     date: "November 1, 2025",
     comments: 0,
-    excerpt: "Objective of the Act to establish the State Bank of India (SBI) as a public sector banking institution by taking over the business of the Imperial Bank of India...",
+    excerpt: "Comprehensive analysis of the State Bank of India Act 1955, examining statutory provisions, Imperial Bank transition, and banking governance rules.",
     readTime: "8 min read"
   },
   {
     slug: "right-of-set-off-in-banking",
     category: "Banking Law",
-    categoryColor: "#3b82f6",
-    title: "RIGHT OF SET-OFF IN BANKING",
-    author: "Prashant Jha",
+    categoryColor: "rgba(207, 168, 86, 0.15)",
+    title: "Right of Set-Off in Banking Law: Statutory & Common Law Principles",
+    author: "Adv. Prashant Jha",
     date: "October 25, 2025",
     comments: 0,
-    excerpt: "RIGHT OF SET-OFF IN BANKING LAW 1. Meaning of Set-off In simple terms, Set-off means adjusting one debt against another...",
+    excerpt: "Detailed guide on the banker's right of set-off under Indian banking jurisprudence, mutuality of debt, and notice requirements.",
     readTime: "6 min read"
   },
   {
     slug: "garnishee-orders-in-banking",
     category: "Banking Law",
-    categoryColor: "#3b82f6",
-    title: "Garnishee Orders in Banking",
-    author: "Prashant Jha",
+    categoryColor: "rgba(207, 168, 86, 0.15)",
+    title: "Garnishee Orders in Banking: Court Procedure & Bank Duties",
+    author: "Adv. Prashant Jha",
     date: "October 23, 2025",
     comments: 0,
-    excerpt: "Garnishee Orders in Banking 1. What is a Garnishee Order? A Garnishee Order is an order of a court directing a third person...",
+    excerpt: "Understanding Garnishee Orders Order 21 Rule 46 CPC, attachment of bank accounts, judgment debtor obligations, and banker liabilities.",
     readTime: "5 min read"
   },
   {
     slug: "mareva-injunction",
     category: "Banking Law",
-    categoryColor: "#3b82f6",
-    title: "MAREVA INJUNCTION",
-    author: "Prashant Jha",
+    categoryColor: "rgba(207, 168, 86, 0.15)",
+    title: "Mareva Injunction: Freezing Orders in Indian Commercial Litigation",
+    author: "Adv. Prashant Jha",
     date: "October 22, 2025",
     comments: 0,
-    excerpt: "MAREVA INJUNCTION 1. What is a Mareva Injunction? A Mareva Injunction is an interim court order that restrains a defendant...",
+    excerpt: "Examine Mareva injunctions, asset freezing orders under Order 39 CPC, preventing asset dissipation, and high court precedents.",
     readTime: "7 min read"
   },
   {
     slug: "introduction-to-banking-law",
     category: "Banking Law",
-    categoryColor: "#3b82f6",
-    title: "INTRODUCTION TO BANKING LAW",
-    author: "Prashant Jha",
+    categoryColor: "rgba(207, 168, 86, 0.15)",
+    title: "Introduction to Indian Banking Law & RBI Regulatory Powers",
+    author: "Adv. Prashant Jha",
     date: "September 21, 2025",
     comments: 0,
-    excerpt: "1. Nature, Scope, and Functions of Banking Law Banking law is a set of legal rules and regulations that control how banks operate...",
+    excerpt: "Essential introduction to Banking Regulation Act 1949, RBI Act 1934, licensing, capital requirements, and banker-customer relationship.",
     readTime: "9 min read"
   },
   {
     slug: "why-teachmelegal-journey-making-law-simple",
-    category: "Teachmelegal",
-    categoryColor: "#c5a059",
-    title: "Why Teachmelegal? – The Journey of Making Law Simple",
-    author: "Prashant Jha",
+    category: "Legal Education",
+    categoryColor: "rgba(207, 168, 86, 0.15)",
+    title: "Why Teachmelegal? – The Journey of Making Law Accessible",
+    author: "Adv. Prashant Jha",
     date: "September 21, 2025",
     comments: 0,
-    excerpt: "When I started my legal career, one thing became very clear to me—law is often taught in a way that feels complicated and disconnected from real life...",
+    excerpt: "Advocate Prashant Jha shares the story behind TeachMeLegal — bridging courtroom practice and student education with simplified visual guides.",
     readTime: "5 min read"
   }
 ];
 
-const POPULAR_TAGS = ['banking', 'bankinglaw', 'banking law in India', 'law', 'Teachmelegal'];
+const POPULAR_TAGS = ['Banking Law', 'Judicial Services', 'Section 138', 'Constitutional Writs', 'Supreme Court'];
 
 const BlogList = () => {
   const [posts, setPosts] = useState(DEFAULT_POSTS);
@@ -112,7 +112,7 @@ const BlogList = () => {
       (post.excerpt && post.excerpt.toLowerCase().includes(selectedTag.toLowerCase()));
     const matchesSearch = !searchQuery ||
       post.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      (post.excerpt && post.excerpt.toLowerCase().includes(searchQuery.toLowerCase()));
+      (post.excerpt && post.excerpt.toLowerCase().includes(selectedTag.toLowerCase()));
     return matchesCategory && matchesTag && matchesSearch;
   });
 
@@ -124,28 +124,28 @@ const BlogList = () => {
         <div className="blog-main">
           {filtered.length === 0 && (
             <div className="blog-empty">
-              <p>No posts found for your search. Try a different keyword.</p>
+              <p>No articles found matching your criteria. Try resetting filters.</p>
             </div>
           )}
 
           {filtered.map(post => (
             <article key={post.slug} className="blog-card">
-              <div className="blog-card-category-bar" style={{ background: post.categoryColor || '#3b82f6' }}>
-                <span>{post.category}</span>
+              <div className="blog-card-category-bar">
+                <span className="blog-cat-pill">{post.category}</span>
               </div>
               <div className="blog-card-body">
                 <Link href={`/blog/${post.slug}`} className="blog-card-title-link">
                   <h2 className="blog-card-title">{post.title}</h2>
                 </Link>
                 <div className="blog-card-meta">
-                  <span className="meta-item">👤 {post.author}</span>
+                  <span className="meta-item">⚖️ {post.author || 'Adv. Prashant Jha'}</span>
                   <span className="meta-item">📅 {post.date}</span>
-                  <span className="meta-item">💬 {post.comments || 0} Comments</span>
                   <span className="meta-item">⏱ {post.readTime || '5 min read'}</span>
                 </div>
                 <p className="blog-card-excerpt">{post.excerpt}</p>
-                <Link href={`/blog/${post.slug}`} className="blog-continue-btn">
-                  Continue Reading →
+                <Link href={`/blog/${post.slug}`} className="btn btn-gold btn-sm">
+                  <span>Read Full Article</span>
+                  <span className="btn-arrow-icon">↗</span>
                 </Link>
               </div>
             </article>
@@ -157,10 +157,11 @@ const BlogList = () => {
 
           {/* Search */}
           <div className="sidebar-widget">
+            <h3 className="sidebar-title">Search Articles</h3>
             <div className="sidebar-search">
               <input
                 type="text"
-                placeholder="Search here"
+                placeholder="Search legal topics..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 className="sidebar-search-input"
@@ -198,7 +199,7 @@ const BlogList = () => {
 
           {/* Recent Posts */}
           <div className="sidebar-widget">
-            <h3 className="sidebar-title">Recent Posts</h3>
+            <h3 className="sidebar-title">Recent Articles</h3>
             <ul className="recent-posts-list">
               {posts.slice(0, 5).map(post => (
                 <li key={post.slug} className="recent-post-item">
@@ -229,12 +230,12 @@ const BlogList = () => {
 
           {/* Quick Legal Glossary */}
           <div className="sidebar-widget">
-            <h3 className="sidebar-title">💡 Instant Legal Glossary</h3>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', fontSize: '0.88rem' }}>
-              <div>Hover to define: <LegalGlossary termKey="mens rea">Mens Rea</LegalGlossary></div>
-              <div>Hover to define: <LegalGlossary termKey="sub judice">Sub Judice</LegalGlossary></div>
-              <div>Hover to define: <LegalGlossary termKey="estoppel">Estoppel</LegalGlossary></div>
-              <div>Hover to define: <LegalGlossary termKey="habeas corpus">Habeas Corpus</LegalGlossary></div>
+            <h3 className="sidebar-title">💡 Legal Terms Glossary</h3>
+            <div className="glossary-items">
+              <div className="glossary-row">Hover term: <LegalGlossary termKey="mens rea">Mens Rea</LegalGlossary></div>
+              <div className="glossary-row">Hover term: <LegalGlossary termKey="sub judice">Sub Judice</LegalGlossary></div>
+              <div className="glossary-row">Hover term: <LegalGlossary termKey="estoppel">Estoppel</LegalGlossary></div>
+              <div className="glossary-row">Hover term: <LegalGlossary termKey="habeas corpus">Habeas Corpus</LegalGlossary></div>
             </div>
           </div>
 

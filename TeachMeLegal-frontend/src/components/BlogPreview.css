@@ -1,7 +1,21 @@
 .legal-works-section {
   padding: 100px 0;
-  background: var(--bg-section-light);
-  border-top: 1px solid rgba(9, 19, 30, 0.05);
+  background: var(--bg-main);
+  border-top: 1px solid var(--border-light);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Subtle background accent glow */
+.legal-works-section::before {
+  content: '';
+  position: absolute;
+  top: 20%;
+  left: -10%;
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle, rgba(207, 168, 86, 0.06) 0%, rgba(8, 18, 30, 0) 70%);
+  pointer-events: none;
 }
 
 .works-header-row {
@@ -12,79 +26,70 @@
   gap: 30px;
 }
 
-.capsule-badge-outline {
-  display: inline-block;
-  padding: 6px 16px;
-  border: 1px solid rgba(9, 19, 30, 0.2);
+.capsule-badge-gold {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 18px;
+  background: rgba(207, 168, 86, 0.12);
+  border: 1px solid rgba(207, 168, 86, 0.35);
   border-radius: 100px;
-  font-size: 0.8rem;
+  font-size: 0.75rem;
   font-weight: 700;
   letter-spacing: 0.1em;
-  color: var(--primary-navy);
+  color: var(--accent-gold);
+  text-transform: uppercase;
 }
 
 .works-title {
   font-family: var(--font-heading);
   font-size: clamp(2.2rem, 4vw, 3.2rem);
   font-weight: 800;
-  color: var(--primary-navy);
+  color: var(--text-heading);
   line-height: 1.1;
   letter-spacing: -0.02em;
+  margin-top: 12px;
 }
 
 .works-header-right {
   display: flex;
   flex-direction: column;
   align-items: flex-end;
-  gap: 16px;
-  max-width: 440px;
+  gap: 18px;
+  max-width: 480px;
 }
 
 .works-sub {
   font-size: 1rem;
-  color: rgba(9, 19, 30, 0.6);
+  color: var(--text-muted);
   line-height: 1.65;
   text-align: right;
-}
-
-.btn-gold {
-  background: var(--accent-gold);
-  color: #ffffff;
-  border: none;
-  padding: 12px 24px;
-  border-radius: 100px;
-  font-weight: 700;
-  font-size: 0.95rem;
-  cursor: pointer;
-  transition: all 0.25s ease;
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  text-decoration: none;
-}
-
-.btn-gold:hover {
-  background: #b59247;
-  transform: translateY(-2px);
 }
 
 /* Works Table */
 .works-table-wrapper {
   display: flex;
   flex-direction: column;
-  border-top: 1px solid rgba(9, 19, 30, 0.1);
+  background: var(--bg-card);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-radius: 24px;
+  border: 1px solid var(--border-light);
+  overflow: hidden;
+  box-shadow: var(--shadow);
 }
 
 .works-table-header {
   display: grid;
   grid-template-columns: 2.2fr 1fr 1fr 0.4fr;
-  padding: 18px 24px;
-  font-size: 0.85rem;
+  padding: 18px 28px;
+  font-size: 0.8rem;
   font-weight: 700;
-  color: rgba(9, 19, 30, 0.5);
+  color: var(--text-muted);
   text-transform: uppercase;
-  letter-spacing: 0.05em;
-  border-bottom: 1px solid rgba(9, 19, 30, 0.1);
+  letter-spacing: 0.08em;
+  border-bottom: 1px solid var(--border-light);
+  background: rgba(0, 0, 0, 0.02);
 }
 
 .works-table-body {
@@ -96,76 +101,93 @@
   display: grid;
   grid-template-columns: 2.2fr 1fr 1fr 0.4fr;
   align-items: center;
-  padding: 28px 24px;
-  border-bottom: 1px solid rgba(9, 19, 30, 0.1);
+  padding: 26px 28px;
+  border-bottom: 1px solid var(--border-light);
   text-decoration: none;
-  color: inherit;
-  transition: all 0.25s ease;
+  color: var(--text-body);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+}
+
+.works-table-row:last-child {
+  border-bottom: none;
 }
 
 .works-table-row:hover {
-  background: #ffffff;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
-  border-color: transparent;
-  transform: translateX(4px);
+  background: var(--accent-gold-light);
+  transform: translateX(6px);
 }
 
 .row-cell-title h3 {
   font-family: var(--font-heading);
-  font-size: 1.25rem;
+  font-size: 1.2rem;
   font-weight: 700;
-  color: var(--primary-navy);
+  color: var(--text-heading);
   margin-bottom: 0;
-  line-height: 1.3;
+  line-height: 1.35;
+  transition: color 0.25s ease;
+}
+
+.works-table-row:hover .row-cell-title h3 {
+  color: var(--accent-gold);
 }
 
 .cat-capsule {
   display: inline-block;
-  border: 1px solid rgba(9, 19, 30, 0.1);
-  color: rgba(9, 19, 30, 0.6);
-  padding: 6px 16px;
+  border: 1px solid var(--accent-gold-border);
+  color: var(--accent-gold);
+  padding: 5px 14px;
   border-radius: 100px;
-  font-size: 0.75rem;
+  font-size: 0.72rem;
   font-weight: 700;
   letter-spacing: 0.08em;
-  background: transparent;
+  background: rgba(207, 168, 86, 0.08);
   transition: all 0.2s ease;
 }
 
 .works-table-row:hover .cat-capsule {
   border-color: var(--accent-gold);
-  color: var(--accent-gold);
-  background: rgba(207, 168, 86, 0.05);
+  background: var(--accent-gold);
+  color: #060e17;
 }
 
 .row-cell-date {
   font-family: var(--font-heading);
-  font-size: 0.95rem;
-  font-weight: 700;
-  color: var(--primary-navy);
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text-muted);
   letter-spacing: 0.02em;
 }
 
 .row-arrow-circle {
-  width: 42px;
-  height: 42px;
+  width: 40px;
+  height: 40px;
   border-radius: 50%;
-  border: 1px solid rgba(9, 19, 30, 0.1);
+  border: 1px solid var(--border-light);
+  background: var(--bg-section-dark);
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 1.1rem;
   font-weight: 700;
-  color: var(--primary-navy);
+  color: var(--text-heading);
   transition: all 0.25s ease;
 }
 
 .works-table-row:hover .row-arrow-circle {
   background: var(--accent-gold);
   border-color: var(--accent-gold);
-  color: #ffffff;
+  color: #060e17;
   transform: translate(2px, -2px);
-  box-shadow: 0 4px 10px rgba(207, 168, 86, 0.3);
+  box-shadow: 0 4px 14px rgba(207, 168, 86, 0.4);
+}
+
+.works-table-row:hover .row-arrow-circle {
+  background: var(--accent-gold);
+  border-color: var(--accent-gold);
+  color: #060e17;
+  transform: translate(2px, -2px);
+  box-shadow: 0 4px 14px rgba(207, 168, 86, 0.4);
 }
 
 @media (max-width: 850px) {
@@ -185,7 +207,7 @@
   .works-table-row {
     grid-template-columns: 1fr;
     gap: 16px;
-    padding: 24px 16px;
+    padding: 24px 20px;
   }
   .row-cell-action {
     display: flex;

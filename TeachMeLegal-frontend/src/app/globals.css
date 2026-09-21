@@ -3,26 +3,27 @@
 
 :root {
   /* Color Palette — Luxury Legal Dark Navy & Champagne Gold */
-  --primary-navy: #09131e;
-  --secondary-navy: #0d1b2a;
-  --navy-card: #0c1827;
+  --primary-navy: #060e17;
+  --secondary-navy: #0a1420;
+  --navy-card: #091320;
   --accent-gold: #cfa856;
   --accent-gold-hover: #e0bc68;
   --accent-gold-light: rgba(207, 168, 86, 0.12);
   --accent-gold-border: rgba(207, 168, 86, 0.35);
   
-  --text-main: #1e293b;
-  --text-muted: #64748b;
-  --bg-main: #ffffff;
-  --bg-card: #ffffff;
-  --bg-hero: linear-gradient(180deg, #09131e 0%, #0d1b2a 100%);
-  --bg-section-dark: #0a1422;
-  --bg-section-alt: #f8fafc;
+  --text-main: #f8fafc;
+  --text-muted: #94a3b8;
+  --bg-main: #060e17;
+  --bg-card: #091422;
+  --bg-hero: linear-gradient(180deg, #060e17 0%, #091422 100%);
+  --bg-section-dark: #050c14;
+  --bg-section-alt: #08111d;
+  --bg-section-light: #0a1420; /* Added missing variable */
   
-  --text-dark: #0f172a;
-  --text-heading: #0f172a;
-  --text-body: #334155;
-  --border-light: #e2e8f0;
+  --text-dark: #f8fafc;
+  --text-heading: #f8fafc;
+  --text-body: #cbd5e1;
+  --border-light: rgba(255, 255, 255, 0.08);
 
   /* Typography */
   --font-heading: 'Plus Jakarta Sans', 'Inter', -apple-system, sans-serif;
@@ -34,8 +35,8 @@
   --radius-lg: 24px;
   --radius-pill: 9999px;
   --shadow-sm: 0 2px 8px rgba(0,0,0,0.04);
-  --shadow: 0 8px 24px rgba(0,0,0,0.06);
-  --shadow-hover: 0 16px 36px rgba(0,0,0,0.12);
+  --shadow: 0 6px 18px rgba(0,0,0,0.5);
+  --shadow-hover: 0 20px 40px rgba(0,0,0,0.7);
   --shadow-gold: 0 6px 20px rgba(207, 168, 86, 0.3);
 }
 
@@ -51,12 +52,40 @@
   --bg-hero: linear-gradient(180deg, #060e17 0%, #091422 100%);
   --bg-section-dark: #050c14;
   --bg-section-alt: #08111d;
+  --bg-section-light: #0a1420;
   --text-dark: #f8fafc;
   --text-heading: #f8fafc;
   --text-body: #cbd5e1;
   --border-light: rgba(255, 255, 255, 0.08);
   --shadow: 0 6px 18px rgba(0,0,0,0.5);
   --shadow-hover: 0 20px 40px rgba(0,0,0,0.7);
+}
+
+.light,
+[data-theme='light'] {
+  --primary-navy: #ffffff;
+  --secondary-navy: #f8fafc;
+  --navy-card: #ffffff;
+  --accent-gold: #b38728;
+  --accent-gold-hover: #966f1e;
+  --accent-gold-light: rgba(179, 135, 40, 0.1);
+  --accent-gold-border: rgba(179, 135, 40, 0.3);
+
+  --text-main: #0f172a;
+  --text-muted: #64748b;
+  --bg-main: #f8fafc;
+  --bg-card: #ffffff;
+  --bg-hero: linear-gradient(180deg, #f1f5f9 0%, #e2e8f0 100%);
+  --bg-section-dark: #f1f5f9;
+  --bg-section-alt: #ffffff;
+  --bg-section-light: #f8fafc;
+
+  --text-dark: #0f172a;
+  --text-heading: #0f172a;
+  --text-body: #334155;
+  --border-light: rgba(15, 23, 42, 0.12);
+  --shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+  --shadow-hover: 0 20px 40px rgba(0, 0, 0, 0.12);
 }
 
 /* ── Reset ── */
@@ -66,6 +95,15 @@
   padding: 0;
 }
 
+html, body {
+  margin: 0;
+  padding: 0;
+  background-color: var(--bg-main, #060e17);
+  color: var(--text-body, #cbd5e1);
+  overflow-x: hidden;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
 html {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -73,11 +111,11 @@ html {
 
 body {
   font-family: var(--font-body);
-  background-color: var(--bg-main);
+  background-color: var(--bg-main, #060e17);
   color: var(--text-body);
   line-height: 1.65;
   font-size: 16px;
-  transition: background-color 0.3s ease, color 0.3s ease;
+  min-height: 100vh;
 }
 
 /* ── Typography ── */

@@ -5,24 +5,24 @@ import { useEffect, useState } from "react";
 import './ThemeToggle.css';
 
 const ThemeToggle = () => {
-  const { theme, setTheme } = useTheme();
+  const { theme, setTheme, resolvedTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => setMounted(true), []);
 
   if (!mounted) return <div className="theme-toggle-placeholder" />;
 
+  const currentTheme = theme === "system" ? resolvedTheme : theme;
+  const isDark = currentTheme === "dark";
+
   return (
     <button
       className="theme-toggle-btn"
-      onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-      aria-label="Toggle Dark Mode"
+      onClick={() => setTheme(isDark ? "light" : "dark")}
+      aria-label="Toggle Light / Dark Theme"
+      title={`Switch to ${isDark ? "Light" : "Dark"} Mode`}
     >
-      {theme === "dark" ? (
-        <span className="theme-icon">☀️</span>
-      ) : (
-        <span className="theme-icon">🌙</span>
-      )}
+      <span className="theme-icon">{isDark ? "☀️" : "🌙"}</span>
     </button>
   );
 };

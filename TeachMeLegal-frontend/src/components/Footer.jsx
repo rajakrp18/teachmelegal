@@ -9,7 +9,7 @@ const Footer = () => {
         <div className="footer-grid">
           <div className="footer-brand">
             <Link href="/" className="footer-logo-link">
-              <Image src="/logo.png" alt="Teach Me Legal Logo" width={50} height={50} style={{ width: 'auto', height: 'auto' }} />
+              <Image src="/logo.png" alt="Teach Me Legal Logo" width={38} height={38} className="footer-logo-img" priority />
               <span className="footer-logo-text">Teach Me <span>Legal</span></span>
             </Link>
             <p className="footer-tagline">Simplifying Law</p>
@@ -26,20 +26,8 @@ const Footer = () => {
               <li><Link href="/">Home</Link></li>
               <li><Link href="/about">About Us</Link></li>
               <li><Link href="/courses">Courses</Link></li>
-              <li><Link href="/books">Books</Link></li>
               <li><Link href="/blog">Blog</Link></li>
               <li><Link href="/contact">Contact</Link></li>
-            </ul>
-          </div>
-
-          <div className="footer-links-group">
-            <h4 className="footer-heading">Categories</h4>
-            <ul className="footer-links">
-              <li><Link href="/books?cat=Exam Material">Subject wise Notes</Link></li>
-              <li><Link href="/books?cat=Question Bank">Question Bank</Link></li>
-              <li><Link href="/books?cat=Exam Material">Exam Materials</Link></li>
-              <li><Link href="/books?cat=Revision Chart">Revision Chart</Link></li>
-              <li><Link href="/courses">Video Lectures</Link></li>
             </ul>
           </div>
 

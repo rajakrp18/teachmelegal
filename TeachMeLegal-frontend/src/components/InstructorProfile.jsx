@@ -9,7 +9,7 @@ const InstructorProfile = () => {
     <section id="about" className="instructor-section">
       <div className="container">
         <div className="instructor-grid">
-          {/* Left Column: Heading & Tag */}
+          {/* Left Column: Heading, Badge & Motto Quote Card */}
           <motion.div 
             className="instructor-left"
             initial={{ opacity: 0, x: -30 }}
@@ -17,12 +17,24 @@ const InstructorProfile = () => {
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
-            <span className="capsule-badge-outline mb-4">ABOUT TEACHMELEGAL</span>
+            <span className="capsule-badge-gold mb-3">ABOUT TEACHMELEGAL</span>
             
             <h2 className="instructor-main-heading">
               Built On Integrity,<br />
               Driven By Justice
             </h2>
+
+            {/* Authentic Personal Quote / Motto Card (Human Touch) */}
+            <div className="advocate-motto-card">
+              <span className="quote-mark">“</span>
+              <p className="motto-text">
+                Law is not just codified text on paper; it is the living shield that protects human dignity and empowers everyday citizens.
+              </p>
+              <div className="motto-author">
+                <strong>Adv. Prashant Jha</strong>
+                <span>Supreme Court of India & High Court of Delhi</span>
+              </div>
+            </div>
           </motion.div>
 
           {/* Right Column: Bio Narrative & Call-To-Action */}
@@ -38,8 +50,16 @@ const InstructorProfile = () => {
             </p>
 
             <p className="instructor-sub-description">
-              Our approach is grounded in professional discretion, exam precision, and a deep commitment to achieving deep understanding—because your legal journey deserves more than notes, it deserves mastery.
+              Our approach is grounded in courtroom precision, exam accuracy, and a deep commitment to mastery—because your legal journey deserves more than rote memorization.
             </p>
+
+            {/* Specialization Badges */}
+            <div className="specialization-pills">
+              <span className="spec-pill">⚖️ Constitutional Law</span>
+              <span className="spec-pill">🏦 Banking Statutes</span>
+              <span className="spec-pill">📜 Criminal Procedure</span>
+              <span className="spec-pill">📑 Supreme Court Practice</span>
+            </div>
 
             <div className="instructor-cta-row">
               <Link href="/about" className="btn btn-gold">

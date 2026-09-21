@@ -1,5 +1,6 @@
 "use client";
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { createPortal } from 'react-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import './PdfPreviewModal.css';
 
@@ -28,12 +29,28 @@ const SAMPLE_PAGES = [
 
 export default function PdfPreviewModal({ isOpen, onClose, book, onAddToCart }) {
   const [currentPage, setCurrentPage] = useState(0);
+  const [mounted, setMounted] = useState(false);
 
-  if (!isOpen || !book) return null;
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [isOpen]);
+
+  if (!mounted || !isOpen || !book) return null;
 
   const sample = SAMPLE_PAGES[currentPage];
 
-  return (
+  return createPortal(
     <AnimatePresence>
       <div className="pdf-modal-overlay" onClick={onClose}>
         <motion.div 
@@ -103,6 +120,7 @@ export default function PdfPreviewModal({ isOpen, onClose, book, onAddToCart }) 
           </div>
         </motion.div>
       </div>
-    </AnimatePresence>
+    </AnimatePresence>,
+    document.body
   );
 }

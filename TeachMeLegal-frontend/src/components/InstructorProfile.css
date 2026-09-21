@@ -1,205 +1,175 @@
-.instructor-profile-section {
+.instructor-section {
   padding: 100px 0;
-  background-color: var(--bg-section-light);
-  color: var(--text-dark);
+  background-color: var(--bg-main);
+  color: var(--text-body);
   position: relative;
   overflow: hidden;
+  border-top: 1px solid var(--border-light);
+  border-bottom: 1px solid var(--border-light);
 }
 
-.profile-container {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 0 24px;
-}
-
-.profile-grid {
+.instructor-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 80px;
+  grid-template-columns: 1fr 1.1fr;
+  gap: 70px;
   align-items: center;
 }
 
-.profile-content {
+.instructor-left {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
 }
 
-.section-badge-outline {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 8px 16px;
-  border: 1px solid rgba(9, 19, 30, 0.15);
-  border-radius: 100px;
-  font-size: 0.85rem;
-  font-weight: 600;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--primary-navy);
-  margin-bottom: 32px;
-}
-
-.section-badge-outline .dot {
-  width: 8px;
-  height: 8px;
-  background-color: var(--accent-gold);
-  border-radius: 50%;
-}
-
-.profile-content .section-title {
-  font-size: 3.5rem;
-  line-height: 1.1;
-  font-weight: 700;
-  color: var(--primary-navy);
-  margin-bottom: 24px;
-  letter-spacing: -0.02em;
-}
-
-.highlight-text-dark {
-  color: var(--accent-gold);
-  font-style: italic;
-}
-
-.profile-bio {
-  font-size: 1.125rem;
-  line-height: 1.7;
-  color: rgba(9, 19, 30, 0.7);
-  margin-bottom: 40px;
-  max-width: 90%;
-}
-
-.btn-outline-gold {
-  display: inline-flex;
-  align-items: center;
-  gap: 12px;
-  padding: 12px 24px;
-  border: 1px solid var(--accent-gold);
-  border-radius: 100px;
-  font-weight: 600;
-  color: var(--primary-navy);
-  text-decoration: none;
-  transition: all 0.3s ease;
-  background: transparent;
-}
-
-.btn-outline-gold:hover {
-  background: var(--accent-gold);
-  color: #fff;
-}
-
-.btn-outline-gold:hover .arrow-badge {
-  background: #fff;
-  color: var(--accent-gold);
-}
-
-.mt-4 {
+.instructor-main-heading {
+  font-size: clamp(2.4rem, 4vw, 3.6rem);
+  line-height: 1.15;
+  font-weight: 800;
+  color: var(--text-heading);
   margin-top: 16px;
+  margin-bottom: 28px;
+  letter-spacing: -0.02em;
+  font-family: var(--font-heading);
 }
 
-/* Image Visual */
-.profile-visual {
+.advocate-motto-card {
   position: relative;
-  width: 100%;
-  display: flex;
-  justify-content: flex-end;
+  background: transparent;
+  border: none;
+  padding: 8px 0 0 0;
+  margin-top: 10px;
 }
 
-.image-wrapper {
-  position: relative;
-  width: 100%;
-  max-width: 500px;
-  border-radius: 24px;
-  overflow: visible; /* To allow the badge to pop out slightly */
-}
-
-.instructor-img {
-  width: 100%;
-  height: auto;
-  border-radius: 24px;
-  object-fit: cover;
-  box-shadow: 0 20px 40px rgba(9, 19, 30, 0.1);
-  display: block;
-}
-
-.experience-badge-glass {
+.quote-mark {
   position: absolute;
-  bottom: -30px;
-  left: -30px;
-  background: rgba(255, 255, 255, 0.85);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.5);
-  border-radius: 20px;
-  padding: 24px 32px;
+  top: -10px;
+  right: 20px;
+  font-size: 4rem;
+  color: rgba(207, 168, 86, 0.15);
+  font-family: serif;
+  line-height: 1;
+  pointer-events: none;
+}
+
+.motto-text {
+  font-size: 0.98rem;
+  color: var(--text-body);
+  line-height: 1.65;
+  font-style: italic;
+  margin-bottom: 16px;
+}
+
+.motto-author {
+  display: flex;
+  flex-direction: column;
+}
+
+.motto-author strong {
+  color: var(--accent-gold);
+  font-size: 0.92rem;
+  font-weight: 700;
+}
+
+.motto-author span {
+  font-size: 0.76rem;
+  color: var(--text-muted);
+}
+
+/* Right Column */
+.instructor-right {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.instructor-description {
+  font-size: 1.1rem;
+  line-height: 1.8;
+  color: var(--text-body);
+  margin-bottom: 18px;
+}
+
+.instructor-description strong {
+  color: var(--accent-gold);
+  font-weight: 700;
+}
+
+.instructor-sub-description {
+  font-size: 1rem;
+  line-height: 1.7;
+  color: var(--text-muted);
+  margin-bottom: 28px;
+}
+
+/* Specialization Pills */
+.specialization-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 34px;
+}
+
+.spec-pill {
+  background: var(--bg-card);
+  border: 1px solid var(--border-light);
+  color: var(--text-heading);
+  padding: 6px 14px;
+  border-radius: 100px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  transition: all 0.25s ease;
+}
+
+.spec-pill:hover {
+  border-color: var(--accent-gold);
+  color: var(--accent-gold);
+  background: rgba(207, 168, 86, 0.1);
+}
+
+.instructor-cta-row {
   display: flex;
   align-items: center;
+  flex-wrap: wrap;
   gap: 16px;
-  box-shadow: 0 10px 30px rgba(9, 19, 30, 0.08);
-  z-index: 2;
-}
-
-.exp-number {
-  font-size: 3rem;
-  font-weight: 700;
-  color: var(--accent-gold);
-  line-height: 1;
-}
-
-.exp-text {
-  font-size: 0.95rem;
-  font-weight: 600;
-  line-height: 1.4;
-  color: var(--primary-navy);
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
 }
 
 /* Responsive */
 @media (max-width: 992px) {
-  .profile-grid {
+  .instructor-grid {
     grid-template-columns: 1fr;
-    gap: 60px;
+    gap: 40px;
   }
   
-  .profile-content {
+  .instructor-left {
+    align-items: center;
+    text-align: center;
+  }
+
+  .instructor-main-heading {
+    text-align: center;
+  }
+  
+  .advocate-motto-card {
+    text-align: left;
+    max-width: 550px;
+  }
+
+  .instructor-right {
     align-items: center;
     text-align: center;
   }
   
-  .profile-bio {
-    max-width: 100%;
-  }
-  
-  .profile-visual {
+  .specialization-pills {
     justify-content: center;
   }
-  
-  .image-wrapper {
-    max-width: 100%;
-  }
-  
-  .experience-badge-glass {
-    left: 20px;
-    bottom: -20px;
+
+  .instructor-cta-row {
+    justify-content: center;
   }
 }
 
 @media (max-width: 768px) {
-  .instructor-profile-section {
-    padding: 80px 0;
-  }
-  
-  .profile-content .section-title {
-    font-size: 2.5rem;
-  }
-  
-  .experience-badge-glass {
-    padding: 16px 24px;
-    left: 10px;
-  }
-  
-  .exp-number {
-    font-size: 2rem;
+  .instructor-section {
+    padding: 70px 0;
   }
 }

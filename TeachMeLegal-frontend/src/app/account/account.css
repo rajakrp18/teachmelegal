@@ -1,0 +1,308 @@
+.account-page-wrapper {
+  background: var(--bg-main);
+  min-height: 100vh;
+  color: var(--text-body);
+  padding-top: 110px;
+}
+
+.account-container {
+  padding-top: 40px;
+  padding-bottom: 90px;
+}
+
+/* User Header Card */
+.account-user-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-light);
+  border-radius: 24px;
+  padding: 36px 40px;
+  box-shadow: var(--shadow);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 40px;
+  position: relative;
+  overflow: hidden;
+}
+
+.account-user-card::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  right: -10%;
+  width: 350px;
+  height: 350px;
+  background: radial-gradient(circle, rgba(207, 168, 86, 0.12) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.user-profile-left {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+.user-avatar-bubble {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #cfa856 0%, #e0bc68 100%);
+  color: #09131e;
+  font-size: 2.2rem;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 8px 24px rgba(207, 168, 86, 0.35);
+  flex-shrink: 0;
+}
+
+.user-meta-info h1 {
+  font-size: 1.85rem;
+  font-weight: 800;
+  color: var(--text-heading);
+  margin-bottom: 4px;
+  font-family: var(--font-heading);
+}
+
+.user-email-text {
+  color: var(--text-muted);
+  font-size: 0.95rem;
+  margin-bottom: 10px;
+}
+
+.user-badges-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.student-role-badge {
+  background: rgba(207, 168, 86, 0.15);
+  border: 1px solid var(--accent-gold-border);
+  color: var(--accent-gold);
+  padding: 4px 14px;
+  border-radius: 100px;
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.btn-account-logout {
+  background: rgba(239, 68, 68, 0.12);
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  color: #f87171;
+  padding: 10px 22px;
+  border-radius: var(--radius-pill);
+  font-weight: 700;
+  font-size: 0.88rem;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.btn-account-logout:hover {
+  background: #ef4444;
+  color: #ffffff;
+  border-color: #ef4444;
+}
+
+/* Account Tabs Navigation Bar */
+.account-tabs-bar {
+  display: flex;
+  gap: 12px;
+  border-bottom: 1px solid var(--border-light);
+  margin-bottom: 36px;
+  padding-bottom: 2px;
+}
+
+.account-tab-btn {
+  background: transparent;
+  border: none;
+  padding: 12px 24px;
+  font-family: var(--font-heading);
+  font-size: 0.98rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  cursor: pointer;
+  position: relative;
+  transition: all 0.2s ease;
+  border-radius: 12px 12px 0 0;
+}
+
+.account-tab-btn:hover {
+  color: var(--accent-gold);
+}
+
+.account-tab-btn.active {
+  color: var(--accent-gold);
+  background: var(--accent-gold-light);
+}
+
+.account-tab-btn.active::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: var(--accent-gold);
+  border-radius: 2px;
+}
+
+/* Tab 1: Enrolled Courses Grid */
+.enrolled-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 28px;
+}
+
+.enrolled-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-light);
+  border-radius: 20px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  box-shadow: var(--shadow-sm);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.enrolled-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-hover);
+  border-color: var(--accent-gold-border);
+}
+
+.enrolled-card-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  margin-bottom: 16px;
+}
+
+.enrolled-book-icon {
+  font-size: 2.2rem;
+  line-height: 1;
+}
+
+.enrolled-card-title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--text-heading);
+  line-height: 1.35;
+  margin-bottom: 4px;
+  font-family: var(--font-heading);
+}
+
+.enrolled-card-tag {
+  font-size: 0.78rem;
+  color: var(--accent-gold);
+  font-weight: 600;
+}
+
+.btn-open-material {
+  width: 100%;
+  background: var(--accent-gold);
+  color: #060e17;
+  border: none;
+  padding: 11px;
+  border-radius: var(--radius-pill);
+  font-weight: 800;
+  font-size: 0.88rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-align: center;
+  margin-top: 16px;
+}
+
+.btn-open-material:hover {
+  background: var(--accent-gold-hover);
+  transform: translateY(-2px);
+}
+
+/* Tab 2: Orders Table */
+.orders-table-wrapper {
+  background: var(--bg-card);
+  border: 1px solid var(--border-light);
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+}
+
+.orders-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+.orders-table th {
+  background: var(--bg-section-dark);
+  padding: 16px 24px;
+  color: var(--text-muted);
+  font-size: 0.8rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  border-bottom: 1px solid var(--border-light);
+}
+
+.orders-table td {
+  padding: 20px 24px;
+  border-bottom: 1px solid var(--border-light);
+  color: var(--text-body);
+  font-size: 0.92rem;
+}
+
+.orders-table tr:last-child td {
+  border-bottom: none;
+}
+
+.order-id-code {
+  font-family: var(--font-geist-mono, monospace);
+  color: var(--text-heading);
+  font-weight: 700;
+}
+
+.order-status-pill {
+  display: inline-block;
+  background: rgba(34, 197, 94, 0.15);
+  color: #4ade80;
+  border: 1px solid rgba(34, 197, 94, 0.3);
+  padding: 4px 12px;
+  border-radius: 100px;
+  font-size: 0.75rem;
+  font-weight: 800;
+}
+
+/* Tab 3: Settings Box */
+.settings-card {
+  max-width: 600px;
+  background: var(--bg-card);
+  border: 1px solid var(--border-light);
+  border-radius: 20px;
+  padding: 36px;
+  box-shadow: var(--shadow-sm);
+}
+
+.settings-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+@media (max-width: 900px) {
+  .account-user-card {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 24px;
+  }
+  .enrolled-grid {
+    grid-template-columns: 1fr;
+  }
+  .account-tabs-bar {
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+}

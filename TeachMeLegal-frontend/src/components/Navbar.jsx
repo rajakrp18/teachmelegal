@@ -4,18 +4,19 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { useCart } from '../context/CartContext';
+import ThemeToggle from './ThemeToggle';
 import './Navbar.css';
 
 const Navbar = () => {
   const { totalCount, setIsCartOpen, user, logoutUser } = useCart();
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [accountDropdownOpen, setAccountDropdownOpen] = useState(false);
   const pathname = usePathname();
 
   const navLinks = [
     { name: 'Home', href: '/' },
     { name: 'About Us', href: '/about' },
     { name: 'Courses', href: '/courses' },
-    { name: 'Books', href: '/books' },
     { name: 'Blog', href: '/blog' },
     { name: 'Contact', href: '/contact' },
   ];
@@ -68,19 +69,67 @@ const Navbar = () => {
               {totalCount > 0 && <span className="cart-count-badge">{totalCount}</span>}
             </button>
 
-            {user ? (
-              <div className="user-profile-menu">
-                <Link href="/account" className="nav-account-link">My Account</Link>
-                <button onClick={logoutUser} className="btn-logout" title="Log Out">Exit</button>
-              </div>
-            ) : (
-              <div className="auth-btns desktop-only">
-                <Link href="/courses" className="btn btn-gold btn-nav-cta">
-                  <span>Start Learning</span>
-                  <span className="btn-arrow-icon">↗</span>
-                </Link>
-              </div>
-            )}
+            {/* Light/Dark Theme Toggle Button */}
+            <ThemeToggle />
+
+            {/* Account Symbol Dropdown */}
+            <div 
+              className="account-dropdown-wrapper"
+              onMouseLeave={() => setAccountDropdownOpen(false)}
+            >
+              <button
+                onClick={() => setAccountDropdownOpen(!accountDropdownOpen)}
+                onMouseEnter={() => setAccountDropdownOpen(true)}
+                className={`btn-account-trigger ${accountDropdownOpen ? 'active' : ''}`}
+                aria-label="Account options"
+                title="My Account Options"
+              >
+                <span className="account-icon-symbol">👤</span>
+                <span className="account-text desktop-only">Account</span>
+                <span className="dropdown-caret">▾</span>
+              </button>
+
+              {accountDropdownOpen && (
+                <div className="account-dropdown-menu">
+                  {user ? (
+                    <>
+                      <div className="dropdown-user-header">
+                        <span className="dropdown-user-name">{user.email?.split('@')[0] || 'Student'}</span>
+                        <span className="dropdown-user-sub">Logged in</span>
+                      </div>
+                      <div className="dropdown-divider" />
+                      <Link href="/account" className="dropdown-item" onClick={() => setAccountDropdownOpen(false)}>
+                        <span className="dropdown-icon">👤</span> My Account
+                      </Link>
+                      <button 
+                        onClick={() => { logoutUser(); setAccountDropdownOpen(false); }} 
+                        className="dropdown-item logout-item"
+                      >
+                        <span className="dropdown-icon">🚪</span> Log Out
+                      </button>
+                    </>
+                  ) : (
+                    <>
+                      <Link href="/login" className="dropdown-item" onClick={() => setAccountDropdownOpen(false)}>
+                        <span className="dropdown-icon">🔑</span> Login
+                      </Link>
+                      <Link href="/signup" className="dropdown-item highlight-item" onClick={() => setAccountDropdownOpen(false)}>
+                        <span className="dropdown-icon">✨</span> Sign Up
+                      </Link>
+                      <div className="dropdown-divider" />
+                      <Link href="/account" className="dropdown-item" onClick={() => setAccountDropdownOpen(false)}>
+                        <span className="dropdown-icon">👤</span> My Account
+                      </Link>
+                    </>
+                  )}
+                </div>
+              )}
+            </div>
+
+            <Link href="/courses" className="btn btn-gold btn-nav-cta desktop-only">
+              <span>Start Learning</span>
+              <span className="btn-arrow-icon">↗</span>
+            </Link>
 
             {/* Mobile Hamburger Button */}
             <button
@@ -111,8 +160,16 @@ const Navbar = () => {
               </Link>
             ))}
             {!user && (
-              <div className="mobile-auth-btns">
-                <Link href="/courses" className="btn btn-gold w-full" onClick={() => setMobileOpen(false)}>
+              <div className="mobile-auth-section">
+                <div className="mobile-auth-row">
+                  <Link href="/login" className="mobile-auth-btn" onClick={() => setMobileOpen(false)}>
+                    Login
+                  </Link>
+                  <Link href="/signup" className="mobile-auth-btn signup" onClick={() => setMobileOpen(false)}>
+                    Sign Up
+                  </Link>
+                </div>
+                <Link href="/courses" className="btn btn-gold w-full mt-2" onClick={() => setMobileOpen(false)}>
                   <span>Start Learning</span>
                   <span className="btn-arrow-icon">↗</span>
                 </Link>

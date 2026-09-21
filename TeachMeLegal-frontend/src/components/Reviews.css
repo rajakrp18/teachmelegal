@@ -1,10 +1,6 @@
 .reviews-section {
   padding: 90px 0;
-  background: linear-gradient(180deg, #f8fafc 0%, #f1f5f9 100%);
-}
-
-[data-theme='dark'] .reviews-section {
-  background: linear-gradient(180deg, #0b1727 0%, #0a1628 100%);
+  background: var(--bg-main);
 }
 
 .reviews-header {
@@ -16,8 +12,8 @@
 .reviews-badge {
   display: inline-block;
   background: rgba(197, 160, 89, 0.15);
-  color: #c5a059;
-  border: 1px solid rgba(197, 160, 89, 0.3);
+  color: var(--accent-gold);
+  border: 1px solid var(--accent-gold-border);
   padding: 6px 18px;
   border-radius: 20px;
   font-size: 0.82rem;
@@ -29,17 +25,13 @@
 
 .reviews-title {
   font-size: clamp(2rem, 3.5vw, 2.8rem);
-  color: #0a1628;
+  color: var(--text-heading);
   font-weight: 800;
   margin-bottom: 14px;
 }
 
-[data-theme='dark'] .reviews-title {
-  color: #ffffff;
-}
-
 .reviews-sub {
-  color: #64748b;
+  color: var(--text-muted);
   font-size: 1.05rem;
 }
 
@@ -51,26 +43,20 @@
 }
 
 .review-card {
-  background: #ffffff;
+  background: var(--bg-card);
   border-radius: 18px;
   padding: 30px;
-  border: 1px solid #e2e8f0;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04);
+  border: 1px solid var(--border-light);
+  box-shadow: var(--shadow-sm);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-[data-theme='dark'] .review-card {
-  background: #112238;
-  border-color: rgba(255, 255, 255, 0.08);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-}
-
 .review-card:hover {
   transform: translateY(-6px);
-  box-shadow: 0 20px 40px rgba(10, 22, 40, 0.1);
+  box-shadow: var(--shadow-hover);
 }
 
 .review-card-top {
@@ -95,17 +81,13 @@
 .review-author {
   font-size: 1.05rem;
   font-weight: 700;
-  color: #0a1628;
+  color: var(--text-heading);
   margin-bottom: 2px;
-}
-
-[data-theme='dark'] .review-author {
-  color: #ffffff;
 }
 
 .review-role {
   font-size: 0.8rem;
-  color: #64748b;
+  color: var(--text-muted);
 }
 
 .review-rating {
@@ -116,15 +98,11 @@
 
 .review-text {
   font-size: 0.98rem;
-  color: #475569;
+  color: var(--text-body);
   line-height: 1.7;
   margin-bottom: 24px;
   font-style: italic;
   flex: 1;
-}
-
-[data-theme='dark'] .review-text {
-  color: #cbd5e1;
 }
 
 .review-card-footer {
@@ -132,12 +110,8 @@
   align-items: center;
   justify-content: space-between;
   padding-top: 16px;
-  border-top: 1px solid #f1f5f9;
+  border-top: 1px solid var(--border-light);
   font-size: 0.8rem;
-}
-
-[data-theme='dark'] .review-card-footer {
-  border-top-color: rgba(255, 255, 255, 0.08);
 }
 
 .review-course-badge {

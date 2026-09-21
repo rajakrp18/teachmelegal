@@ -1,8 +1,8 @@
-/* About Page Main Wrapper */
 .about-page {
   padding-top: 100px;
   background: var(--bg-main);
   min-height: 100vh;
+  color: var(--text-body);
 }
 
 /* About Hero Banner */
@@ -12,13 +12,13 @@
   background: var(--bg-hero);
   text-align: center;
   overflow: hidden;
-  color: #ffffff;
+  color: var(--text-body);
 }
 
 .about-hero-bg {
   position: absolute;
   inset: 0;
-  background-image: radial-gradient(circle at 50% 0%, rgba(207, 168, 86, 0.18) 0%, transparent 70%);
+  background-image: radial-gradient(circle at 50% 0%, rgba(207, 168, 86, 0.15) 0%, transparent 70%);
   pointer-events: none;
 }
 
@@ -29,26 +29,11 @@
   margin: 0 auto;
 }
 
-.about-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  background: rgba(255, 255, 255, 0.08);
-  color: var(--accent-gold);
-  border: 1px solid var(--accent-gold-border);
-  padding: 6px 20px;
-  border-radius: var(--radius-pill);
-  font-size: 0.78rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  margin-bottom: 22px;
-}
-
 .about-hero-title {
   font-size: clamp(2.4rem, 4.8vw, 3.8rem);
-  color: #ffffff !important;
+  color: var(--text-heading) !important;
   line-height: 1.12;
+  margin-top: 16px;
   margin-bottom: 20px;
   font-family: var(--font-heading);
   font-weight: 800;
@@ -63,7 +48,7 @@
 }
 
 .about-hero-subtitle {
-  color: #cbd5e1 !important;
+  color: var(--text-muted) !important;
   font-size: 1.1rem;
   line-height: 1.8;
   max-width: 700px;
@@ -78,7 +63,7 @@
 
 .about-intro-grid {
   display: grid;
-  grid-template-columns: 0.95fr 1.05fr;
+  grid-template-columns: 0.9fr 1.1fr;
   gap: 60px;
   align-items: center;
 }
@@ -87,7 +72,7 @@
   position: relative;
   border-radius: 28px;
   overflow: hidden;
-  box-shadow: 0 25px 60px rgba(9, 19, 30, 0.2);
+  box-shadow: var(--shadow);
   border: 1px solid var(--border-light);
 }
 
@@ -96,11 +81,6 @@
   height: auto;
   object-fit: cover;
   display: block;
-  transition: transform 0.4s ease;
-}
-
-.about-photo-card:hover .about-photo {
-  transform: scale(1.02);
 }
 
 .about-court-badge {
@@ -108,17 +88,17 @@
   bottom: 20px;
   left: 20px;
   right: 20px;
-  background: rgba(9, 19, 30, 0.92);
+  background: var(--bg-card);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   border: 1px solid var(--accent-gold-border);
-  color: #ffffff;
+  color: var(--text-heading);
   padding: 14px 20px;
   border-radius: 16px;
   display: flex;
   align-items: center;
   gap: 14px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+  box-shadow: var(--shadow-sm);
 }
 
 .badge-icon {
@@ -133,10 +113,10 @@
 
 .about-court-badge span {
   font-size: 0.78rem;
-  color: #cbd5e1;
+  color: var(--text-muted);
 }
 
-/* Text Column */
+/* Text Column & Founder Letter Card */
 .section-subtitle {
   display: inline-block;
   color: var(--accent-gold);
@@ -160,42 +140,61 @@
   text-align: center;
 }
 
-.about-lead {
-  font-size: 1.1rem;
-  color: var(--text-heading);
-  line-height: 1.8;
-  margin-bottom: 18px;
-  font-weight: 500;
+.founder-letter-card {
+  background: var(--bg-card);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--border-light);
+  border-radius: 16px;
+  padding: 24px 28px;
+  margin-bottom: 30px;
+  box-shadow: var(--shadow-sm);
 }
 
-.about-body {
+.founder-quote {
+  font-size: 1.02rem;
   color: var(--text-body);
-  line-height: 1.8;
-  margin-bottom: 35px;
+  line-height: 1.75;
+  font-style: italic;
+  margin-bottom: 16px;
+}
+
+.founder-signature-block {
+  display: flex;
+  flex-direction: column;
+}
+
+.founder-signature-block strong {
+  color: var(--accent-gold);
+  font-size: 0.95rem;
+  font-weight: 700;
+}
+
+.founder-signature-block span {
+  font-size: 0.78rem;
+  color: var(--text-muted);
 }
 
 .about-stats-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 18px;
-  padding-top: 28px;
-  border-top: 1px solid var(--border-light);
+  padding-top: 10px;
 }
 
 .stat-card {
-  background: var(--bg-card);
+  background: var(--bg-section-dark);
   border: 1px solid var(--border-light);
   border-radius: 16px;
   padding: 20px 14px;
   text-align: center;
-  box-shadow: var(--shadow-sm);
   transition: all 0.25s ease;
 }
 
 .stat-card:hover {
   transform: translateY(-4px);
   border-color: var(--accent-gold);
-  box-shadow: var(--shadow);
+  background: var(--accent-gold-light);
 }
 
 .stat-number {
@@ -215,25 +214,79 @@
   line-height: 1.35;
 }
 
-/* Story Section */
-.about-story-section {
+/* TeachMeLegal Method Section */
+.about-method-section {
   padding: 90px 0;
   background: var(--bg-section-alt);
+  border-top: 1px solid var(--border-light);
+  border-bottom: 1px solid var(--border-light);
+}
+
+.section-sub-desc {
+  color: var(--text-muted);
+  font-size: 1rem;
+  margin-top: -10px;
+  margin-bottom: 44px;
+}
+
+.method-comparison-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px;
+}
+
+.method-card {
+  border-radius: 24px;
+  padding: 40px 36px;
+  background: var(--bg-card);
+  backdrop-filter: blur(16px);
+  border: 1px solid var(--border-light);
+  box-shadow: var(--shadow-sm);
+}
+
+.method-card.teachmelegal {
+  border-color: var(--accent-gold-border);
+  background: var(--bg-card);
+  box-shadow: 0 16px 40px rgba(207, 168, 86, 0.15);
+}
+
+.method-badge {
+  font-family: var(--font-heading);
+  font-size: 1.15rem;
+  font-weight: 800;
+  margin-bottom: 24px;
+}
+
+.text-muted { color: var(--text-muted); }
+.text-gold { color: var(--accent-gold); }
+
+.method-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.method-list li {
+  font-size: 0.98rem;
+  line-height: 1.65;
+  color: var(--text-body);
+}
+
+/* Story & Mission Section */
+.about-story-section {
+  padding: 90px 0;
+  background: var(--bg-main);
 }
 
 .story-wrapper {
-  max-width: 880px;
+  max-width: 900px;
   margin: 0 auto;
-  background: var(--bg-card);
-  border-radius: 28px;
-  padding: 56px 48px;
-  border: 1px solid var(--border-light);
-  box-shadow: var(--shadow);
 }
 
 .story-header {
   text-align: center;
-  margin-bottom: 34px;
+  margin-bottom: 30px;
 }
 
 .story-icon {
@@ -244,148 +297,55 @@
 
 .story-content p {
   color: var(--text-body);
-  font-size: 1.05rem;
+  font-size: 1.08rem;
   line-height: 1.85;
   margin-bottom: 22px;
-}
-
-.story-content p:last-child {
-  margin-bottom: 0;
-}
-
-/* Mission & Vision Section */
-.about-mv-section {
-  padding: 90px 0;
-  background: var(--bg-main);
+  text-align: center;
 }
 
 .about-mv-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 32px;
+  gap: 28px;
+  margin-top: 50px;
 }
 
-/* Cards without harsh top borders */
 .mv-card {
   background: var(--bg-card);
-  border-radius: 24px;
-  padding: 44px 36px;
+  backdrop-filter: blur(16px);
+  border-radius: 20px;
+  padding: 36px 30px;
   border: 1px solid var(--border-light);
   box-shadow: var(--shadow-sm);
-  transition: all 0.3s ease;
-}
-
-.mv-card:hover {
-  transform: translateY(-6px);
-  border-color: var(--accent-gold-border);
-  box-shadow: var(--shadow-hover);
 }
 
 .mv-card-header {
   display: flex;
   align-items: center;
-  gap: 14px;
-  margin-bottom: 24px;
-}
-
-.mv-icon {
-  font-size: 2.2rem;
-}
-
-.mv-title {
-  font-size: 1.6rem;
-  color: var(--text-heading);
-  font-weight: 800;
-  font-family: var(--font-heading);
-}
-
-.mv-list {
-  list-style: none;
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-}
-
-.mv-list li {
-  color: var(--text-body);
-  padding-left: 28px;
-  position: relative;
-  line-height: 1.65;
-  font-size: 1rem;
-}
-
-.mv-list li::before {
-  content: '✓';
-  position: absolute;
-  left: 0;
-  color: var(--accent-gold);
-  font-weight: 800;
-  font-size: 1.1rem;
-}
-
-.mv-text {
-  color: var(--text-body);
-  font-size: 1.05rem;
-  line-height: 1.85;
-}
-
-/* Offer Section */
-.about-offer-section {
-  padding: 90px 0;
-  background: var(--bg-section-alt);
-}
-
-.center-header {
-  text-align: center;
-  margin-bottom: 50px;
-}
-
-.offer-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 24px;
-}
-
-.offer-card {
-  background: var(--bg-card);
-  border-radius: 24px;
-  padding: 36px 28px;
-  border: 1px solid var(--border-light);
-  transition: all 0.3s ease;
-  text-align: center;
-  box-shadow: var(--shadow-sm);
-}
-
-.offer-card:hover {
-  transform: translateY(-6px);
-  border-color: var(--accent-gold-border);
-  box-shadow: var(--shadow);
-}
-
-.offer-icon-wrapper {
-  font-size: 2.5rem;
+  gap: 12px;
   margin-bottom: 16px;
 }
 
-.offer-title {
-  font-size: 1.18rem;
+.mv-icon { font-size: 2rem; }
+
+.mv-title {
+  font-size: 1.4rem;
   color: var(--text-heading);
-  font-weight: 700;
-  margin-bottom: 10px;
+  font-weight: 800;
   font-family: var(--font-heading);
 }
 
-.offer-desc {
-  font-size: 0.92rem;
+.mv-text {
   color: var(--text-muted);
-  line-height: 1.65;
+  font-size: 0.98rem;
+  line-height: 1.75;
 }
 
 /* Discount Banner */
 .discount-cta-banner {
-  background: linear-gradient(160deg, #09131e 0%, #0d1b2a 100%);
+  background: var(--bg-card);
   padding: 70px 0;
-  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  border-top: 1px solid var(--border-light);
 }
 
 .discount-cta-inner {
@@ -396,43 +356,29 @@
   flex-wrap: wrap;
 }
 
-.cta-badge {
-  display: inline-block;
-  background: rgba(255, 255, 255, 0.08);
-  color: var(--accent-gold);
-  border: 1px solid var(--accent-gold-border);
-  padding: 5px 16px;
-  border-radius: var(--radius-pill);
-  font-size: 0.78rem;
-  font-weight: 800;
-  margin-bottom: 12px;
-}
-
 .cta-title {
   font-size: 2.2rem;
-  color: #ffffff;
+  color: var(--text-heading);
   font-weight: 800;
+  margin-top: 10px;
   margin-bottom: 8px;
   font-family: var(--font-heading);
 }
 
 .cta-subtitle {
-  color: #cbd5e1;
+  color: var(--text-muted);
   font-size: 1.05rem;
   max-width: 600px;
 }
 
-/* Mobile Responsive */
 @media (max-width: 900px) {
   .about-intro-grid,
+  .method-comparison-grid,
   .about-mv-grid {
     grid-template-columns: 1fr;
   }
   .discount-cta-inner {
     flex-direction: column;
     text-align: center;
-  }
-  .story-wrapper {
-    padding: 36px 24px;
   }
 }

@@ -1,6 +1,6 @@
 .yt-section {
   padding: 90px 0;
-  background: var(--primary-navy);
+  background: var(--bg-main);
   position: relative;
   overflow: hidden;
 }
@@ -41,7 +41,7 @@
 
 .yt-title {
   font-size: 2.2rem;
-  color: #fff;
+  color: var(--text-heading);
   margin-bottom: 12px;
 }
 
@@ -121,18 +121,19 @@
 }
 
 .yt-card {
-  background: rgba(255,255,255,0.05);
+  background: var(--bg-card);
   border-radius: 14px;
   overflow: hidden;
   cursor: pointer;
   transition: var(--transition);
-  border: 1px solid rgba(255,255,255,0.08);
+  border: 1px solid var(--border-light);
+  box-shadow: var(--shadow-sm);
 }
 
 .yt-card:hover {
   transform: translateY(-6px);
-  background: rgba(255,255,255,0.1);
-  border-color: rgba(197, 160, 89, 0.4);
+  box-shadow: var(--shadow-hover);
+  border-color: var(--accent-gold-border);
 }
 
 .yt-thumbnail {
@@ -197,7 +198,7 @@
 }
 
 .yt-card-title {
-  color: #fff;
+  color: var(--text-heading);
   font-size: 0.95rem;
   line-height: 1.4;
   margin-bottom: 10px;

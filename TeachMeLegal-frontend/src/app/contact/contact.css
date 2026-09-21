@@ -1,31 +1,80 @@
-.contact-hero {
-  padding-top: 130px;
-  padding-bottom: 50px;
-  background: linear-gradient(135deg, var(--primary-navy) 0%, var(--secondary-navy) 100%);
-  position: relative;
-  overflow: hidden;
+.contact-page-wrapper {
+  background: var(--bg-main);
+  min-height: 100vh;
+  color: var(--text-body);
 }
 
-.contact-hero::after {
+.contact-hero {
+  padding-top: 140px;
+  padding-bottom: 75px;
+  background: var(--bg-hero);
+  position: relative;
+  overflow: hidden;
+  text-align: center;
+  border-bottom: 1px solid var(--border-light);
+}
+
+.contact-hero::before {
   content: '';
   position: absolute;
-  inset: 0;
-  background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23c5a059' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  top: -20%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 700px;
+  height: 500px;
+  background: radial-gradient(ellipse 60% 50% at 50% 0%, rgba(207, 168, 86, 0.16) 0%, rgba(6, 14, 23, 0) 70%);
   pointer-events: none;
 }
 
-.contact-hero-title {
-  color: #fff;
-  font-size: 3rem;
+.contact-hero-container {
+  max-width: 900px;
+  margin: 0 auto;
   position: relative;
-  z-index: 1;
+  z-index: 10;
+  padding: 0 24px;
 }
 
-.map-container {
-  width: 100%;
+.contact-hero-title {
+  color: var(--text-heading) !important;
+  font-size: clamp(2.4rem, 5vw, 4rem);
+  font-weight: 800;
+  margin-top: 16px;
+  margin-bottom: 20px;
+  line-height: 1.15;
+  letter-spacing: -0.025em;
+  font-family: var(--font-heading);
+}
+
+.contact-hero-title .gold-text {
+  color: var(--accent-gold);
+  background: linear-gradient(135deg, #cfa856 0%, #f3d789 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.contact-hero-subtitle {
+  color: var(--text-muted) !important;
+  font-size: 1.12rem;
+  line-height: 1.75;
+  max-width: 740px;
+  margin: 0 auto;
+  font-weight: 400;
+}
+
+.map-section {
+  padding: 0 0 90px;
+  background: var(--bg-main);
+}
+
+.map-wrapper {
+  border-radius: 24px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
   line-height: 0;
 }
 
-.map-container iframe {
+.map-wrapper iframe {
   display: block;
+  filter: grayscale(0.2) contrast(1.1);
 }
