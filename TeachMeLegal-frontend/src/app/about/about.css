@@ -382,3 +382,44 @@
     text-align: center;
   }
 }
+
+@media (max-width: 600px) {
+  .about-stats-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+  }
+  .stat-card {
+    padding: 12px 6px;
+  }
+  .stat-number {
+    font-size: 1.35rem;
+  }
+  .stat-label {
+    font-size: 0.7rem;
+    line-height: 1.25;
+  }
+  .founder-letter-card {
+    padding: 18px 20px;
+  }
+}
+
+@media (max-width: 420px) {
+  .about-stats-grid {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+  .stat-card {
+    padding: 14px 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    text-align: left;
+  }
+  .stat-number {
+    margin-bottom: 0;
+    font-size: 1.6rem;
+  }
+  .stat-label {
+    font-size: 0.82rem;
+  }
+}
