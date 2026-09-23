@@ -30,8 +30,8 @@ const Navbar = () => {
             <Image
               src="/logo.png"
               alt="Teach Me Legal Logo"
-              width={38}
-              height={38}
+              width={64}
+              height={64}
               className="logo-img"
               priority
             />

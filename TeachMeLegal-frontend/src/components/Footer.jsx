@@ -8,15 +8,26 @@ const Footer = () => {
       <div className="container">
         <div className="footer-grid">
           <div className="footer-brand">
-            <Link href="/" className="footer-logo-link">
-              <Image src="/logo.png" alt="Teach Me Legal Logo" width={38} height={38} className="footer-logo-img" priority />
-              <span className="footer-logo-text">Teach Me <span>Legal</span></span>
+            <Link href="/" className="footer-logo-box" aria-label="Teach Me Legal Home">
+              <Image
+                src="/logo.png"
+                alt="Teach Me Legal Logo"
+                width={120}
+                height={120}
+                className="footer-logo-img"
+                priority
+              />
             </Link>
-            <p className="footer-tagline">Simplifying Law</p>
-            <div className="footer-contact-info">
-              <p>📍 Dwarka, Delhi - 110059</p>
-              <p>📞 +91 94725 68264</p>
-              <p>✉️ info@teachmelegal.com</p>
+            <div className="footer-brand-details">
+              <Link href="/" className="footer-logo-text">
+                Teach Me <span>Legal</span>
+              </Link>
+              <p className="footer-tagline">Simplifying Law</p>
+              <div className="footer-contact-info">
+                <p><span className="footer-icon">📍</span> Dwarka, Delhi - 110059</p>
+                <p><span className="footer-icon">📞</span> +91 94725 68264</p>
+                <p><span className="footer-icon">✉️</span> info@teachmelegal.com</p>
+              </div>
             </div>
           </div>
           
