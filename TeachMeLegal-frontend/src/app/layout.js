@@ -17,6 +17,11 @@ const geistMono = Geist_Mono({
 export const metadata = {
   title: "Teach Me Legal | Simplifying Law",
   description: "India's premier legal learning platform with Advocate Prashant Jha.",
+  icons: {
+    icon: "/favicon.ico",
+    shortcut: "/favicon.ico",
+    apple: "/icon.png",
+  },
 };
 
 export default function RootLayout({ children }) {
