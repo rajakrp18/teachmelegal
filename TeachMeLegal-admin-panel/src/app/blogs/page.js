@@ -8,10 +8,12 @@ export default function AdminBlogsPage() {
   const [categoryFilter, setCategoryFilter] = useState('ALL');
   const [loading, setLoading] = useState(true);
 
+  const API_URL = 'http://localhost:5000/api/admin';
+
   const fetchBlogs = async () => {
     setLoading(true);
     try {
-      const res = await fetch('/api/admin/blogs');
+      const res = await fetch(`${API_URL}/blogs`);
       const data = await res.json();
       if (data.success) {
         setBlogs(data.posts || []);
@@ -30,7 +32,7 @@ export default function AdminBlogsPage() {
   const handleDelete = async (id, title) => {
     if (!confirm(`Are you sure you want to delete "${title}"?`)) return;
     try {
-      const res = await fetch(`/api/admin/blogs/${id}`, { method: 'DELETE' });
+      const res = await fetch(`${API_URL}/blogs/${id}`, { method: 'DELETE' });
       const data = await res.json();
       if (data.success) {
         setBlogs(blogs.filter(b => b.id !== id));
@@ -44,7 +46,7 @@ export default function AdminBlogsPage() {
 
   const handleTogglePublish = async (post) => {
     try {
-      const res = await fetch(`/api/admin/blogs/${post.id}`, {
+      const res = await fetch(`${API_URL}/blogs/${post.id}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ published: !post.published })
@@ -100,7 +102,7 @@ export default function AdminBlogsPage() {
               </select>
             </div>
 
-            <span style={{ fontSize: '0.88rem', color: '#64748b' }}>
+            <span style={{ fontSize: '0.88rem', color: 'var(--admin-text-sub)' }}>
               Showing {filteredBlogs.length} of {blogs.length} articles
             </span>
           </div>
@@ -129,9 +131,9 @@ export default function AdminBlogsPage() {
                 ) : (
                   filteredBlogs.map((post) => (
                     <tr key={post.id}>
-                      <td style={{ fontWeight: 600, color: '#0f172a', maxWidth: '320px' }}>
+                      <td style={{ fontWeight: 600, color: 'var(--admin-primary)', maxWidth: '320px' }}>
                         <div>{post.title}</div>
-                        <div style={{ fontSize: '0.78rem', color: '#64748b', fontWeight: 400, marginTop: '4px' }}>
+                        <div style={{ fontSize: '0.78rem', color: 'var(--admin-text-sub)', fontWeight: 400, marginTop: '4px' }}>
                           /{post.slug}
                         </div>
                       </td>
@@ -140,7 +142,7 @@ export default function AdminBlogsPage() {
                           {post.category}
                         </span>
                       </td>
-                      <td style={{ color: '#64748b' }}>{post.date}</td>
+                      <td style={{ color: 'var(--admin-text-sub)' }}>{post.date}</td>
                       <td><strong>{post.views || 0}</strong></td>
                       <td>
                         <button

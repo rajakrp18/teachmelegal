@@ -84,7 +84,7 @@ const BlogList = () => {
   useEffect(() => {
     async function loadBlogs() {
       try {
-        const res = await fetch('/api/admin/blogs');
+        const res = await fetch('http://localhost:5000/api/blogs');
         const data = await res.json();
         if (data.success && data.posts && data.posts.length > 0) {
           setPosts(data.posts.filter(p => p.published));

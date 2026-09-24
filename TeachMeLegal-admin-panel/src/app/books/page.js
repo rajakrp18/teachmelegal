@@ -142,16 +142,16 @@ export default function AdminBooksPage() {
                 ) : (
                   books.map((book) => (
                     <tr key={book.id}>
-                      <td style={{ fontWeight: 600, color: '#0f172a' }}>
+                      <td style={{ fontWeight: 600, color: 'var(--admin-primary)' }}>
                         <span style={{ marginRight: '8px' }}>{book.icon}</span>
                         {book.title}
                       </td>
                       <td>
-                        <span className="badge" style={{ background: '#f8fafc', border: '1px solid #cbd5e1' }}>
+                        <span className="badge" style={{ background: 'var(--admin-body-bg)', border: '1px solid var(--admin-border)', color: 'var(--admin-text-main)' }}>
                           {book.category}
                         </span>
                       </td>
-                      <td style={{ textDecoration: 'line-through', color: '#94a3b8' }}>{book.originalPrice}</td>
+                      <td style={{ textDecoration: 'line-through', color: 'var(--admin-text-sub)' }}>{book.originalPrice}</td>
                       <td><strong style={{ color: '#047857' }}>{book.salePrice}</strong></td>
                       <td>
                         <span className="badge" style={{ background: `${book.badgeColor}20`, color: book.badgeColor }}>

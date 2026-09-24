@@ -46,6 +46,17 @@ model Book {
   active        Boolean  @default(true)
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
+  reviews       BookReview[]
+}
+
+model BookReview {
+  id        String   @id @default(cuid())
+  bookId    String
+  book      Book     @relation(fields: [bookId], references: [id])
+  userName  String
+  rating    Int
+  comment   String
+  createdAt DateTime @default(now())
 }
 
 model BlogPost {

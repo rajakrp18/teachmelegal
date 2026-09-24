@@ -6,13 +6,21 @@ export default function AdminDashboardPage() {
   const [stats, setStats] = useState(null);
   const [blogs, setBlogs] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [searchTerm, setSearchTerm] = useState('');
+
+  const filteredBlogs = blogs.filter(post => 
+    post.title?.toLowerCase().includes(searchTerm.toLowerCase()) || 
+    post.author?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    post.category?.toLowerCase().includes(searchTerm.toLowerCase())
+  );
 
   useEffect(() => {
     async function loadData() {
       try {
+        const API_URL = 'http://localhost:5000/api/admin';
         const [analyticsRes, blogsRes] = await Promise.all([
-          fetch('/api/admin/analytics'),
-          fetch('/api/admin/blogs')
+          fetch(`${API_URL}/analytics`),
+          fetch(`${API_URL}/blogs`)
         ]);
         const analyticsData = await analyticsRes.json();
         const blogsData = await blogsRes.json();
@@ -33,9 +41,6 @@ export default function AdminDashboardPage() {
       <header className="admin-header">
         <h1 className="admin-header-title">Dashboard Overview</h1>
         <div className="admin-header-actions">
-          <Link href="/blogs/new" className="admin-btn admin-btn-primary">
-            ➕ Write New Blog
-          </Link>
         </div>
       </header>
 
@@ -79,15 +84,25 @@ export default function AdminDashboardPage() {
         <div className="admin-card">
           <div className="admin-card-header">
             <h2 className="admin-card-title">Recent Legal Blog Posts</h2>
-            <Link href="/blogs" className="admin-btn admin-btn-secondary" style={{ fontSize: '0.82rem' }}>
-              View All Posts →
-            </Link>
+            <div style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
+              <input 
+                type="text" 
+                placeholder="Search posts..." 
+                className="admin-search-input"
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+              />
+              <Link href="/blogs" className="admin-btn admin-btn-secondary" style={{ fontSize: '0.82rem' }}>
+                View All Posts →
+              </Link>
+            </div>
           </div>
 
           <div className="admin-table-wrapper">
             <table className="admin-table">
               <thead>
                 <tr>
+                  <th>SL No.</th>
                   <th>Title</th>
                   <th>Category</th>
                   <th>Author</th>
@@ -100,23 +115,24 @@ export default function AdminDashboardPage() {
               <tbody>
                 {loading ? (
                   <tr>
-                    <td colSpan="7" style={{ textAlign: 'center', padding: '30px' }}>Loading articles...</td>
+                    <td colSpan="8" style={{ textAlign: 'center', padding: '30px' }}>Loading articles...</td>
                   </tr>
-                ) : blogs.length === 0 ? (
+                ) : filteredBlogs.length === 0 ? (
                   <tr>
-                    <td colSpan="7" style={{ textAlign: 'center', padding: '30px' }}>No blog posts found.</td>
+                    <td colSpan="8" style={{ textAlign: 'center', padding: '30px' }}>No blog posts found.</td>
                   </tr>
                 ) : (
-                  blogs.slice(0, 5).map((post) => (
+                  filteredBlogs.slice(0, 5).map((post, index) => (
                     <tr key={post.id}>
-                      <td style={{ fontWeight: 600, color: '#0f172a' }}>{post.title}</td>
+                      <td style={{ color: 'var(--admin-text-sub)', fontWeight: 600 }}>#{index + 1}</td>
+                      <td style={{ fontWeight: 600, color: 'var(--admin-primary)' }}>{post.title}</td>
                       <td>
                         <span className="badge" style={{ background: `${post.categoryColor}15`, color: post.categoryColor }}>
                           {post.category}
                         </span>
                       </td>
                       <td>{post.author}</td>
-                      <td style={{ color: '#64748b' }}>{post.date}</td>
+                      <td style={{ color: 'var(--admin-text-sub)' }}>{post.date}</td>
                       <td><strong>{post.views || 0}</strong></td>
                       <td>
                         <span className={`badge ${post.published ? 'badge-published' : 'badge-draft'}`}>

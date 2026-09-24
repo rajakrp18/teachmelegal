@@ -1,5 +1,6 @@
 "use client";
 import React, { useState, useEffect } from 'react';
+import Link from 'next/link';
 import Navbar from '../../components/Navbar';
 import Footer from '../../components/Footer';
 import { useCart } from '../../context/CartContext';
@@ -147,7 +148,7 @@ export default function BooksPage() {
   useEffect(() => {
     async function loadBooks() {
       try {
-        const res = await fetch('/api/admin/books');
+        const res = await fetch('http://localhost:3001/api/admin/books');
         const data = await res.json();
         if (data.success && data.books && data.books.length > 0) {
           setBooksList(data.books.filter(b => b.active !== false));
@@ -279,11 +280,14 @@ export default function BooksPage() {
                       <div key={book.id} className="product-card">
                         <div className="card-top-image">
                           {book.badge && <span className="sale-ribbon">{book.badge}</span>}
-                          <img
-                            src={book.image}
-                            alt={book.title}
-                            className="book-cover-image"
-                          />
+                          <Link href={`/books/${book.id}`}>
+                            <img
+                              src={book.image}
+                              alt={book.title}
+                              className="book-cover-image"
+                              style={{ cursor: 'pointer' }}
+                            />
+                          </Link>
                           {/* Hover action overlay */}
                           <div className="card-hover-actions">
                             <button
@@ -310,9 +314,11 @@ export default function BooksPage() {
                             <span className="sale-price">{book.salePrice}</span>
                           </div>
 
-                          <h3 className="product-title" title={book.title}>
-                            {book.title}
-                          </h3>
+                          <Link href={`/books/${book.id}`} style={{ textDecoration: 'none' }}>
+                            <h3 className="product-title" title={book.title} style={{ cursor: 'pointer' }}>
+                              {book.title}
+                            </h3>
+                          </Link>
 
                           <button
                             className={`btn-add-cart-main ${isAdded ? 'added' : ''}`}

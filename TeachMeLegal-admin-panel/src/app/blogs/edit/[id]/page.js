@@ -26,7 +26,7 @@ export default function EditBlogPage({ params }) {
   useEffect(() => {
     async function fetchPost() {
       try {
-        const res = await fetch(`/api/admin/blogs/${id}`);
+        const res = await fetch(`http://localhost:5000/api/admin/blogs/${id}`);
         const data = await res.json();
         if (data.success && data.post) {
           setForm(data.post);
@@ -48,7 +48,7 @@ export default function EditBlogPage({ params }) {
     setError('');
 
     try {
-      const res = await fetch(`/api/admin/blogs/${id}`, {
+      const res = await fetch(`http://localhost:5000/api/admin/blogs/${id}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(form)

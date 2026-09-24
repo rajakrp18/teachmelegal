@@ -140,7 +140,7 @@ export default function AdminCoursesPage() {
                 ) : (
                   courses.map((course) => (
                     <tr key={course.id}>
-                      <td style={{ fontWeight: 600, color: '#0f172a' }}>{course.title}</td>
+                      <td style={{ fontWeight: 600, color: 'var(--admin-primary)' }}>{course.title}</td>
                       <td>
                         <span className="badge" style={{ background: '#eff6ff', color: '#3b82f6' }}>
                           {course.category}

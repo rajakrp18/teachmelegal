@@ -33,7 +33,7 @@ const BlogPreview = () => {
   useEffect(() => {
     async function loadLatestPosts() {
       try {
-        const res = await fetch('/api/admin/blogs');
+        const res = await fetch('http://localhost:5000/api/blogs');
         const data = await res.json();
         if (data.success && data.posts && data.posts.length > 0) {
           const mapped = data.posts.slice(0, 4).map(p => ({
