@@ -10,7 +10,7 @@ export default function NewBlogPage() {
     title: '',
     slug: '',
     category: 'Banking Law',
-    categoryColor: '#3b82f6',
+    categoryColor: '#cfa856',
     author: 'Advocate Prashant Jha',
     readTime: '5 min read',
     excerpt: '',
@@ -19,6 +19,7 @@ export default function NewBlogPage() {
   });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  const [showPreviewModal, setShowPreviewModal] = useState(false);
 
   const handleTitleChange = (e) => {
     const title = e.target.value;
@@ -62,36 +63,71 @@ export default function NewBlogPage() {
   return (
     <>
       <header className="admin-header">
-        <h1 className="admin-header-title">Write New Legal Blog Article</h1>
+        <div>
+          <h1 className="admin-header-title">Write New Legal Blog Article</h1>
+          <p className="admin-header-subtitle">
+            Create authoritative statutory analysis, case law briefs, and judicial masterclasses.
+          </p>
+        </div>
         <div className="admin-header-actions">
+          <button
+            type="button"
+            onClick={() => setShowPreviewModal(true)}
+            className="admin-btn admin-btn-secondary"
+            title="Preview how this article looks to students on TeachMeLegal"
+          >
+            👁️ Live Student Preview
+          </button>
           <Link href="/blogs" className="admin-btn admin-btn-secondary">
             ← Cancel
           </Link>
+          <button 
+            type="button" 
+            onClick={handleSubmit} 
+            className="admin-btn admin-btn-primary" 
+            disabled={loading}
+          >
+            {loading ? 'Publishing...' : '🚀 Save & Publish'}
+          </button>
         </div>
       </header>
 
-      <main className="admin-content" style={{ maxWidth: '960px' }}>
+      {/* Main Full-Width Content Canvas */}
+      <main className="admin-content" style={{ width: '100%', maxWidth: '100%' }}>
         {error && (
-          <div style={{ background: '#fef2f2', border: '1px solid #fca5a5', color: '#dc2626', padding: '14px 20px', borderRadius: '10px', marginBottom: '24px' }}>
+          <div style={{ background: '#fef2f2', border: '1px solid #fca5a5', color: '#dc2626', padding: '14px 20px', borderRadius: '12px', marginBottom: '8px' }}>
             ⚠️ {error}
           </div>
         )}
 
         <form onSubmit={handleSubmit}>
-          <div className="admin-card" style={{ padding: '32px' }}>
+          {/* Metadata Card */}
+          <div className="admin-card" style={{ marginBottom: '24px' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px', borderBottom: '1px solid var(--admin-border)', paddingBottom: '14px' }}>
+              <h2 className="admin-card-title" style={{ fontSize: '1.15rem' }}>
+                Article Metadata & Classification
+              </h2>
+              <span style={{ fontSize: '0.82rem', color: 'var(--admin-gold)', fontWeight: 700 }}>
+                Step 1: Set Title & Details
+              </span>
+            </div>
+
+            {/* Title */}
             <div className="admin-form-group">
               <label className="admin-label">Blog Title *</label>
               <input
                 type="text"
                 value={form.title}
                 onChange={handleTitleChange}
-                placeholder="e.g. Overview of Negotiable Instruments Act, 1881"
+                placeholder="e.g. Overview of Negotiable Instruments Act, 1881: Legal Analysis & Supreme Court Jurisprudence"
                 className="admin-input"
+                style={{ fontSize: '1.05rem', fontWeight: 600 }}
                 required
               />
             </div>
 
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px' }}>
+            {/* 4-Column Metadata Grid */}
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '18px' }}>
               <div className="admin-form-group">
                 <label className="admin-label">URL Slug</label>
                 <input
@@ -111,6 +147,7 @@ export default function NewBlogPage() {
                     value={form.category}
                     onChange={(e) => setForm({ ...form, category: e.target.value })}
                     className="admin-select"
+                    style={{ flex: 1, borderRadius: '12px' }}
                   >
                     <option value="Banking Law">Banking Law</option>
                     <option value="Constitutional Law">Constitutional Law</option>
@@ -122,14 +159,12 @@ export default function NewBlogPage() {
                     type="color"
                     value={form.categoryColor}
                     onChange={(e) => setForm({ ...form, categoryColor: e.target.value })}
-                    style={{ width: '48px', height: '48px', border: 'none', borderRadius: '8px', cursor: 'pointer' }}
+                    style={{ width: '42px', height: '42px', border: 'none', borderRadius: '10px', cursor: 'pointer' }}
                     title="Category Badge Color"
                   />
                 </div>
               </div>
-            </div>
 
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px' }}>
               <div className="admin-form-group">
                 <label className="admin-label">Author Name</label>
                 <input
@@ -152,43 +187,129 @@ export default function NewBlogPage() {
               </div>
             </div>
 
-            <div className="admin-form-group">
+            {/* Short Excerpt */}
+            <div className="admin-form-group" style={{ marginBottom: 0 }}>
               <label className="admin-label">Short Excerpt / Summary</label>
               <textarea
                 value={form.excerpt}
                 onChange={(e) => setForm({ ...form, excerpt: e.target.value })}
-                placeholder="A quick 1-2 sentence overview of what this article covers..."
+                placeholder="A quick 1-2 sentence overview of statutory provisions and courtroom ratio discussed in this article..."
                 className="admin-textarea"
-                style={{ minHeight: '80px' }}
+                style={{ minHeight: '68px' }}
               />
             </div>
+          </div>
 
-            <div className="admin-form-group">
-              <label className="admin-label">Article Content (WordPress Visual Editor) *</label>
-              <WordPressEditor
-                value={form.content}
-                onChange={(html) => setForm(prev => ({ ...prev, content: html }))}
-              />
+          {/* Full Canvas Editor Card */}
+          <div className="admin-card">
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px', flexWrap: 'wrap', gap: '12px' }}>
+              <div>
+                <h2 className="admin-card-title" style={{ fontSize: '1.15rem' }}>
+                  Article Content Canvas
+                </h2>
+                <span style={{ fontSize: '0.84rem', color: 'var(--admin-text-sub)' }}>
+                  Use <strong>⚡ Split View</strong> to write on the left while observing the real-time student layout on the right.
+                </span>
+              </div>
             </div>
 
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginTop: '30px', paddingTop: '20px', borderTop: '1px solid #e2e8f0' }}>
-              <label style={{ display: 'flex', alignItems: 'center', gap: '10px', cursor: 'pointer', fontWeight: 600 }}>
+            <WordPressEditor
+              value={form.content}
+              onChange={(html) => setForm(prev => ({ ...prev, content: html }))}
+            />
+
+            {/* Bottom Bar */}
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginTop: '28px', paddingTop: '20px', borderTop: '1px solid var(--admin-border)', flexWrap: 'wrap', gap: '16px' }}>
+              <label style={{ display: 'flex', alignItems: 'center', gap: '10px', cursor: 'pointer', fontWeight: 700, fontSize: '0.92rem' }}>
                 <input
                   type="checkbox"
                   checked={form.published}
                   onChange={(e) => setForm({ ...form, published: e.target.checked })}
-                  style={{ width: '18px', height: '18px', accentColor: '#c5a059' }}
+                  style={{ width: '18px', height: '18px', accentColor: '#cfa856', cursor: 'pointer' }}
                 />
-                <span>Publish Immediately</span>
+                <span>Publish Immediately on teachmelegal.com</span>
               </label>
 
-              <button type="submit" className="admin-btn admin-btn-primary" disabled={loading} style={{ padding: '12px 30px' }}>
-                {loading ? 'Publishing...' : '🚀 Save & Publish Post'}
-              </button>
+              <div style={{ display: 'flex', gap: '12px' }}>
+                <button
+                  type="button"
+                  onClick={() => setShowPreviewModal(true)}
+                  className="admin-btn admin-btn-secondary"
+                >
+                  👁️ Live Student Preview
+                </button>
+                <button 
+                  type="submit" 
+                  className="admin-btn admin-btn-primary" 
+                  disabled={loading} 
+                  style={{ padding: '12px 34px' }}
+                >
+                  {loading ? 'Publishing...' : '🚀 Save & Publish Post'}
+                </button>
+              </div>
             </div>
           </div>
         </form>
       </main>
+
+      {/* Full Student Preview Modal */}
+      {showPreviewModal && (
+        <div className="admin-modal-backdrop" onClick={() => setShowPreviewModal(false)}>
+          <div 
+            className="admin-modal-card" 
+            style={{ maxWidth: '960px', width: '95%', maxHeight: '92vh', padding: '36px' }}
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderBottom: '1px solid var(--admin-border)', paddingBottom: '16px', marginBottom: '24px' }}>
+              <div>
+                <span className="badge badge-exam" style={{ background: `${form.categoryColor || '#cfa856'}20`, color: form.categoryColor || '#cfa856' }}>
+                  {form.category}
+                </span>
+                <span style={{ fontSize: '0.82rem', color: 'var(--admin-text-sub)', marginLeft: '12px' }}>
+                  Simulated Student Reading Mode • {form.readTime}
+                </span>
+              </div>
+              <button 
+                type="button"
+                onClick={() => setShowPreviewModal(false)}
+                className="admin-modal-close"
+              >
+                ✕
+              </button>
+            </div>
+
+            <article className="post-content">
+              <h1 style={{ fontSize: '2.1rem', fontWeight: 800, lineHeight: 1.25, margin: '0 0 16px', color: 'var(--admin-text-main)' }}>
+                {form.title || 'Untitled Legal Article'}
+              </h1>
+              
+              <div style={{ display: 'flex', gap: '18px', color: 'var(--admin-text-sub)', fontSize: '0.88rem', borderBottom: '1px solid var(--admin-border)', paddingBottom: '16px', marginBottom: '24px' }}>
+                <span>✍️ {form.author || 'Adv. Prashant Jha'}</span>
+                <span>📅 Published Today</span>
+                <span>⏱️ {form.readTime}</span>
+              </div>
+
+              {form.excerpt && (
+                <div style={{ background: 'rgba(207, 168, 86, 0.08)', borderLeft: '3.5px solid var(--admin-gold)', padding: '14px 20px', borderRadius: '0 10px 10px 0', marginBottom: '28px', fontStyle: 'italic', fontSize: '1.02rem' }}>
+                  {form.excerpt}
+                </div>
+              )}
+
+              <div dangerouslySetInnerHTML={{ __html: form.content || '<p style="color: #94a3b8; font-style: italic;">No content written yet.</p>' }} />
+            </article>
+
+            <div style={{ marginTop: '28px', textAlign: 'right', borderTop: '1px solid var(--admin-border)', paddingTop: '16px' }}>
+              <button 
+                type="button"
+                onClick={() => setShowPreviewModal(false)}
+                className="admin-btn admin-btn-primary"
+              >
+                ← Back to Editing Canvas
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </>
   );
 }
