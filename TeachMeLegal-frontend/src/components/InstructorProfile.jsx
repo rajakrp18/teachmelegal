@@ -2,6 +2,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
+import { IconArrowUpRight, IconPlay, IconScales, IconLandmark, IconDocument, IconGavel } from './Icons';
 import './InstructorProfile.css';
 
 const InstructorProfile = () => {
@@ -55,16 +56,26 @@ const InstructorProfile = () => {
 
             {/* Specialization Badges */}
             <div className="specialization-pills">
-              <span className="spec-pill">⚖️ Constitutional Law</span>
-              <span className="spec-pill">🏦 Banking Statutes</span>
-              <span className="spec-pill">📜 Criminal Procedure</span>
-              <span className="spec-pill">📑 Supreme Court Practice</span>
+              <span className="spec-pill">
+                <IconScales size={14} /> Constitutional Law
+              </span>
+              <span className="spec-pill">
+                <IconLandmark size={14} /> Banking Statutes
+              </span>
+              <span className="spec-pill">
+                <IconDocument size={14} /> Criminal Procedure
+              </span>
+              <span className="spec-pill">
+                <IconGavel size={14} /> Supreme Court Practice
+              </span>
             </div>
 
             <div className="instructor-cta-row">
               <Link href="/about" className="btn btn-gold">
                 <span>Learn More About Us</span>
-                <span className="btn-arrow-icon">↗</span>
+                <span className="btn-arrow-icon">
+                  <IconArrowUpRight size={13} />
+                </span>
               </Link>
 
               <a 
@@ -72,8 +83,10 @@ const InstructorProfile = () => {
                 target="_blank" 
                 rel="noopener noreferrer" 
                 className="btn btn-outline"
+                style={{ display: 'inline-flex', alignItems: 'center', gap: '8px' }}
               >
-                ▶ Watch Free Lectures
+                <IconPlay size={13} style={{ color: 'var(--accent-gold)' }} />
+                <span>Watch Free Lectures</span>
               </a>
             </div>
           </motion.div>

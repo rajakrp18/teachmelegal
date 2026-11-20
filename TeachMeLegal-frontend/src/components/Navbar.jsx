@@ -5,6 +5,15 @@ import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { useCart } from '../context/CartContext';
 import ThemeToggle from './ThemeToggle';
+import { 
+  IconShoppingBag, 
+  IconUser, 
+  IconChevronDown, 
+  IconArrowUpRight, 
+  IconLogout, 
+  IconKey, 
+  IconSparkles 
+} from './Icons';
 import './Navbar.css';
 
 const Navbar = () => {
@@ -27,17 +36,22 @@ const Navbar = () => {
         <nav className="navbar nav-capsule">
           {/* Logo */}
           <Link href="/" className="logo">
-            <Image
-              src="/logo.png"
-              alt="Teach Me Legal Logo"
-              width={64}
-              height={64}
-              className="logo-img"
-              priority
-            />
-            <span className="logo-text">
-              Teach<span className="highlight">Me</span>Legal
-            </span>
+            <div className="logo-emblem-wrap">
+              <Image
+                src="/logo.png"
+                alt="Teach Me Legal Logo"
+                width={56}
+                height={56}
+                className="logo-img"
+                priority
+              />
+            </div>
+            <div className="logo-text-group">
+              <span className="logo-text">
+                Teach<span className="highlight">Me</span>Legal
+              </span>
+              <span className="logo-subline">SUPREME COURT ADVOCACY & ACADEMY</span>
+            </div>
           </Link>
           
           {/* Desktop Nav Links Pill Bar */}
@@ -65,7 +79,9 @@ const Navbar = () => {
               aria-label="View Shopping Cart"
               title="Shopping Cart"
             >
-              <span className="cart-icon-symbol">🛍️</span>
+              <span className="cart-icon-symbol">
+                <IconShoppingBag size={18} />
+              </span>
               {totalCount > 0 && <span className="cart-count-badge">{totalCount}</span>}
             </button>
 
@@ -84,9 +100,13 @@ const Navbar = () => {
                 aria-label="Account options"
                 title="My Account Options"
               >
-                <span className="account-icon-symbol">👤</span>
+                <span className="account-icon-symbol">
+                  <IconUser size={16} />
+                </span>
                 <span className="account-text desktop-only">Account</span>
-                <span className="dropdown-caret">▾</span>
+                <span className="dropdown-caret">
+                  <IconChevronDown size={12} />
+                </span>
               </button>
 
               {accountDropdownOpen && (
@@ -99,26 +119,26 @@ const Navbar = () => {
                       </div>
                       <div className="dropdown-divider" />
                       <Link href="/account" className="dropdown-item" onClick={() => setAccountDropdownOpen(false)}>
-                        <span className="dropdown-icon">👤</span> My Account
+                        <span className="dropdown-icon"><IconUser size={15} /></span> My Account
                       </Link>
                       <button 
                         onClick={() => { logoutUser(); setAccountDropdownOpen(false); }} 
                         className="dropdown-item logout-item"
                       >
-                        <span className="dropdown-icon">🚪</span> Log Out
+                        <span className="dropdown-icon"><IconLogout size={15} /></span> Log Out
                       </button>
                     </>
                   ) : (
                     <>
                       <Link href="/login" className="dropdown-item" onClick={() => setAccountDropdownOpen(false)}>
-                        <span className="dropdown-icon">🔑</span> Login
+                        <span className="dropdown-icon"><IconKey size={15} /></span> Login
                       </Link>
                       <Link href="/signup" className="dropdown-item highlight-item" onClick={() => setAccountDropdownOpen(false)}>
-                        <span className="dropdown-icon">✨</span> Sign Up
+                        <span className="dropdown-icon"><IconSparkles size={15} /></span> Sign Up
                       </Link>
                       <div className="dropdown-divider" />
                       <Link href="/account" className="dropdown-item" onClick={() => setAccountDropdownOpen(false)}>
-                        <span className="dropdown-icon">👤</span> My Account
+                        <span className="dropdown-icon"><IconUser size={15} /></span> My Account
                       </Link>
                     </>
                   )}
@@ -128,7 +148,9 @@ const Navbar = () => {
 
             <Link href="/courses" className="btn btn-gold btn-nav-cta desktop-only">
               <span>Start Learning</span>
-              <span className="btn-arrow-icon">↗</span>
+              <span className="btn-arrow-icon">
+                <IconArrowUpRight size={13} />
+              </span>
             </Link>
 
             {/* Mobile Hamburger Button */}
@@ -171,7 +193,9 @@ const Navbar = () => {
                 </div>
                 <Link href="/courses" className="btn btn-gold w-full mt-2" onClick={() => setMobileOpen(false)}>
                   <span>Start Learning</span>
-                  <span className="btn-arrow-icon">↗</span>
+                  <span className="btn-arrow-icon">
+                    <IconArrowUpRight size={13} />
+                  </span>
                 </Link>
               </div>
             )}
@@ -183,4 +207,3 @@ const Navbar = () => {
 };
 
 export default Navbar;
-

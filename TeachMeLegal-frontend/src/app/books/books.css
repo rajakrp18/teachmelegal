@@ -106,9 +106,16 @@
   right: 12px;
   background: transparent;
   border: none;
-  font-size: 1.1rem;
   cursor: pointer;
   color: var(--accent-gold);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.2s ease;
+}
+
+.search-submit-btn:hover {
+  transform: scale(1.1);
 }
 
 /* Price Filter Box */

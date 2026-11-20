@@ -1,6 +1,7 @@
 import Navbar from '../../components/Navbar';
 import Footer from '../../components/Footer';
 import ContactForm from '../../components/ContactForm';
+import { IconScales } from '../../components/Icons';
 import './contact.css';
 
 export const metadata = {
@@ -16,7 +17,9 @@ export default function ContactPage() {
       {/* Hero Banner Section */}
       <section className="contact-hero">
         <div className="container contact-hero-container">
-          <span className="capsule-badge-gold mb-3">⚖️ DIRECT CHAMBER INQUIRIES</span>
+          <span className="capsule-badge-gold mb-3">
+            <IconScales size={14} /> DIRECT CHAMBER INQUIRIES
+          </span>
           <h1 className="contact-hero-title">
             Get In Touch With <span className="gold-text">Our Chambers</span>
           </h1>

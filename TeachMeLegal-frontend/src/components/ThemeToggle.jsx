@@ -2,6 +2,7 @@
 
 import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
+import { IconSun, IconMoon } from "./Icons";
 import './ThemeToggle.css';
 
 const ThemeToggle = () => {
@@ -22,7 +23,9 @@ const ThemeToggle = () => {
       aria-label="Toggle Light / Dark Theme"
       title={`Switch to ${isDark ? "Light" : "Dark"} Mode`}
     >
-      <span className="theme-icon">{isDark ? "☀️" : "🌙"}</span>
+      <span className="theme-icon">
+        {isDark ? <IconSun size={18} /> : <IconMoon size={18} />}
+      </span>
     </button>
   );
 };

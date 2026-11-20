@@ -40,6 +40,13 @@ app.post('/api/create-order', async (req, res) => {
       receipt: `receipt_${Date.now()}`,
     };
 
+    if (process.env.RAZORPAY_KEY_ID === 'dummy_key_id' || !process.env.RAZORPAY_KEY_ID) {
+      return res.json({ 
+        success: true, 
+        order: { id: `order_mock_${Date.now()}`, amount: options.amount, currency: options.currency } 
+      });
+    }
+
     const order = await razorpay.orders.create(options);
     res.json({ success: true, order });
   } catch (error) {

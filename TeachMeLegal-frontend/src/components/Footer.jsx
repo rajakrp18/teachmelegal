@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
+import { IconMapPin, IconPhone, IconMail } from './Icons';
 import './Footer.css';
 
 const Footer = () => {
@@ -24,9 +25,9 @@ const Footer = () => {
               </Link>
               <p className="footer-tagline">Simplifying Law</p>
               <div className="footer-contact-info">
-                <p><span className="footer-icon">📍</span> Dwarka, Delhi - 110059</p>
-                <p><span className="footer-icon">📞</span> +91 94725 68264</p>
-                <p><span className="footer-icon">✉️</span> info@teachmelegal.com</p>
+                <p><span className="footer-icon"><IconMapPin size={13} /></span> Dwarka, Delhi - 110059</p>
+                <p><span className="footer-icon"><IconPhone size={13} /></span> +91 94725 68264</p>
+                <p><span className="footer-icon"><IconMail size={13} /></span> info@teachmelegal.com</p>
               </div>
             </div>
           </div>

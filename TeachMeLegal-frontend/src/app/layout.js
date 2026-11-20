@@ -3,6 +3,7 @@ import "./globals.css";
 import { ThemeProvider } from "../components/ThemeProvider";
 import { CartProvider } from "../context/CartContext";
 import CartDrawer from "../components/CartDrawer";
+import AnalyticsTracker from "../components/AnalyticsTracker";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -34,6 +35,7 @@ export default function RootLayout({ children }) {
       <body className="min-h-full flex flex-col">
         <ThemeProvider attribute="class" defaultTheme="dark" enableSystem={false}>
           <CartProvider>
+            <AnalyticsTracker />
             {children}
             <CartDrawer />
           </CartProvider>

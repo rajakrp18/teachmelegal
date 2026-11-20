@@ -2,6 +2,7 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import Link from 'next/link';
 import LegalGlossary from './LegalGlossary';
+import { IconScales, IconCalendar, IconClock, IconArrowUpRight, IconSearch, IconLightbulb, IconBookOpen } from './Icons';
 import './BlogList.css';
 
 const DEFAULT_POSTS = [
@@ -138,14 +139,25 @@ const BlogList = () => {
                   <h2 className="blog-card-title">{post.title}</h2>
                 </Link>
                 <div className="blog-card-meta">
-                  <span className="meta-item">⚖️ {post.author || 'Adv. Prashant Jha'}</span>
-                  <span className="meta-item">📅 {post.date}</span>
-                  <span className="meta-item">⏱ {post.readTime || '5 min read'}</span>
+                  <span className="meta-item">
+                    <IconScales size={14} className="meta-svg" />
+                    {post.author || 'Adv. Prashant Jha'}
+                  </span>
+                  <span className="meta-item">
+                    <IconCalendar size={14} className="meta-svg" />
+                    {post.date}
+                  </span>
+                  <span className="meta-item">
+                    <IconClock size={14} className="meta-svg" />
+                    {post.readTime || '5 min read'}
+                  </span>
                 </div>
                 <p className="blog-card-excerpt">{post.excerpt}</p>
                 <Link href={`/blog/${post.slug}`} className="btn btn-gold btn-sm">
                   <span>Read Full Article</span>
-                  <span className="btn-arrow-icon">↗</span>
+                  <span className="btn-arrow-icon">
+                    <IconArrowUpRight size={12} />
+                  </span>
                 </Link>
               </div>
             </article>
@@ -166,7 +178,9 @@ const BlogList = () => {
                 onChange={(e) => setSearchQuery(e.target.value)}
                 className="sidebar-search-input"
               />
-              <button className="sidebar-search-btn" aria-label="Search">🔍</button>
+              <button className="sidebar-search-btn" aria-label="Search">
+                <IconSearch size={15} />
+              </button>
             </div>
           </div>
 
@@ -230,12 +244,18 @@ const BlogList = () => {
 
           {/* Quick Legal Glossary */}
           <div className="sidebar-widget">
-            <h3 className="sidebar-title">💡 Legal Terms Glossary</h3>
-            <div className="glossary-items">
-              <div className="glossary-row">Hover term: <LegalGlossary termKey="mens rea">Mens Rea</LegalGlossary></div>
-              <div className="glossary-row">Hover term: <LegalGlossary termKey="sub judice">Sub Judice</LegalGlossary></div>
-              <div className="glossary-row">Hover term: <LegalGlossary termKey="estoppel">Estoppel</LegalGlossary></div>
-              <div className="glossary-row">Hover term: <LegalGlossary termKey="habeas corpus">Habeas Corpus</LegalGlossary></div>
+            <h3 className="sidebar-title">
+              <IconBookOpen size={18} style={{ color: 'var(--accent-gold)' }} />
+              Legal Terms & Maxims
+            </h3>
+            <p className="glossary-widget-subtitle">
+              Hover over terms for statutory definitions and courtroom applications.
+            </p>
+            <div className="glossary-items-list">
+              <LegalGlossary termKey="mens rea" />
+              <LegalGlossary termKey="sub judice" />
+              <LegalGlossary termKey="estoppel" />
+              <LegalGlossary termKey="habeas corpus" />
             </div>
           </div>
 

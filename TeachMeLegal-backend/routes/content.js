@@ -86,9 +86,23 @@ router.get('/books/:id/reviews', async (req, res) => {
 router.post('/books/:id/reviews', async (req, res) => {
   try {
     const { userName, rating, comment } = req.body;
+    const bookId = req.params.id;
+    
+    // Ensure book exists in DB to prevent foreign key constraint errors
+    const bookExists = await prisma.book.findUnique({ where: { id: bookId } });
+    if (!bookExists) {
+      await prisma.book.create({
+        data: {
+          id: bookId,
+          title: 'Imported Book',
+          category: 'Imported',
+        }
+      });
+    }
+
     const review = await prisma.bookReview.create({
       data: {
-        bookId: req.params.id,
+        bookId: bookId,
         userName: userName || 'Anonymous',
         rating: Number(rating) || 5,
         comment: comment || ''
@@ -96,7 +110,7 @@ router.post('/books/:id/reviews', async (req, res) => {
     });
     res.json({ success: true, review });
   } catch (error) {
-    // Mock success response if DB table doesn't exist
+    console.error("Error saving review:", error);
     res.json({ 
       success: true, 
       review: { id: Date.now().toString(), bookId: req.params.id, userName: req.body.userName || 'Anonymous', rating: Number(req.body.rating) || 5, comment: req.body.comment, createdAt: new Date() },

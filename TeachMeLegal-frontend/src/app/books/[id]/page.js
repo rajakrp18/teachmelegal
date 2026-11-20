@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import Navbar from '../../../components/Navbar';
 import Footer from '../../../components/Footer';
 import { useCart } from '../../../context/CartContext';
+import { IconShoppingBag } from '../../../components/Icons';
 import './book-detail.css';
 
 export default function BookDetailPage({ params }) {
@@ -21,7 +22,7 @@ export default function BookDetailPage({ params }) {
 
   useEffect(() => {
     // Fetch book details from admin panel
-    fetch('http://localhost:3001/api/admin/books')
+    fetch('http://localhost:5000/api/books')
       .then(res => res.json())
       .then(data => {
         if (data.success && data.books) {
@@ -125,7 +126,7 @@ export default function BookDetailPage({ params }) {
             
             <div className="detail-actions">
               <button className="btn-add-to-cart-large" onClick={() => addToCart(book)}>
-                🛍️ Add to Cart
+                <IconShoppingBag size={18} /> Add to Cart
               </button>
             </div>
             

@@ -4,6 +4,7 @@ import Link from 'next/link';
 import Navbar from '../../components/Navbar';
 import Footer from '../../components/Footer';
 import { useCart } from '../../context/CartContext';
+import { IconSearch, IconShoppingBag, IconEye } from '../../components/Icons';
 import './books.css';
 
 const DEFAULT_BOOKS = [
@@ -144,11 +145,12 @@ export default function BooksPage() {
   const [searchQuery, setSearchQuery] = useState('');
   const [priceRange, setPriceRange] = useState(199);
   const [addedIds, setAddedIds] = useState([]);
+  const [quickViewBook, setQuickViewBook] = useState(null);
 
   useEffect(() => {
     async function loadBooks() {
       try {
-        const res = await fetch('http://localhost:3001/api/admin/books');
+        const res = await fetch('http://localhost:5000/api/books');
         const data = await res.json();
         if (data.success && data.books && data.books.length > 0) {
           setBooksList(data.books.filter(b => b.active !== false));
@@ -206,7 +208,9 @@ export default function BooksPage() {
                   onChange={(e) => setSearchQuery(e.target.value)}
                   className="sidebar-search-input"
                 />
-                <button className="search-submit-btn" aria-label="Search">🔍</button>
+                <button className="search-submit-btn" aria-label="Search">
+                  <IconSearch size={16} />
+                </button>
               </div>
             </div>
 
@@ -261,7 +265,9 @@ export default function BooksPage() {
 
             {filtered.length === 0 ? (
               <div className="books-empty-state">
-                <span className="empty-icon">🔍</span>
+                <span className="empty-icon">
+                  <IconSearch size={36} />
+                </span>
                 <h3>No Courses or Books Found</h3>
                 <p>We couldn't find any items matching your filter criteria.</p>
                 <button
@@ -288,20 +294,16 @@ export default function BooksPage() {
                               style={{ cursor: 'pointer' }}
                             />
                           </Link>
-                          {/* Hover action overlay */}
                           <div className="card-hover-actions">
                             <button
                               onClick={() => handleAddToCart(book)}
                               className="hover-action-btn"
                               title="Add to Cart"
                             >
-                              🛍️
+                              <IconShoppingBag size={16} />
                             </button>
-                            <button className="hover-action-btn" title="Compare">
-                              ⚖️
-                            </button>
-                            <button className="hover-action-btn" title="Quick View">
-                              🔗
+                            <button className="hover-action-btn" title="Quick View" onClick={() => setQuickViewBook(book)}>
+                              <IconEye size={16} />
                             </button>
                           </div>
                         </div>
@@ -368,6 +370,33 @@ export default function BooksPage() {
           </div>
         </div>
       </section>
+
+      {/* Quick View Modal */}
+      {quickViewBook && (
+        <div style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, background: 'rgba(0,0,0,0.8)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 9999 }}>
+          <div style={{ background: '#0a1628', padding: '32px', borderRadius: '16px', maxWidth: '600px', width: '90%', display: 'flex', gap: '24px', border: '1px solid #1e293b', position: 'relative' }}>
+            <button onClick={() => setQuickViewBook(null)} style={{ position: 'absolute', top: '16px', right: '16px', background: 'transparent', color: '#fff', border: 'none', fontSize: '1.2rem', cursor: 'pointer' }}>✕</button>
+            <img src={quickViewBook.image} alt={quickViewBook.title} style={{ width: '200px', height: '260px', objectFit: 'cover', borderRadius: '8px' }} />
+            <div style={{ color: '#fff', display: 'flex', flexDirection: 'column', gap: '12px', justifyContent: 'center' }}>
+              <span style={{ color: '#c5a059', fontSize: '0.9rem', fontWeight: 600 }}>{quickViewBook.category}</span>
+              <h2 style={{ fontSize: '1.5rem', lineHeight: 1.3 }}>{quickViewBook.title}</h2>
+              <div style={{ fontSize: '1.2rem', color: '#10b981', fontWeight: 'bold' }}>{quickViewBook.salePrice}</div>
+              <p style={{ color: '#94a3b8', fontSize: '0.9rem' }}>Includes lifetime access to digital PDF material. Formatted for competitive exams and law school studies.</p>
+              <button 
+                className="btn-add-cart-main" 
+                style={{ marginTop: 'auto' }}
+                onClick={() => {
+                  handleAddToCart(quickViewBook);
+                  setQuickViewBook(null);
+                }}
+              >
+                Add to Cart
+              </button>
+              <Link href={`/books/${quickViewBook.id}`} style={{ color: '#c5a059', textAlign: 'center', textDecoration: 'underline', fontSize: '0.9rem' }}>View Full Details</Link>
+            </div>
+          </div>
+        </div>
+      )}
 
       <Footer />
     </main>

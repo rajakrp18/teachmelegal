@@ -56,11 +56,30 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.3rem;
   flex-shrink: 0;
   border: 1px solid var(--accent-gold-border);
   color: var(--accent-gold);
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+.contact-detail-item:hover .contact-icon-bubble {
+  background: var(--accent-gold);
+  color: #09131e;
+  transform: scale(1.08);
+}
+
+.light .contact-icon-bubble,
+[data-theme='light'] .contact-icon-bubble {
+  background: rgba(179, 135, 40, 0.12);
+  border-color: rgba(179, 135, 40, 0.35);
+  color: #966f1e;
+}
+
+.light .contact-detail-item:hover .contact-icon-bubble,
+[data-theme='light'] .contact-detail-item:hover .contact-icon-bubble {
+  background: #cfa856;
+  color: #09131e;
 }
 
 .contact-detail-item strong {
@@ -87,7 +106,16 @@
   border-radius: 12px;
   font-size: 0.88rem;
   font-weight: 700;
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.light .guarantee-badge,
+[data-theme='light'] .guarantee-badge {
+  background: rgba(179, 135, 40, 0.1);
+  border-color: rgba(179, 135, 40, 0.3);
+  color: #966f1e;
 }
 
 /* Form Card */

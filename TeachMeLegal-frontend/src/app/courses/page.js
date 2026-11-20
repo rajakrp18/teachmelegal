@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import Navbar from '../../components/Navbar';
 import Footer from '../../components/Footer';
 import { useCart } from '../../context/CartContext';
+import { IconBookOpen, IconSearch, IconShoppingBag, IconScales, IconEye } from '../../components/Icons';
 import './courses.css';
 
 const DEFAULT_COURSES = [
@@ -181,7 +182,9 @@ export default function CoursesPage() {
       {/* Top Hero Banner Section */}
       <section className="courses-hero-section">
         <div className="courses-hero-container">
-          <span className="capsule-badge-gold mb-3">📚 EXPLORE OUR LEGAL LIBRARY</span>
+          <span className="capsule-badge-gold mb-3">
+            <IconBookOpen size={14} /> EXPLORE OUR LEGAL LIBRARY
+          </span>
           <h1 className="courses-hero-title">
             Master Indian Law with <span className="gold-text">Structured Courses</span>
           </h1>
@@ -209,7 +212,9 @@ export default function CoursesPage() {
                   onChange={(e) => setSearchQuery(e.target.value)}
                   className="sidebar-search-input"
                 />
-                <button className="search-submit-btn" aria-label="Search">🔍</button>
+                <button className="search-submit-btn" aria-label="Search">
+                  <IconSearch size={16} />
+                </button>
               </div>
             </div>
 
@@ -264,7 +269,9 @@ export default function CoursesPage() {
 
             {filtered.length === 0 ? (
               <div className="books-empty-state">
-                <span className="empty-icon">🔍</span>
+                <span className="empty-icon">
+                  <IconSearch size={36} />
+                </span>
                 <h3>No Courses Found</h3>
                 <p>We couldn't find any courses matching your filter criteria.</p>
                 <button
@@ -294,13 +301,13 @@ export default function CoursesPage() {
                               className="hover-action-btn"
                               title="Add to Cart"
                             >
-                              🛍️
+                              <IconShoppingBag size={16} />
                             </button>
                             <button className="hover-action-btn" title="Compare">
-                              ⚖️
+                              <IconScales size={16} />
                             </button>
                             <button className="hover-action-btn" title="Quick View">
-                              🔗
+                              <IconEye size={16} />
                             </button>
                           </div>
                         </div>

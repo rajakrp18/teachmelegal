@@ -2,6 +2,16 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
+import { 
+  IconScales, 
+  IconStar, 
+  IconPlay, 
+  IconArrowUpRight, 
+  IconMedal, 
+  IconTrendUp, 
+  IconGraduationCap, 
+  IconShieldCheck 
+} from './Icons';
 import './Hero.css';
 
 const Hero = () => {
@@ -9,7 +19,9 @@ const Hero = () => {
     <section className="hero" id="home">
       {/* Background Radial Glow & Mesh Gradients */}
       <div className="hero-glow-backdrop" aria-hidden="true" />
-      <div className="hero-scales-watermark" aria-hidden="true">⚖️</div>
+      <div className="hero-scales-watermark" aria-hidden="true">
+        <IconScales size={360} />
+      </div>
       
       <div className="container hero-container">
         {/* Left Column: Headline & Primary CTAs */}
@@ -26,7 +38,9 @@ const Hero = () => {
             animate={{ opacity: 1, scale: 1 }}
             transition={{ delay: 0.1, duration: 0.4 }}
           >
-            <span className="badge-icon">⚖️</span>
+            <span className="badge-icon">
+              <IconScales size={15} />
+            </span>
             <span>SUPREME COURT ADVOCATE & LEGAL EDUCATOR</span>
           </motion.div>
 
@@ -59,7 +73,9 @@ const Hero = () => {
           >
             <Link href="/courses" className="btn btn-gold hero-cta-btn">
               <span>Explore Courses</span>
-              <span className="btn-arrow-icon">↗</span>
+              <span className="btn-arrow-icon">
+                <IconArrowUpRight size={13} />
+              </span>
             </Link>
 
             <a 
@@ -68,7 +84,10 @@ const Hero = () => {
               rel="noopener noreferrer" 
               className="btn btn-outline-dark hero-secondary-btn"
             >
-              <span>▶ Watch Free Lectures</span>
+              <span className="btn-play-icon">
+                <IconPlay size={13} />
+              </span>
+              <span>Watch Free Lectures</span>
             </a>
           </motion.div>
         </motion.div>
@@ -98,10 +117,12 @@ const Hero = () => {
               animate={{ opacity: 1, scale: 1 }}
               transition={{ delay: 0.5, duration: 0.6 }}
             >
-              <div className="badge-icon-star">⭐</div>
+              <div className="badge-icon-star">
+                <IconStar size={24} />
+              </div>
               <div className="badge-text-group">
                 <strong>4.9 Rating</strong>
-                <span>30k+ Students</span>
+                <span>100k+ Students</span>
               </div>
             </motion.div>
           </div>
@@ -112,7 +133,9 @@ const Hero = () => {
       <div className="hero-metrics-strip">
         <div className="container metrics-grid">
           <div className="metric-item">
-            <div className="metric-icon">🎖️</div>
+            <div className="metric-icon">
+              <IconMedal size={24} />
+            </div>
             <div className="metric-text">
               <strong>10+ Years</strong>
               <span>Legal Experience</span>
@@ -122,7 +145,9 @@ const Hero = () => {
           <div className="metric-divider" />
 
           <div className="metric-item">
-            <div className="metric-icon">📈</div>
+            <div className="metric-icon">
+              <IconTrendUp size={24} />
+            </div>
             <div className="metric-text">
               <strong>95% Pass Rate</strong>
               <span>Exam Success</span>
@@ -132,9 +157,11 @@ const Hero = () => {
           <div className="metric-divider" />
 
           <div className="metric-item">
-            <div className="metric-icon">👨‍⚖️</div>
+            <div className="metric-icon">
+              <IconGraduationCap size={24} />
+            </div>
             <div className="metric-text">
-              <strong>30,000+</strong>
+              <strong>100,000+</strong>
               <span>Enrolled Students</span>
             </div>
           </div>
@@ -142,7 +169,9 @@ const Hero = () => {
           <div className="metric-divider" />
 
           <div className="metric-item">
-            <div className="metric-icon">⚖️</div>
+            <div className="metric-icon">
+              <IconShieldCheck size={24} />
+            </div>
             <div className="metric-text">
               <strong>100% Verified</strong>
               <span>Courtroom Curriculum</span>

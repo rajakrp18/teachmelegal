@@ -3,15 +3,19 @@ import { useEffect, useState } from 'react';
 
 export default function AdminAnalyticsPage() {
   const [stats, setStats] = useState(null);
+  const [popularBlogs, setPopularBlogs] = useState([]);
+  const [trafficSources, setTrafficSources] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     async function loadAnalytics() {
       try {
-        const res = await fetch('/api/admin/analytics');
+        const res = await fetch('http://localhost:5000/api/admin/analytics');
         const data = await res.json();
         if (data.success) {
           setStats(data.stats);
+          setPopularBlogs(data.popularBlogs || []);
+          setTrafficSources(data.trafficSources || []);
         }
       } catch (err) {
         console.error('Failed to load analytics stats:', err);
@@ -82,12 +86,14 @@ export default function AdminAnalyticsPage() {
                 <tbody>
                   {loading ? (
                     <tr><td colSpan="3" style={{ padding: '20px', textAlign: 'center' }}>Loading...</td></tr>
+                  ) : popularBlogs.length === 0 ? (
+                    <tr><td colSpan="3" style={{ padding: '20px', textAlign: 'center' }}>No articles found.</td></tr>
                   ) : (
-                    stats?.topPosts?.map((post) => (
+                    popularBlogs.map((post) => (
                       <tr key={post.id}>
                         <td style={{ fontWeight: 600 }}>{post.title}</td>
                         <td>
-                          <span className="badge" style={{ background: `${post.categoryColor}15`, color: post.categoryColor }}>
+                          <span className="badge" style={{ background: `var(--admin-primary)`, color: 'var(--admin-gold)' }}>
                             {post.category}
                           </span>
                         </td>
@@ -104,19 +110,16 @@ export default function AdminAnalyticsPage() {
           <div className="admin-card" style={{ padding: '24px' }}>
             <h2 className="admin-card-title" style={{ marginBottom: '20px' }}>🌐 Traffic Sources</h2>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
-              {[
-                { source: 'Google Search / Organic', share: '64%', color: '#3b82f6' },
-                { source: 'Direct / Bookmarks', share: '21%', color: '#10b981' },
-                { source: 'YouTube Channel', share: '11%', color: '#ef4444' },
-                { source: 'Social & Telegram', share: '4%', color: '#f59e0b' },
-              ].map((item, index) => (
+              {loading ? (
+                <div style={{ padding: '20px', textAlign: 'center' }}>Loading...</div>
+              ) : trafficSources.map((item, index) => (
                 <div key={index}>
                   <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.88rem', fontWeight: 600, marginBottom: '6px' }}>
-                    <span>{item.source}</span>
-                    <span style={{ color: item.color }}>{item.share}</span>
+                    <span>{item.name}</span>
+                    <span style={{ color: item.color }}>{item.percentage}%</span>
                   </div>
-                  <div style={{ height: '8px', width: '100%', background: '#e2e8f0', borderRadius: '4px', overflow: 'hidden' }}>
-                    <div style={{ height: '100%', width: item.share, background: item.color, borderRadius: '4px' }} />
+                  <div style={{ height: '8px', width: '100%', background: 'rgba(255, 255, 255, 0.1)', borderRadius: '4px', overflow: 'hidden' }}>
+                    <div style={{ height: '100%', width: `${item.percentage}%`, background: item.color, borderRadius: '4px' }} />
                   </div>
                 </div>
               ))}

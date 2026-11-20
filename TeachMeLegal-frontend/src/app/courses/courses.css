@@ -113,9 +113,13 @@
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  color: #060e17;
-  font-size: 0.85rem;
-  flex-shrink: 0;
+  color: #09131e;
+  transition: all 0.2s ease;
+}
+
+.search-submit-btn:hover {
+  background: var(--accent-gold-hover, #e0bc68);
+  transform: translateY(-50%) scale(1.05);
 }
 
 /* Price Filter */
@@ -277,16 +281,21 @@
   width: 42px;
   height: 42px;
   border-radius: 50%;
-  background: rgba(255, 255, 255, 0.9);
+  background: rgba(255, 255, 255, 0.95);
   border: none;
-  font-size: 1.1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #09131e;
   cursor: pointer;
   transition: all 0.2s ease;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
 .hover-action-btn:hover {
   background: var(--accent-gold);
-  transform: scale(1.1);
+  color: #09131e;
+  transform: scale(1.12);
 }
 
 .card-body {

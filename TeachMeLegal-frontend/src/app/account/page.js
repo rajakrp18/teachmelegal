@@ -6,6 +6,7 @@ import Navbar from '../../components/Navbar';
 import Footer from '../../components/Footer';
 import PdfPreviewModal from '../../components/PdfPreviewModal';
 import { useCart } from '../../context/CartContext';
+import { IconBookOpen, IconDocument, IconUser } from '../../components/Icons';
 import './account.css';
 
 export default function AccountPage() {
@@ -106,20 +107,26 @@ export default function AccountPage() {
           <button
             className={`account-tab-btn ${activeTab === 'courses' ? 'active' : ''}`}
             onClick={() => setActiveTab('courses')}
+            style={{ display: 'inline-flex', alignItems: 'center', gap: '8px' }}
           >
-            📚 My Courses & Books ({enrolledItems.length})
+            <IconBookOpen size={16} />
+            <span>My Courses & Books ({enrolledItems.length})</span>
           </button>
           <button
             className={`account-tab-btn ${activeTab === 'orders' ? 'active' : ''}`}
             onClick={() => setActiveTab('orders')}
+            style={{ display: 'inline-flex', alignItems: 'center', gap: '8px' }}
           >
-            🧾 Order History ({orderHistory.length})
+            <IconDocument size={16} />
+            <span>Order History ({orderHistory.length})</span>
           </button>
           <button
             className={`account-tab-btn ${activeTab === 'settings' ? 'active' : ''}`}
             onClick={() => setActiveTab('settings')}
+            style={{ display: 'inline-flex', alignItems: 'center', gap: '8px' }}
           >
-            ⚙️ Profile & Settings
+            <IconUser size={16} />
+            <span>Profile & Settings</span>
           </button>
         </div>
 
@@ -130,7 +137,9 @@ export default function AccountPage() {
               <div key={item.id} className="enrolled-card">
                 <div>
                   <div className="enrolled-card-header">
-                    <span className="enrolled-book-icon">📖</span>
+                    <span className="enrolled-book-icon" style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center' }}>
+                      <IconBookOpen size={20} />
+                    </span>
                     <div>
                       <span className="enrolled-card-tag">{item.category}</span>
                       <h3 className="enrolled-card-title">{item.title}</h3>
@@ -141,8 +150,10 @@ export default function AccountPage() {
                 <button
                   onClick={() => setPreviewPdf({ title: item.title, file: item.pdfUrl })}
                   className="btn-open-material"
+                  style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: '8px' }}
                 >
-                  📖 Open & Read Notes PDF
+                  <IconBookOpen size={16} />
+                  <span>Open & Read Notes PDF</span>
                 </button>
               </div>
             ))}

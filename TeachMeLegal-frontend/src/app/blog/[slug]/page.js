@@ -2,6 +2,7 @@ import Navbar from '../../../components/Navbar';
 import Footer from '../../../components/Footer';
 import Link from 'next/link';
 import { getPostBySlug, getAllPosts } from '../../../lib/blogsStore';
+import { IconUser, IconCalendar, IconClock, IconEye, IconScales, IconBookOpen, IconDocument } from '../../../components/Icons';
 import './post.css';
 
 export async function generateStaticParams() {
@@ -36,10 +37,22 @@ export default async function BlogPost({ params }) {
           <span className="post-category-badge" style={{ background: post.categoryColor || '#3b82f6' }}>{post.category}</span>
           <h1 className="post-title">{post.title}</h1>
           <div className="post-meta">
-            <span>👤 {post.author}</span>
-            <span>📅 {post.date}</span>
-            <span>⏱ {post.readTime}</span>
-            <span>👁️ {post.views || 0} Views</span>
+            <span style={{ display: 'inline-flex', alignItems: 'center', gap: '6px' }}>
+              <IconUser size={14} style={{ color: 'var(--accent-gold)' }} />
+              {post.author}
+            </span>
+            <span style={{ display: 'inline-flex', alignItems: 'center', gap: '6px' }}>
+              <IconCalendar size={14} style={{ color: 'var(--accent-gold)' }} />
+              {post.date}
+            </span>
+            <span style={{ display: 'inline-flex', alignItems: 'center', gap: '6px' }}>
+              <IconClock size={14} style={{ color: 'var(--accent-gold)' }} />
+              {post.readTime}
+            </span>
+            <span style={{ display: 'inline-flex', alignItems: 'center', gap: '6px' }}>
+              <IconEye size={14} style={{ color: 'var(--accent-gold)' }} />
+              {post.views || 0} Views
+            </span>
           </div>
         </div>
       </section>
@@ -52,7 +65,9 @@ export default async function BlogPost({ params }) {
             <div className="post-sidebar-widget">
               <h3>About the Author</h3>
               <div className="author-card">
-                <div className="author-avatar">⚖️</div>
+                <div className="author-avatar" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                  <IconScales size={24} style={{ color: 'var(--accent-gold)' }} />
+                </div>
                 <div>
                   <strong>{post.author}</strong>
                   <p>Practicing lawyer at the Supreme Court of India & Founder of Teach Me Legal.</p>
@@ -63,9 +78,9 @@ export default async function BlogPost({ params }) {
             <div className="post-sidebar-widget">
               <h3>Explore More</h3>
               <ul className="post-nav-links">
-                <li><Link href="/courses">📚 Courses</Link></li>
-                <li><Link href="/books">📖 Books & Notes</Link></li>
-                <li><Link href="/blog">📝 All Blog Posts</Link></li>
+                <li><Link href="/courses" style={{ display: 'flex', alignItems: 'center', gap: '8px' }}><IconBookOpen size={16} /> Courses</Link></li>
+                <li><Link href="/books" style={{ display: 'flex', alignItems: 'center', gap: '8px' }}><IconBookOpen size={16} /> Books & Notes</Link></li>
+                <li><Link href="/blog" style={{ display: 'flex', alignItems: 'center', gap: '8px' }}><IconDocument size={16} /> All Blog Posts</Link></li>
               </ul>
             </div>
 

@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import PdfPreviewModal from './PdfPreviewModal';
+import { IconBookOpen, IconEye, IconArrowUpRight } from './Icons';
 import './Courses.css';
 
 const REAL_BOOKS = [
@@ -73,29 +74,15 @@ const REAL_BOOKS = [
   }
 ];
 
-const loadRazorpayScript = () => {
-  return new Promise((resolve) => {
-    if (window.Razorpay) {
-      resolve(true);
-      return;
-    }
-    const script = document.createElement('script');
-    script.src = 'https://checkout.razorpay.com/v1/checkout.js';
-    script.onload = () => resolve(true);
-    script.onerror = () => resolve(false);
-    document.body.appendChild(script);
-  });
-};
-
 const Courses = () => {
   const [courses, setCourses] = useState(REAL_BOOKS);
-  const [loadingId, setLoadingId] = useState(null);
   const [selectedBookForPreview, setSelectedBookForPreview] = useState(null);
+  const { addToCart, setIsCartOpen } = require('../context/CartContext').useCart();
 
   React.useEffect(() => {
     async function loadBooks() {
       try {
-        const res = await fetch('/api/admin/books');
+        const res = await fetch('http://localhost:5000/api/books');
         const data = await res.json();
         if (data.success && data.books && data.books.length > 0) {
           const mapped = data.books.slice(0, 6).map(b => ({
@@ -118,49 +105,9 @@ const Courses = () => {
     loadBooks();
   }, []);
 
-  const handleCheckout = async (course) => {
-    setLoadingId(course.id);
-    const res = await loadRazorpayScript();
-
-    if (!res) {
-      alert('Razorpay SDK failed to load. Are you online?');
-      setLoadingId(null);
-      return;
-    }
-
-    try {
-      const result = await fetch('/api/create-order', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ amount: course.numericPrice, currency: 'INR' }),
-      });
-      const data = await result.json();
-
-      if (!data.success) {
-        alert(`Order initiated for ${course.title} (${course.salePrice || course.price})! Connect Razorpay keys for live payments.`);
-        setLoadingId(null);
-        return;
-      }
-
-      const options = {
-        key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID || 'dummy_key_id',
-        amount: data.order.amount,
-        currency: data.order.currency,
-        name: 'Teach Me Legal',
-        description: `Enroll in ${course.title}`,
-        order_id: data.order.id,
-        handler: function (response) {
-          alert(`Successfully enrolled in ${course.title}!`);
-        },
-        theme: { color: '#09131e' },
-      };
-
-      const paymentObject = new window.Razorpay(options);
-      paymentObject.open();
-    } catch (error) {
-      alert(`Checkout initiated for ${course.title}`);
-    }
-    setLoadingId(null);
+  const handleAddToCart = (course) => {
+    addToCart(course);
+    setIsCartOpen(true);
   };
 
   return (
@@ -172,7 +119,9 @@ const Courses = () => {
           {/* Section Header */}
           <div className="courses-header-row">
             <div>
-              <span className="capsule-badge-gold">📚 FEATURED COURSES & STUDY MATERIALS</span>
+              <span className="capsule-badge-gold">
+                <IconBookOpen size={14} /> FEATURED COURSES & STUDY MATERIALS
+              </span>
               <h2 className="dark-section-title">Master Indian Law</h2>
             </div>
 
@@ -210,7 +159,7 @@ const Courses = () => {
                         setSelectedBookForPreview(item);
                       }}
                     >
-                      👁️ Sample PDF
+                      <IconEye size={13} /> Sample PDF
                     </button>
                   </div>
 
@@ -227,11 +176,10 @@ const Courses = () => {
 
                       <button 
                         className="btn-circle-arrow"
-                        onClick={() => handleCheckout(item)}
-                        disabled={loadingId === item.id}
+                        onClick={() => handleAddToCart(item)}
                         title="Enroll Now"
                       >
-                        {loadingId === item.id ? '...' : '↗'}
+                        <IconArrowUpRight size={14} />
                       </button>
                     </div>
                   </div>
@@ -247,7 +195,7 @@ const Courses = () => {
         isOpen={Boolean(selectedBookForPreview)}
         onClose={() => setSelectedBookForPreview(null)}
         book={selectedBookForPreview}
-        onAddToCart={(book) => handleCheckout(book)}
+        onAddToCart={(book) => handleAddToCart(book)}
       />
     </section>
   );

@@ -285,14 +285,69 @@
 }
 
 .story-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   text-align: center;
   margin-bottom: 30px;
+  width: 100%;
 }
 
 .story-icon {
-  font-size: 2.8rem;
-  display: block;
-  margin-bottom: 12px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 60px;
+  height: 60px;
+  border-radius: 18px;
+  background: rgba(207, 168, 86, 0.12);
+  border: 1px solid rgba(207, 168, 86, 0.3);
+  color: var(--accent-gold);
+  margin-bottom: 16px;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.05);
+}
+
+.light .story-icon,
+[data-theme='light'] .story-icon {
+  background: rgba(179, 135, 40, 0.1);
+  border-color: rgba(179, 135, 40, 0.35);
+  color: #966f1e;
+  box-shadow: 0 4px 14px rgba(179, 135, 40, 0.1);
+}
+
+.mv-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 14px;
+  background: rgba(207, 168, 86, 0.12);
+  border: 1px solid rgba(207, 168, 86, 0.3);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--accent-gold);
+  flex-shrink: 0;
+  transition: all 0.3s ease;
+}
+
+.mv-card:hover .mv-icon {
+  background: var(--accent-gold);
+  color: #09131e;
+  transform: scale(1.06);
+}
+
+.light .mv-icon,
+[data-theme='light'] .mv-icon {
+  background: rgba(179, 135, 40, 0.1);
+  border-color: rgba(179, 135, 40, 0.32);
+  color: #966f1e;
+  box-shadow: 0 2px 8px rgba(179, 135, 40, 0.08);
+}
+
+.light .mv-card:hover .mv-icon,
+[data-theme='light'] .mv-card:hover .mv-icon {
+  background: #cfa856;
+  color: #09131e;
 }
 
 .story-content p {
@@ -313,32 +368,48 @@
 .mv-card {
   background: var(--bg-card);
   backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
   border-radius: 20px;
   padding: 36px 30px;
   border: 1px solid var(--border-light);
   box-shadow: var(--shadow-sm);
+  transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.mv-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--accent-gold-border);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
+}
+
+.light .mv-card,
+[data-theme='light'] .mv-card {
+  background: #ffffff;
+  border-color: rgba(9, 19, 30, 0.08);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
 }
 
 .mv-card-header {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 16px;
   margin-bottom: 16px;
 }
-
-.mv-icon { font-size: 2rem; }
 
 .mv-title {
   font-size: 1.4rem;
   color: var(--text-heading);
   font-weight: 800;
   font-family: var(--font-heading);
+  margin: 0;
+  line-height: 1.2;
 }
 
 .mv-text {
   color: var(--text-muted);
   font-size: 0.98rem;
   line-height: 1.75;
+  margin: 0;
 }
 
 /* Discount Banner */

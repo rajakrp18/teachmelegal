@@ -1,5 +1,6 @@
 "use client";
 import React, { useState } from 'react';
+import { IconPlay, IconEye } from './Icons';
 import './YouTubeLectures.css';
 
 const YOUTUBE_VIDEOS = [
@@ -69,8 +70,10 @@ const YouTubeLectures = () => {
             rel="noopener noreferrer"
             className="yt-channel-btn"
           >
-            <span className="yt-icon">▶</span>
-            View Full Playlist
+            <span className="yt-icon" style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center' }}>
+              <IconPlay size={12} />
+            </span>
+            <span>View Full Playlist</span>
           </a>
         </div>
 
@@ -103,14 +106,19 @@ const YouTubeLectures = () => {
                   }}
                 />
                 <div className="yt-play-overlay">
-                  <span className="yt-play-btn">▶</span>
+                  <span className="yt-play-btn" style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center' }}>
+                    <IconPlay size={16} />
+                  </span>
                 </div>
                 <span className="yt-duration">{video.duration}</span>
               </div>
               <div className="yt-card-info">
                 <h4 className="yt-card-title">{video.title}</h4>
                 <div className="yt-card-meta">
-                  <span>👁 {video.views} views</span>
+                  <span style={{ display: 'inline-flex', alignItems: 'center', gap: '5px' }}>
+                    <IconEye size={14} style={{ color: 'var(--accent-gold)' }} />
+                    {video.views} views
+                  </span>
                   <span className="yt-free-badge">FREE</span>
                 </div>
               </div>
@@ -124,8 +132,10 @@ const YouTubeLectures = () => {
             target="_blank"
             rel="noopener noreferrer"
             className="btn btn-primary yt-subscribe-btn"
+            style={{ display: 'inline-flex', alignItems: 'center', gap: '8px' }}
           >
-            <span>▶</span> Subscribe on YouTube
+            <IconPlay size={14} />
+            <span>Subscribe on YouTube</span>
           </a>
         </div>
       </div>

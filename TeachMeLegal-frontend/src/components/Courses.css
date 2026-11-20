@@ -129,10 +129,13 @@
 .btn-sample-badge {
   position: relative;
   z-index: 3;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
   background: rgba(207, 168, 86, 0.15);
   color: var(--accent-gold);
   border: 1px solid var(--accent-gold-border);
-  padding: 4px 12px;
+  padding: 5px 12px;
   border-radius: var(--radius-pill);
   font-size: 0.72rem;
   font-weight: 700;

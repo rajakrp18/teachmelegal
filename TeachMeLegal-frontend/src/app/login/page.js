@@ -2,6 +2,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { useState } from 'react';
+import { IconGoogle, IconCheckCircle } from '../../components/Icons';
 import '../auth.css';
 
 import { useCart } from '../../context/CartContext';
@@ -41,12 +42,20 @@ export default function LoginPage() {
             <span>Teach Me <b>Legal</b></span>
           </Link>
           <h2 className="auth-left-title">India's Premier Legal Learning Platform</h2>
-          <p className="auth-left-sub">Join 30,000+ students learning law with Advocate Prashant Jha</p>
+          <p className="auth-left-sub">Join 100,000+ students learning law with Advocate Prashant Jha</p>
           <div className="auth-benefits">
-            <div className="auth-benefit">✅ Access to 50+ courses & notes</div>
-            <div className="auth-benefit">✅ Free YouTube lectures</div>
-            <div className="auth-benefit">✅ Direct download of study material</div>
-            <div className="auth-benefit">✅ Exclusive student discounts</div>
+            <div className="auth-benefit">
+              <IconCheckCircle size={18} style={{ color: 'var(--accent-gold)', flexShrink: 0 }} /> Access to 50+ courses & notes
+            </div>
+            <div className="auth-benefit">
+              <IconCheckCircle size={18} style={{ color: 'var(--accent-gold)', flexShrink: 0 }} /> Free YouTube lectures
+            </div>
+            <div className="auth-benefit">
+              <IconCheckCircle size={18} style={{ color: 'var(--accent-gold)', flexShrink: 0 }} /> Direct download of study material
+            </div>
+            <div className="auth-benefit">
+              <IconCheckCircle size={18} style={{ color: 'var(--accent-gold)', flexShrink: 0 }} /> Exclusive student discounts
+            </div>
           </div>
         </div>
         <div className="auth-left-pattern" />
@@ -97,7 +106,7 @@ export default function LoginPage() {
 
           <div className="auth-social-btns">
             <button className="auth-social-btn google">
-              <span>🇬</span> Continue with Google
+              <IconGoogle size={18} /> Continue with Google
             </button>
           </div>
 

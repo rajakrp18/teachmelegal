@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 import confetti from 'canvas-confetti';
 import { useCart } from '../context/CartContext';
+import { IconShoppingBag, IconTrash } from './Icons';
 import './CartDrawer.css';
 
 export default function CartDrawer() {
@@ -22,48 +23,40 @@ export default function CartDrawer() {
 
   const [loading, setLoading] = useState(false);
 
+  const router = require('next/navigation').useRouter();
+
   if (!isCartOpen) return null;
 
-  const handleCheckout = async () => {
+  const handleCheckout = () => {
     if (cartItems.length === 0) return;
-    setLoading(true);
-
-    try {
-      // Trigger festive confetti celebration!
-      confetti({
-        particleCount: 100,
-        spread: 70,
-        origin: { y: 0.6 }
-      });
-
-      alert(`🎉 Payment Successful! Order placed for ₹${finalTotal.toFixed(2)}. Access granted to study portal!`);
-      clearCart();
-      setIsCartOpen(false);
-    } catch (err) {
-      alert('Checkout error');
-    } finally {
-      setLoading(false);
-    }
+    setIsCartOpen(false);
+    router.push('/checkout');
   };
 
   return (
     <div className="cart-overlay" onClick={() => setIsCartOpen(false)}>
       <div className="cart-drawer" onClick={(e) => e.stopPropagation()}>
         <div className="cart-header">
-          <h3>🛒 Shopping Cart ({totalCount})</h3>
+          <h3 style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+            <IconShoppingBag size={20} style={{ color: 'var(--accent-gold)' }} />
+            Shopping Cart ({totalCount})
+          </h3>
           <button className="cart-close-btn" onClick={() => setIsCartOpen(false)}>✕</button>
         </div>
 
         {hasDiscount && (
-          <div className="cart-discount-banner">
-            🎉 <strong>10% Discount Applied!</strong> You added 3+ study notes to cart.
+          <div className="cart-discount-banner" style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+            <IconSparkles size={16} style={{ color: 'var(--accent-gold)', flexShrink: 0 }} />
+            <span><strong>10% Discount Applied!</strong> You added 3+ study notes to cart.</span>
           </div>
         )}
 
         <div className="cart-items-list">
           {cartItems.length === 0 ? (
             <div className="cart-empty">
-              <span style={{ fontSize: '3rem' }}>🛍️</span>
+              <span className="cart-empty-icon" style={{ display: 'inline-flex', color: 'var(--accent-gold)', marginBottom: '12px' }}>
+                <IconShoppingBag size={48} />
+              </span>
               <p>Your cart is empty.</p>
             </div>
           ) : (
@@ -81,7 +74,9 @@ export default function CartDrawer() {
                   <button onClick={() => updateQuantity(item.id, -1)} className="cart-qty-btn">-</button>
                   <span className="cart-qty">{item.quantity}</span>
                   <button onClick={() => updateQuantity(item.id, 1)} className="cart-qty-btn">+</button>
-                  <button onClick={() => removeFromCart(item.id)} className="cart-remove-btn" title="Remove">🗑️</button>
+                  <button onClick={() => removeFromCart(item.id)} className="cart-remove-btn" title="Remove" style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center' }}>
+                    <IconTrash size={16} />
+                  </button>
                 </div>
               </div>
             ))

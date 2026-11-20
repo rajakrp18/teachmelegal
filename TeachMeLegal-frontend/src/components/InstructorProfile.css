@@ -118,6 +118,29 @@
   font-size: 0.8rem;
   font-weight: 600;
   transition: all 0.25s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.spec-pill svg {
+  color: var(--accent-gold);
+  flex-shrink: 0;
+}
+
+.light .spec-pill,
+[data-theme='light'] .spec-pill {
+  background: rgba(255, 255, 255, 0.95);
+  border-color: rgba(9, 19, 30, 0.12);
+  color: #09131e;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+}
+
+.light .spec-pill:hover,
+[data-theme='light'] .spec-pill:hover {
+  background: rgba(207, 168, 86, 0.12);
+  border-color: var(--accent-gold);
+  color: #966f1e;
 }
 
 .spec-pill:hover {

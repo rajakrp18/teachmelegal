@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import { motion, AnimatePresence } from 'framer-motion';
+import { IconBookOpen, IconShoppingBag } from './Icons';
 import './PdfPreviewModal.css';
 
 const SAMPLE_PAGES = [
@@ -64,7 +65,10 @@ export default function PdfPreviewModal({ isOpen, onClose, book, onAddToCart }) 
           {/* Modal Header */}
           <div className="pdf-modal-header">
             <div className="pdf-book-meta">
-              <span className="pdf-badge">📖 Free Sample Preview</span>
+              <span className="pdf-badge">
+                <IconBookOpen size={14} style={{ display: 'inline-block', verticalAlign: 'middle', marginRight: '5px' }} />
+                Free Sample Preview
+              </span>
               <h3>{book.title}</h3>
             </div>
             <button className="pdf-close-btn" onClick={onClose}>✕</button>
@@ -109,12 +113,14 @@ export default function PdfPreviewModal({ isOpen, onClose, book, onAddToCart }) 
             <div className="pdf-action-controls">
               <button 
                 className="btn btn-primary"
+                style={{ display: 'inline-flex', alignItems: 'center', gap: '8px' }}
                 onClick={() => {
                   onAddToCart(book);
                   onClose();
                 }}
               >
-                🛒 Unlock Full Book ({book.salePrice || book.price || '₹99'})
+                <IconShoppingBag size={16} />
+                <span>Unlock Full Book ({book.salePrice || book.price || '₹99'})</span>
               </button>
             </div>
           </div>

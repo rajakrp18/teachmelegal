@@ -2,6 +2,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import Navbar from '../../components/Navbar';
 import Footer from '../../components/Footer';
+import { IconScales, IconDocument, IconTarget, IconCompass, IconFlame, IconArrowUpRight } from '../../components/Icons';
 import './about.css';
 
 export const metadata = {
@@ -18,7 +19,9 @@ export default function AboutPage() {
       <section className="about-hero">
         <div className="about-hero-bg" aria-hidden="true" />
         <div className="container about-hero-container">
-          <span className="capsule-badge-gold">⚖️ Advocate-Led Legal Education</span>
+          <span className="capsule-badge-gold">
+            <IconScales size={14} /> Advocate-Led Legal Education
+          </span>
           <h1 className="about-hero-title">
             Demystifying Law With <span className="gold-text">Courtroom Precision</span>
           </h1>
@@ -64,7 +67,7 @@ export default function AboutPage() {
                 <span className="stat-label">Years Legal Practice</span>
               </div>
               <div className="stat-card">
-                <span className="stat-number">30,000+</span>
+                <span className="stat-number">100,000+</span>
                 <span className="stat-label">Enrolled Students</span>
               </div>
               <div className="stat-card">
@@ -114,7 +117,9 @@ export default function AboutPage() {
         <div className="container">
           <div className="story-wrapper">
             <div className="story-header">
-              <span className="story-icon">📜</span>
+              <span className="story-icon">
+                <IconDocument size={28} />
+              </span>
               <h2 className="about-heading center">Our Journey & Core Values</h2>
             </div>
 
@@ -131,7 +136,9 @@ export default function AboutPage() {
             <div className="about-mv-grid">
               <div className="mv-card">
                 <div className="mv-card-header">
-                  <span className="mv-icon">🎯</span>
+                  <span className="mv-icon">
+                    <IconTarget size={24} />
+                  </span>
                   <h3 className="mv-title">Our Mission</h3>
                 </div>
                 <p className="mv-text">
@@ -141,7 +148,9 @@ export default function AboutPage() {
 
               <div className="mv-card">
                 <div className="mv-card-header">
-                  <span className="mv-icon">🔭</span>
+                  <span className="mv-icon">
+                    <IconCompass size={24} />
+                  </span>
                   <h3 className="mv-title">Our Vision</h3>
                 </div>
                 <p className="mv-text">
@@ -157,13 +166,17 @@ export default function AboutPage() {
       <section className="discount-cta-banner">
         <div className="container discount-cta-inner">
           <div className="cta-content">
-            <span className="capsule-badge-gold">🔥 SPECIAL LEARNER OFFER</span>
+            <span className="capsule-badge-gold">
+              <IconFlame size={14} /> SPECIAL LEARNER OFFER
+            </span>
             <h2 className="cta-title">Start Your Legal Mastery Today</h2>
             <p className="cta-subtitle">Explore our structured video courses and subject-wise exam charts curated by Advocate Prashant Jha.</p>
           </div>
           <Link href="/courses" className="btn btn-gold hero-cta-btn">
             <span>Explore All Courses</span>
-            <span className="btn-arrow-icon">↗</span>
+            <span className="btn-arrow-icon">
+              <IconArrowUpRight size={13} />
+            </span>
           </Link>
         </div>
       </section>

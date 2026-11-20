@@ -2,6 +2,14 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { useState } from 'react';
+import { 
+  IconCheckCircle, 
+  IconGraduationCap, 
+  IconBookOpen, 
+  IconVideo, 
+  IconCreditCard, 
+  IconGoogle 
+} from '../../components/Icons';
 import '../auth.css';
 
 export default function SignupPage() {
@@ -27,7 +35,9 @@ export default function SignupPage() {
     return (
       <div className="auth-page">
         <div className="auth-success-screen">
-          <div className="auth-success-icon">🎉</div>
+          <div className="auth-success-icon" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+            <IconCheckCircle size={48} style={{ color: 'var(--accent-gold)' }} />
+          </div>
           <h2>Account Created!</h2>
           <p>Welcome to Teach Me Legal. Start your legal learning journey today.</p>
           <Link href="/courses" className="auth-submit-btn" style={{ display: 'inline-block', marginTop: '20px' }}>
@@ -49,10 +59,18 @@ export default function SignupPage() {
           <h2 className="auth-left-title">Start Your Legal Education Journey Today</h2>
           <p className="auth-left-sub">Join thousands of students learning law the right way</p>
           <div className="auth-benefits">
-            <div className="auth-benefit">🎓 Courses by a Supreme Court Advocate</div>
-            <div className="auth-benefit">📚 50+ books & study notes available</div>
-            <div className="auth-benefit">🎬 Free YouTube lecture access</div>
-            <div className="auth-benefit">💳 Exclusive member discounts</div>
+            <div className="auth-benefit">
+              <IconGraduationCap size={18} style={{ color: 'var(--accent-gold)', flexShrink: 0 }} /> Courses by a Supreme Court Advocate
+            </div>
+            <div className="auth-benefit">
+              <IconBookOpen size={18} style={{ color: 'var(--accent-gold)', flexShrink: 0 }} /> 50+ books & study notes available
+            </div>
+            <div className="auth-benefit">
+              <IconVideo size={18} style={{ color: 'var(--accent-gold)', flexShrink: 0 }} /> Free YouTube lecture access
+            </div>
+            <div className="auth-benefit">
+              <IconCreditCard size={18} style={{ color: 'var(--accent-gold)', flexShrink: 0 }} /> Exclusive member discounts
+            </div>
           </div>
         </div>
         <div className="auth-left-pattern" />
@@ -100,7 +118,7 @@ export default function SignupPage() {
 
           <div className="auth-social-btns">
             <button className="auth-social-btn google">
-              <span>🇬</span> Continue with Google
+              <IconGoogle size={18} /> Continue with Google
             </button>
           </div>
 
