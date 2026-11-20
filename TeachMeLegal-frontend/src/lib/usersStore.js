@@ -187,3 +187,8 @@ export function addOrderAndEnrollUser(email, order, items = []) {
     orderHistory: user.orderHistory
   };
 }
+
+export function getAllUsers() {
+  const users = initUsersStore();
+  return users.map(u => sanitizeUser(u));
+}

@@ -8,6 +8,7 @@ export default function AdminLayout({ children }) {
 
   const navItems = [
     { label: 'Dashboard Overview', href: '/admin', icon: '📊' },
+    { label: 'Enrolled Scholars', href: '/admin/users', icon: '👥' },
     { label: 'Manage Blogs', href: '/admin/blogs', icon: '📝' },
     { label: 'Write New Blog', href: '/admin/blogs/new', icon: '✍️' },
     { label: 'Manage Courses', href: '/admin/courses', icon: '🎓' },
