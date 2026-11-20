@@ -264,8 +264,15 @@ export default function AdminCoursesPage() {
 
         {/* Modal Dialog for Add / Edit */}
         {showModal && (
-          <div style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.5)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 1000, padding: '20px' }}>
-            <div className="admin-card" style={{ width: '100%', maxWidth: '600px', padding: '32px', margin: 0, maxHeight: '90vh', overflowY: 'auto' }}>
+          <div 
+            style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.5)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 1000, padding: '20px' }}
+            onClick={() => setShowModal(false)}
+          >
+            <div 
+              className="admin-card" 
+              style={{ width: '100%', maxWidth: '600px', padding: '32px', margin: 0, maxHeight: '90vh', overflowY: 'auto' }}
+              onClick={(e) => e.stopPropagation()}
+            >
               <h2 className="admin-card-title" style={{ marginBottom: '20px' }}>
                 {editingCourse ? 'Edit Course Details' : 'Add New Course'}
               </h2>

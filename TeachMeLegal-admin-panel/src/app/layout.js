@@ -50,6 +50,13 @@ export default function RootLayout({ children }) {
     localStorage.setItem('adminSidebar', newState ? 'expanded' : 'collapsed');
   };
 
+  const handleMainCanvasClick = () => {
+    if (isSidebarExpanded) {
+      setIsSidebarExpanded(false);
+      localStorage.setItem('adminSidebar', 'collapsed');
+    }
+  };
+
   const navItems = [
     { label: 'Dashboard Overview', href: '/', icon: <IconDashboard size={19} /> },
     { label: 'Users & Scholars', href: '/users', icon: <IconUsers size={19} /> },
@@ -169,7 +176,7 @@ export default function RootLayout({ children }) {
           </aside>
 
           {/* Main Content Area */}
-          <div className="admin-main">
+          <div className="admin-main" onClick={handleMainCanvasClick}>
             {children}
           </div>
         </div>
