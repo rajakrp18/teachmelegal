@@ -5,889 +5,110 @@ import path from 'path';
 
 const INITIAL_POSTS = [
   {
-    id: "post-1",
-    slug: "state-bank-of-india-act-1955",
-    category: "Banking Law",
-    categoryColor: "#3b82f6",
-    title: "State Bank of India Act, 1955",
-    author: "Prashant Jha",
-    date: "November 1, 2025",
-    readTime: "8 min read",
-    comments: 0,
-    views: 1420,
-    published: true,
-    tags: ["banking", "banking law in India", "bankinglaw"],
-    excerpt: "Objective of the Act to establish the State Bank of India (SBI) as a public sector banking institution by taking over the business of the Imperial Bank of India...",
-    content: `
-
-<h3>STATE BANK OF INDIA ACT, 1955</h3>
-<h3>INTRODUCTION</h3>
-<p>Objective of the Act</p>
-<p>To establish the State Bank of India (SBI) as a public sector banking institution by taking over the business of the Imperial Bank of India,<br/>
-in order to extend banking facilities to rural and semi-urban areas and serve as an agent of the Reserve Bank of India (RBI) for government business.</p>
-<p>Imperial Bank to SBI”</p>
-<div class="table-responsive"><table class="blog-table"><thead><tr><th>Year</th><th>Event</th></tr></thead>
-<tbody>
-
-<tr>
-<td>1806</td>
-<td>Bank of Calcutta established</td>
-</tr>
-<tr>
-<td>1921</td>
-<td>Imperial Bank of India formed (merger of 3 Presidency Banks)</td>
-</tr>
-<tr>
-<td>1935</td>
-<td>RBI established</td>
-</tr>
-<tr>
-<td>1947</td>
-<td>India gained Independence</td>
-</tr>
-<tr>
-<td>1951</td>
-<td>Rural Credit Survey Committee recommended nationalization</td>
-</tr>
-<tr>
-<td>1955</td>
-<td>State Bank of India Act passed</td>
-</tr>
-<tr>
-<td>1 July 1955</td>
-<td>SBI formally started functioning</td>
-</tr>
-</tbody>
-</table></div>
-
-<h3>HISTORICAL BACKGROUND</h3>
-<div class="table-responsive"><table class="blog-table"><thead><tr><th>Period</th><th>Development</th><th>Explanation</th></tr></thead>
-<tbody>
-
-<tr>
-<td>Pre–1921</td>
-<td>Presidency Banks</td>
-<td>Three major banks: Bank of Bengal (1806), Bank of Bombay (1840), and Bank of Madras (1843).</td>
-</tr>
-<tr>
-<td>1921</td>
-<td>Formation of Imperial Bank of India</td>
-<td>These three banks were merged under the Imperial Bank of India Act, 1920.Imperial Bank functioned as a commercial and quasi-central bank.</td>
-</tr>
-<tr>
-<td>Post–Independence (1947–1955)</td>
-<td>National Need</td>
-<td>The Imperial Bank largely served urban and elite customers, neglecting rural credit and agricultural finance.</td>
-</tr>
-<tr>
-<td>1955</td>
-<td>Nationalization &amp; Establishment of SBI</td>
-<td>Government nationalized the Imperial Bank under the State Bank of India Act, 1955, creating the State Bank of India on 1 July 1955.</td>
-</tr>
-</tbody>
-</table></div>
-
-<p>PREAMBLE (Essence)</p>
-<p>“An Act to constitute the State Bank of India and to transfer to it the undertaking of the Imperial Bank of India, and to provide for other matters connected therewith or incidental thereto.”</p>
-<p>Keywords:</p>
-<ul>
-<li>Constitution of SBI</li>
-<li>Transfer of undertaking</li>
-<li>Government ownership</li>
-<li>Public purpose banking</li>
-</ul>
-<h3>AIMS AND OBJECTIVES</h3>
-<div class="table-responsive"><table class="blog-table"><thead><tr><th>Objective</th><th>Explanation</th></tr></thead>
-<tbody>
-
-<tr>
-<td>1. Nationalization of Imperial Bank</td>
-<td>To bring banking under government control and align it with national interests.</td>
-</tr>
-<tr>
-<td>2. Rural Expansion</td>
-<td>To extend credit facilities to rural and semi-urban areas neglected by private banks.</td>
-</tr>
-<tr>
-<td>3. Financial Inclusion</td>
-<td>To make banking accessible to farmers, small businesses, and weaker sections.</td>
-</tr>
-<tr>
-<td>4. Public Welfare Banking</td>
-<td>To operate not just for profit, but for the economic development of the country.</td>
-</tr>
-<tr>
-<td>5. Agency Role for RBI</td>
-<td>To assist RBI in government business — managing accounts, issuing currency, handling public debt.</td>
-</tr>
-</tbody>
-</table></div>
-
-<h3>STRUCTURE OF THE ACT</h3>
-<div class="table-responsive"><table class="blog-table"><thead><tr><th>Chapter</th><th>Subject</th><th>Key Focus Area</th></tr></thead>
-<tbody>
-
-<tr>
-<td>I</td>
-<td>Preliminary</td>
-<td>Short title, definitions, commencement.</td>
-</tr>
-<tr>
-<td>II</td>
-<td>Incorporation &amp; Capital</td>
-<td>Establishment, capital structure, legal personality.</td>
-</tr>
-<tr>
-<td>III</td>
-<td>Transfer of Undertaking</td>
-<td>Transfer of assets, liabilities, and employees from Imperial Bank.</td>
-</tr>
-<tr>
-<td>IV</td>
-<td>Shares and Shareholders</td>
-<td>Rights, voting, and government shareholding.</td>
-</tr>
-<tr>
-<td>V</td>
-<td>Management and Governance</td>
-<td>Central Board, Chairman, MDs, and Local Boards.</td>
-</tr>
-<tr>
-<td>VI</td>
-<td>Business of the State Bank</td>
-<td>Banking powers, limitations, and RBI agency role.</td>
-</tr>
-<tr>
-<td>VII</td>
-<td>Accounts, Audit, and Funds</td>
-<td>Financial discipline, reserves, and reporting.</td>
-</tr>
-<tr>
-<td>VIII</td>
-<td>Miscellaneous</td>
-<td>Administrative, legal, and transitional provisions.</td>
-</tr>
-</tbody>
-</table></div>
-
-<h3>LEGAL NATURE OF SBI</h3>
-<div class="table-responsive"><table class="blog-table"><thead><tr><th>Feature</th><th>Meaning</th></tr></thead>
-<tbody>
-
-<tr>
-<td>Body Corporate</td>
-<td>SBI is a legal entity — can sue or be sued.</td>
-</tr>
-<tr>
-<td>Government-Owned</td>
-<td>Central Government must hold at least 51% of its share capital.</td>
-</tr>
-<tr>
-<td>Statutory Bank</td>
-<td>Created by a Parliamentary Act, not by company registration.</td>
-</tr>
-<tr>
-<td>Public Purpose Institution</td>
-<td>Works for national economic growth, not merely private profit.</td>
-</tr>
-</tbody>
-</table></div>
-<p>Imperial Bank vs. State Bank of India”</p>
-<div class="table-responsive"><table class="blog-table"><thead><tr><th>Basis</th><th>Imperial Bank of India</th><th>State Bank of India</th></tr></thead>
-<tbody>
-
-<tr>
-<td>Ownership</td>
-<td>Private shareholders</td>
-<td>Government-controlled (public sector)</td>
-</tr>
-<tr>
-<td>Purpose</td>
-<td>Profit-making</td>
-<td>Public service and development</td>
-</tr>
-<tr>
-<td>Rural Banking</td>
-<td>Negligible</td>
-<td>Primary focus area</td>
-</tr>
-<tr>
-<td>Control</td>
-<td>Managed by private Board</td>
-<td>Managed by Central Board under Government</td>
-</tr>
-<tr>
-<td>Year of Establishment</td>
-<td>1921</td>
-<td>1955</td>
-</tr>
-<tr>
-<td>Legal Authority</td>
-<td>Imperial Bank of India Act, 1920</td>
-<td>State Bank of India Act, 1955</td>
-</tr>
-</tbody>
-</table></div>
-
-<p>Enactment:</p>
-<ul>
-<li>Name: State Bank of India Act, 1955</li>
-<li>Act No.: 23 of 1955</li>
-<li>Date of Enactment: 8 May 1955</li>
-<li>Came into Force: 1 July 1955</li>
-<li>Objective: To constitute the State Bank of India, to transfer to it the undertaking of the Imperial Bank of India, and to provide for matters connected therewith.</li>
-</ul>
-
-<h3>CHAPTER I – PRELIMINARY</h3>
-<p>Section 1 – Short Title and Commencement</p>
-<ol>
-<li>Short Title:<br/>
-The Act is called the State Bank of India Act, 1955.<br/>
-→ This gives the official name of the legislation.</li>
-<li>Commencement:
-<ul>
-<li>It came into force on 1st July, 1955,</li>
-<li>by a notification of the Central Government in the Official Gazette.</li>
-</ul>
-</li>
-</ol>
-<p>Section 2 – Definitions</p>
-<p>This section defines key terms used in the Act. Let’s simplify some of the most important ones:</p>
-<div class="table-responsive"><table class="blog-table"><thead><tr><th>Term</th><th>Meaning (Simplified)</th></tr></thead>
-<tbody>
-
-<tr>
-<td>Appointed Day</td>
-<td>The day the Act came into force → 1st July, 1955.</td>
-</tr>
-<tr>
-<td>Central Board</td>
-<td>The main governing body of SBI, also called Central Board of Directors. It controls and directs all affairs of the bank.</td>
-</tr>
-<tr>
-<td>Chairman</td>
-<td>Head of the Central Board. The top executive authority of SBI.</td>
-</tr>
-<tr>
-<td>Imperial Bank</td>
-<td>The old bank formed in 1921, whose business was transferred to SBI.</td>
-</tr>
-<tr>
-<td>Local Board</td>
-<td>Smaller boards constituted under Section 21 for different regions (e.g., Mumbai, Kolkata, Chennai).</td>
-</tr>
-<tr>
-<td>Reserve Bank</td>
-<td>Reserve Bank of India (RBI) established under RBI Act, 1934.</td>
-</tr>
-<tr>
-<td>State Bank</td>
-<td>Means the State Bank of India constituted under this Act.</td>
-</tr>
-<tr>
-<td>Workman</td>
-<td>Has the same meaning as in the Industrial Disputes Act, 1947 — includes non-managerial employees engaged in manual or clerical work.</td>
-</tr>
-</tbody>
-</table></div>
-<p><span class="legal-badge-icon lightbulb"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v1M12 21v1M4.22 4.22l.71.71M18.36 18.36l.71.71M1 12h1M21 12h1M4.22 19.78l.71-.71M18.36 5.64l.71-.71"/></svg></span> Purpose of Definitions:<br/>
-These terms create clarity and consistency in interpretation throughout the Act.</p>
-
-<p>CHAPTER II – INCORPORATION &amp; SHARE CAPITAL (Sections 3–5)</p>
-<p>Objective of Chapter II</p>
-<p>To provide the legal foundation for the establishment of the State Bank of India (SBI) and to define its capital structure, ownership, and basic corporate character.</p>
-<div class="table-responsive"><table class="blog-table"><thead><tr><th>Section No.</th><th>Section Title</th><th>Core Provision / Meaning</th></tr></thead>
-<tbody>
-
-<tr>
-<td>3</td>
-<td>Establishment of the State Bank of India</td>
-<td>• Constitutes the State Bank of India as a body corporate.<br/>
-• SBI has perpetual succession and a common seal.<br/>
-• It can sue and be sued in its own name.<br/>
-• Central Office to be at Mumbai (Bombay).</td>
-</tr>
-<tr>
-<td>4</td>
-<td>Authorised Capital of the State Bank</td>
-<td>• Total authorised capital of SBI shall be ₹5,000 crore, divided into 500 crore shares of ₹10 each.<br/>
-• Capital may be increased or reduced by the Central Government, in consultation with RBI, through notification.<br/>
-• Shares may be issued in physical or dematerialized form.</td>
-</tr>
-<tr>
-<td>5</td>
-<td>Issued Capital and Government Holding</td>
-<td>• The Central Government must always hold not less than 51% of the issued capital of SBI.<br/>
-• The remaining shares may be held by the public, financial institutions, or others.<br/>
-• Shares are freely transferable, subject to rules.</td>
-</tr>
-</tbody>
-</table></div>
-<p>CHAPTER III – TRANSFER OF UNDERTAKING (Sections 6–9)</p>
-<p>Objective of Chapter III</p>
-<p>To legally transfer the business, assets, liabilities, and employees of the Imperial Bank of India (1921–1955) to the newly established State Bank of India, ensuring continuity, employee protection, and public ownership.</p>
-<div class="table-responsive"><table class="blog-table"><thead><tr><th>Section No.</th><th>Section Title</th><th>Core Provision / Meaning</th></tr></thead>
-<tbody>
-
-<tr>
-<td>6</td>
-<td>Transfer of Assets and Liabilities</td>
-<td>• On the appointed day (1 July 1955), all assets, liabilities, contracts, and undertakings of the Imperial Bank automatically transfer to SBI.<br/>
-• No separate conveyance, deed, or assignment needed.<br/>
-• All legal proceedings by or against the Imperial Bank continue against SBI.</td>
-</tr>
-<tr>
-<td>7</td>
-<td>Transfer of Service of Employees</td>
-<td>• All employees of the Imperial Bank automatically become employees of SBI on the same terms and conditions.<br/>
-• No break in service or loss of benefits (salary, pension, leave, etc.).<br/>
-• Employees cannot claim compensation merely because of the transfer.</td>
-</tr>
-<tr>
-<td>8</td>
-<td>Provident and Pension Funds</td>
-<td>• All provident funds, pension funds, gratuity funds, and other staff welfare funds maintained by the Imperial Bank are transferred to SBI.<br/>
-• Funds continue to be managed for the same purpose and benefit of staff.</td>
-</tr>
-<tr>
-<td>9</td>
-<td>Compensation to Shareholders</td>
-<td>• Shareholders of the Imperial Bank are compensated for the transfer of their shares and interests.<br/>
-• Compensation is calculated as per First Schedule of the Act.<br/>
-• Payment method decided by the Central Government.</td>
-</tr>
-</tbody>
-</table></div>
-<p>CHAPTER IV – SHARES AND SHAREHOLDERS (Sections 10–15)</p>
-<p>Objective of Chapter IV</p>
-<p>To define the ownership structure, rights, and obligations of shareholders of the State Bank of India (SBI).<br/>
-This Chapter regulates transfer, voting, nomination, and recognition of shares, ensuring government control and investor protection.</p>
-
-<div class="table-responsive"><table class="blog-table"><thead><tr><th>Sec. No.</th><th>Section Title</th><th>Core Provision / Meaning</th></tr></thead>
-<tbody>
-
-<tr>
-<td>10</td>
-<td>Transferability of Shares</td>
-<td>• Shares of SBI are transferable, subject to rules framed by the Central Government and RBI.<br/>
-• The transfer must be registered in the books of SBI.<br/>
-• Transfer does not affect the Government’s minimum 51% shareholding.</td>
-</tr>
-<tr>
-<td>10A</td>
-<td>Nomination</td>
-<td>• A shareholder can nominate any person to whom shares will vest after their death.<br/>
-• Nominee becomes entitled to all rights upon shareholder’s death.<br/>
-• Nomination can be cancelled or varied at any time.</td>
-</tr>
-<tr>
-<td>11</td>
-<td>Voting Rights of Shareholders</td>
-<td>• Each shareholder has one vote per share held.<br/>
-• However, no shareholder other than the Central Government can exercise voting rights exceeding 10% of total voting rights.<br/>
-• Voting may be in person or by proxy.</td>
-</tr>
-<tr>
-<td>12</td>
-<td>Shares as Approved Securities</td>
-<td>• Shares of SBI are deemed “approved securities”under the Indian Trusts Act, 1882 and the Insurance Act, 1938.<br/>
-• This makes them eligible investments for trust funds, insurance companies, and other statutory bodies.</td>
-</tr>
-<tr>
-<td>13</td>
-<td>Register of Shareholders</td>
-<td>• SBI must maintain a Register of Shareholders, containing names, addresses, and shareholdings.<br/>
-• Inspection of the register is allowed as per regulations.</td>
-</tr>
-<tr>
-<td>13A</td>
-<td>Register of beneficial owner</td>
-<td>The register of beneficial owners maintained by depository under section 11 of depositories act 1996 shall be deemed to be a register of shareholders for the purpose of this act</td>
-</tr>
-<tr>
-<td>15</td>
-<td>Trusts Not Recognized</td>
-<td>• SBI will not recognize any trust (public or private) relating to its shares.<br/>
-• Only the registered holder is recognized as the shareholder for all purposes.</td>
-</tr>
-</tbody>
-</table></div>
-
-<p>CHAPTER V – MANAGEMENT (Sections 16–31A)</p>
-<p>Objective of Chapter V</p>
-<p>To lay down the organizational structure, composition, powers, and working of the Central and Local Boards of the State Bank of India (SBI).<br/>
-This chapter governs who manages the Bank, how they are appointed, their powers, tenure, and meeting procedures.</p>
-<div class="table-responsive"><table class="blog-table"><thead><tr><th>Sec. No.</th><th>Section Title</th><th>Core Provision / Meaning</th></tr></thead>
-<tbody>
-
-<tr>
-<td>16</td>
-<td>Offices and Branches</td>
-<td>• SBI shall have its Central Office at Mumbai (Bombay).<br/>
-• It may establish local head offices, branches, and agencies in India or abroad.<br/>
-• Opening or closing offices requires RBI approval.</td>
-</tr>
-<tr>
-<td>17</td>
-<td>Management of SBI</td>
-<td>• The general superintendence and directionof the bank’s affairs vest in the Central Board of Directors.<br/>
-• The Chairman is the Chief Executive Officer (CEO).</td>
-</tr>
-<tr>
-<td>18</td>
-<td>Directions by Central Government</td>
-<td>• The Central Government, after consultation with RBI, may issue policy directions to SBI in the public interest.<br/>
-• SBI is bound to comply.</td>
-</tr>
-<tr>
-<td>19</td>
-<td>Constitution of Central Board</td>
-<td>• The Central Board consists of:<br/>
-1. Chairman<br/>
-2. Managing Directors (up to 4)<br/>
-3. Official directors (nominated by Govt. and RBI)<br/>
-4. Non-official directors (elected shareholders, employee representatives, etc.)<br/>
-• Total strength and representation prescribed by law.</td>
-</tr>
-<tr>
-<td>19A</td>
-<td>Qualifications of Directors</td>
-<td>• Directors must possess adequate banking, finance, or business experience.<br/>
-• Persons of unsound mind, insolvent, or convicted of offence are disqualified.</td>
-</tr>
-<tr>
-<td>19B</td>
-<td>Additional Directors</td>
-<td>• RBI may appoint one or more additional directors on the Central Board in the interest of banking policy or public interest.</td>
-</tr>
-<tr>
-<td>20</td>
-<td>Term of Office</td>
-<td>• Term of office for directors, Chairman, and MDs fixed by Govt. (usually 3 years, extendable).<br/>
-• They may resign, retire, or be removedearlier by Govt.</td>
-</tr>
-<tr>
-<td>21</td>
-<td>Local Boards</td>
-<td>• SBI may establish Local Boards for specified areas.<br/>
-• Members appointed by Central Board with Govt. approval.<br/>
-• They advise on local banking needs.</td>
-</tr>
-<tr>
-<td>21A</td>
-<td>Powers of Local Boards</td>
-<td>• Local Boards perform functions delegated by Central Board.<br/>
-• Mostly advisory — on local lending, rural banking, etc.</td>
-</tr>
-<tr>
-<td>21B</td>
-<td>Committees of Local Boards</td>
-<td>• Local Boards may form committees to handle specific functions.<br/>
-• Subject to Central Board’s supervision.</td>
-</tr>
-<tr>
-<td>21C</td>
-<td>Advisory Committee for Associates</td>
-<td>• SBI may constitute Advisory Committees to guide operations of associate banks or local matters.</td>
-</tr>
-<tr>
-<td>22</td>
-<td>Disqualifications of Directors</td>
-<td>• Disqualified if:<br/>
-1. Of unsound mind or insolvent<br/>
-2. Convicted of moral turpitude<br/>
-3. Holds conflicting office or interest<br/>
-4. Misses meetings without valid reason</td>
-</tr>
-<tr>
-<td>23</td>
-<td>Vacation of Office</td>
-<td>• Director vacates office if disqualified, resigns, or becomes ineligible.</td>
-</tr>
-<tr>
-<td>24A</td>
-<td>Supersession of Central Board</td>
-<td>• Central Government may supersede the Central Board in public interest, after consultation with RBI.<br/>
-• During supersession, Govt. appoints interim administrators.</td>
-</tr>
-<tr>
-<td>25</td>
-<td>Casual Vacancies</td>
-<td>• Mid-term vacancies filled in same manner as original appointment.<br/>
-• Replacement serves only remainder of predecessor’s term.</td>
-</tr>
-<tr>
-<td>26</td>
-<td>Remuneration of Directors</td>
-<td>• Govt. fixes fees, allowances, and remuneration of directors, Chairman, and MDs (in consultation with RBI).</td>
-</tr>
-<tr>
-<td>27</td>
-<td>Powers and Remuneration of Chairman</td>
-<td>• Chairman = Chief Executive Officer (CEO).<br/>
-• Oversees day-to-day management.<br/>
-• Salary and powers fixed by Govt. + RBI.</td>
-</tr>
-<tr>
-<td>28</td>
-<td>[Omitted]</td>
-<td>Deleted by later amendment.</td>
-</tr>
-<tr>
-<td>29</td>
-<td>Powers and Remuneration of Managing Directors</td>
-<td>• MDs assist Chairman in executing policies.<br/>
-• Powers and pay fixed by Govt. + RBI.</td>
-</tr>
-<tr>
-<td>30</td>
-<td>Executive and Other Committees</td>
-<td>• Central Board may form committees (Executive, Audit, etc.) for specific functions.</td>
-</tr>
-<tr>
-<td>31</td>
-<td>Meetings of Central Board</td>
-<td>• Board meets regularly as per regulations.<br/>
-• Decisions by majority; Chairman has casting vote.</td>
-</tr>
-<tr>
-<td>31A</td>
-<td>Meetings of Local Boards</td>
-<td>• Local Boards meet periodically to discuss regional banking issues.<br/>
-• Their reports go to the Central Board.</td>
-</tr>
-</tbody>
-</table></div>
-<p>Two-tier Management System</p>
-<div class="table-responsive"><table class="blog-table"><thead><tr><th>Level</th><th>Body</th><th>Main Function</th></tr></thead>
-<tbody>
-
-<tr>
-<td>Central Level</td>
-<td>Central Board of Directors</td>
-<td>Overall policy, supervision, and management.</td>
-</tr>
-<tr>
-<td>Regional Level</td>
-<td>Local Boards</td>
-<td>Advisory and local implementation.</td>
-</tr>
-</tbody>
-</table></div>
-<p>Executive Hierarchy</p>
-<p>Chairman → Managing Directors → Committees → Regional/Local Boards.</p>
-<p>CHAPTER VI – BUSINESS OF THE STATE BANK (Sections 32–35)</p>
-<p>Objective of Chapter VI</p>
-<p>To define the functions, powers, and limitations of the State Bank of India in conducting its banking business, and to specify its role as the agent of the Reserve Bank of India (RBI).</p>
-<p>This chapter ensures that SBI operates both as a commercial bank and as a public sector institution serving national financial objectives.</p>
-<div class="table-responsive"><table class="blog-table"><thead><tr><th>Sec. No.</th><th>Section Title</th><th>Core Provision / Meaning</th></tr></thead>
-<tbody>
-
-<tr>
-<td>32</td>
-<td>State Bank to Act as Agent of the Reserve Bank</td>
-<td>• SBI acts as the agent of RBI wherever RBI requires.<br/>
-• Performs functions like:<br/>
-→ Managing Government business(receipts, payments, public debt).<br/>
-→ Conducting currency and remittance services.<br/>
-• RBI may remunerate SBI for its services.</td>
-</tr>
-<tr>
-<td>33</td>
-<td>Other Business Which SBI May Transact</td>
-<td>• SBI may engage in all ordinary banking business, such as:<br/>
-→ Accepting deposits<br/>
-→ Granting loans, advances, and overdrafts<br/>
-→ Issuing letters of credit, drafts, cheques<br/>
-→ Investing in securities<br/>
-→ Managing provident funds, trusts, etc.</td>
-</tr>
-<tr>
-<td>34</td>
-<td>Prohibited Business</td>
-<td>• SBI cannot engage in:<br/>
-→ Trading or buying/selling goods for profit<br/>
-→ Owning immovable property (except for business use)<br/>
-→ Making unsecured loans to directors or related persons.<br/>
-• These restrictions protect public funds and prevent conflicts of interest.</td>
-</tr>
-<tr>
-<td>35</td>
-<td>Power to Acquire Business of Other Banks</td>
-<td>• SBI may acquire the business or assets of any other bank with RBI and Government approval.<br/>
-• Rights and obligations of the acquired bank become those of SBI.</td>
-</tr>
-<tr>
-<td>35A</td>
-<td>Appointment of director by Sbi</td>
-<td>If Sbi has an agreement with company to appoint directors, that appointment is valid, even if conflict with company law or other companies rules, such director:
-<p>·       Serve at Sbi pleasure( Can be removed any time)</p>
-<p>·       Are not personally liable for good faith, action</p>
-<p>·       Are not subject to retirement or age/ Share limit</p></td>
-</tr>
-</tbody>
-</table></div>
-<p>CHAPTER VII – ACCOUNTS, AUDIT AND FUNDS (Sections 36–42)</p>
-<p>Objective of Chapter VII</p>
-<p>To ensure financial discipline, transparency, and accountability in the functioning of the State Bank of India.<br/>
-It prescribes how SBI must maintain its accounts, manage reserves, distribute profits, and undergo statutory audits.</p>
-<div class="table-responsive"><table class="blog-table"><thead><tr><th>Sec. No.</th><th>Section Title</th><th>Core Provision / Meaning</th></tr></thead>
-<tbody>
-
-<tr>
-<td>36
-<p>37</p></td>
-<td>Funds and Reserves</td>
-<td>• SBI shall create and maintain certain funds, such as:<br/>
-→ Reserve Fund for contingencies.<br/>
-→ Depreciation Fund for assets.<br/>
-→ Bad Debt Reserve.<br/>
-→ Integration and Development Fund (for rural and small sector development).</td>
-</tr>
-<tr>
-<td>38</td>
-<td>Disposal of Profits</td>
-<td>• After paying expenses, losses, and taxes, SBI shall:<br/>
-→ Transfer a portion of profits to Reserve Fund.<br/>
-→ Pay dividend to shareholders (including Govt.).<br/>
-→ Transfer balance to General Reserve or Development Funds.</td>
-</tr>
-<tr>
-<td>39</td>
-<td>Accounts and Balance Sheet</td>
-<td>• SBI must prepare its annual accounts and balance sheet at the end of each accounting year (31st March).<br/>
-• Must follow prescribed accounting standardsapproved by RBI and Government.</td>
-</tr>
-<tr>
-<td>41</td>
-<td>Audit</td>
-<td>• Accounts of SBI shall be audited by auditorsappointed by the Central Government in consultation with the RBI.<br/>
-• Auditor’s report submitted to Central Board and Government.</td>
-</tr>
-<tr>
-<td>40</td>
-<td>Returns</td>
-<td>• SBI shall submit periodic returns and statements to RBI regarding its assets, liabilities, and operations.<br/>
-• Enables RBI to assess SBI’s monetary position and compliance.</td>
-</tr>
-<tr>
-<td>42</td>
-<td>General Meeting and Discussion Balance Sheet</td>
-<td>·       SBI hold general meeting of shareholders every year
-<p>·       The audited balance sheet and profit reports are discussed in the meeting</p>
-<p>·       Shareholder can ask questions and make suggestions</p></td>
-</tr>
-</tbody>
-</table></div>
-<p>CHAPTER VIII – MISCELLANEOUS PROVISIONS (Sections 43–57)</p>
-<p>Objective of Chapter VIII</p>
-<p>This chapter deals with administrative, legal, and transitional provisions of the Act.<br/>
-It ensures discipline, secrecy, continuity, and regulatory control in the functioning of the State Bank of India after its establishment.</p>
-<div class="table-responsive"><table class="blog-table"><thead><tr><th>Sec. No.</th><th>Section Title</th><th>Core Provision / Meaning</th></tr></thead>
-<tbody>
-
-<tr>
-<td>43</td>
-<td>Appointment of Officers and Employees</td>
-<td>• SBI may appoint officers and staff as necessary for its functioning.<br/>
-• Appointments made as per service regulationsframed by the Central Board with Government approval.</td>
-</tr>
-<tr>
-<td>44</td>
-<td>Obligation of Fidelity and Secrecy</td>
-<td>• All SBI officers and employees must maintain confidentiality regarding customer accounts and bank affairs.<br/>
-• Breach of secrecy is an offence under law.</td>
-</tr>
-<tr>
-<td>45</td>
-<td>Bar to Liquidation</td>
-<td>• SBI cannot be voluntarily wound up or liquidatedunder company law.<br/>
-• Only Parliament can decide to dissolve or restructure SBI.</td>
-</tr>
-<tr>
-<td>46</td>
-<td>Transfer of Employees from Subsidiary Banks</td>
-<td>• Employees of former Imperial Bank or subsidiaries transferred to SBI shall continue under same service conditions, unless altered by consent.</td>
-</tr>
-<tr>
-<td>47</td>
-<td>Delegation of Powers</td>
-<td>• Central Board may delegate powers to Chairman, MDs, or other officers for efficient management.</td>
-</tr>
-<tr>
-<td>49</td>
-<td>Power of Central Government to Make Rules</td>
-<td>• The Central Government may make rules to carry out the purposes of the Act, in consultation with the RBI.</td>
-</tr>
-<tr>
-<td>50</td>
-<td>Power of Central Board to Make Regulations</td>
-<td>• The Central Board may make regulationsconsistent with the Act and rules, covering:<br/>
-→ Service conditions<br/>
-→ Conduct of business<br/>
-→ Meetings and procedures</td>
-</tr>
-<tr>
-<td>51</td>
-<td> Requirement of foreign law,</td>
-<td>• if any foreign country law does not automatically transfer the imperial bank, asset to Sbi, then the imperial Bank must take necessary step under that country law to complete the transfer
-<p>Purpose:-  to ensure that foreign asset and liabilities of imperial bank legally pass to Sbi.</p></td>
-</tr>
-<tr>
-<td>57</td>
-<td>Dissolution of Imperial Bank of India</td>
-<td>• The Imperial Bank of India stands dissolved upon the establishment of SBI.<br/>
-• All its assets, liabilities, and undertakings transferred to SBI.</td>
-</tr>
-<tr>
-<td>55</td>
-<td>No proceeding against imperial Bank after appointed day</td>
-<td>After the appointment day, 1 July 1955
-<p>No one can file case or claim against imperial Bank or its employee in India</p></td>
-</tr>
-<tr>
-<td>56</td>
-<td>Transitional and Savings Provisions</td>
-<td>• Any contracts, rights, or obligations of the Imperial Bank continue with SBI.<br/>
-• Legal continuity ensured.</td>
-</tr>
-</tbody>
-</table></div>
-
-
-    `
+    "id": "post-1",
+    "slug": "state-bank-of-india-act-1955",
+    "category": "Banking Law",
+    "categoryColor": "#3b82f6",
+    "title": "State Bank of India Act, 1955",
+    "author": "Prashant Jha",
+    "date": "November 1, 2025",
+    "readTime": "8 min read",
+    "comments": 0,
+    "views": 1420,
+    "published": true,
+    "tags": [
+      "banking",
+      "banking law in India",
+      "bankinglaw"
+    ],
+    "excerpt": "Objective of the Act to establish the State Bank of India (SBI) as a public sector banking institution by taking over the business of the Imperial Bank of India...",
+    "content": "\n\n<h3>STATE BANK OF INDIA ACT, 1955</h3>\n<h3>INTRODUCTION</h3>\n<p>Objective of the Act</p>\n<p>To establish the State Bank of India (SBI) as a public sector banking institution by taking over the business of the Imperial Bank of India,<br/>\nin order to extend banking facilities to rural and semi-urban areas and serve as an agent of the Reserve Bank of India (RBI) for government business.</p>\n<p>Imperial Bank to SBI”</p>\n<div class=\"table-responsive\"><table class=\"blog-table\"><thead><tr><th>Year</th><th>Event</th></tr></thead>\n<tbody>\n\n<tr>\n<td>1806</td>\n<td>Bank of Calcutta established</td>\n</tr>\n<tr>\n<td>1921</td>\n<td>Imperial Bank of India formed (merger of 3 Presidency Banks)</td>\n</tr>\n<tr>\n<td>1935</td>\n<td>RBI established</td>\n</tr>\n<tr>\n<td>1947</td>\n<td>India gained Independence</td>\n</tr>\n<tr>\n<td>1951</td>\n<td>Rural Credit Survey Committee recommended nationalization</td>\n</tr>\n<tr>\n<td>1955</td>\n<td>State Bank of India Act passed</td>\n</tr>\n<tr>\n<td>1 July 1955</td>\n<td>SBI formally started functioning</td>\n</tr>\n</tbody>\n</table></div>\n\n<h3>HISTORICAL BACKGROUND</h3>\n<div class=\"table-responsive\"><table class=\"blog-table\"><thead><tr><th>Period</th><th>Development</th><th>Explanation</th></tr></thead>\n<tbody>\n\n<tr>\n<td>Pre–1921</td>\n<td>Presidency Banks</td>\n<td>Three major banks: Bank of Bengal (1806), Bank of Bombay (1840), and Bank of Madras (1843).</td>\n</tr>\n<tr>\n<td>1921</td>\n<td>Formation of Imperial Bank of India</td>\n<td>These three banks were merged under the Imperial Bank of India Act, 1920.Imperial Bank functioned as a commercial and quasi-central bank.</td>\n</tr>\n<tr>\n<td>Post–Independence (1947–1955)</td>\n<td>National Need</td>\n<td>The Imperial Bank largely served urban and elite customers, neglecting rural credit and agricultural finance.</td>\n</tr>\n<tr>\n<td>1955</td>\n<td>Nationalization &amp; Establishment of SBI</td>\n<td>Government nationalized the Imperial Bank under the State Bank of India Act, 1955, creating the State Bank of India on 1 July 1955.</td>\n</tr>\n</tbody>\n</table></div>\n\n<p>PREAMBLE (Essence)</p>\n<p>“An Act to constitute the State Bank of India and to transfer to it the undertaking of the Imperial Bank of India, and to provide for other matters connected therewith or incidental thereto.”</p>\n<p>Keywords:</p>\n<ul>\n<li>Constitution of SBI</li>\n<li>Transfer of undertaking</li>\n<li>Government ownership</li>\n<li>Public purpose banking</li>\n</ul>\n<h3>AIMS AND OBJECTIVES</h3>\n<div class=\"table-responsive\"><table class=\"blog-table\"><thead><tr><th>Objective</th><th>Explanation</th></tr></thead>\n<tbody>\n\n<tr>\n<td>1. Nationalization of Imperial Bank</td>\n<td>To bring banking under government control and align it with national interests.</td>\n</tr>\n<tr>\n<td>2. Rural Expansion</td>\n<td>To extend credit facilities to rural and semi-urban areas neglected by private banks.</td>\n</tr>\n<tr>\n<td>3. Financial Inclusion</td>\n<td>To make banking accessible to farmers, small businesses, and weaker sections.</td>\n</tr>\n<tr>\n<td>4. Public Welfare Banking</td>\n<td>To operate not just for profit, but for the economic development of the country.</td>\n</tr>\n<tr>\n<td>5. Agency Role for RBI</td>\n<td>To assist RBI in government business — managing accounts, issuing currency, handling public debt.</td>\n</tr>\n</tbody>\n</table></div>\n\n<h3>STRUCTURE OF THE ACT</h3>\n<div class=\"table-responsive\"><table class=\"blog-table\"><thead><tr><th>Chapter</th><th>Subject</th><th>Key Focus Area</th></tr></thead>\n<tbody>\n\n<tr>\n<td>I</td>\n<td>Preliminary</td>\n<td>Short title, definitions, commencement.</td>\n</tr>\n<tr>\n<td>II</td>\n<td>Incorporation &amp; Capital</td>\n<td>Establishment, capital structure, legal personality.</td>\n</tr>\n<tr>\n<td>III</td>\n<td>Transfer of Undertaking</td>\n<td>Transfer of assets, liabilities, and employees from Imperial Bank.</td>\n</tr>\n<tr>\n<td>IV</td>\n<td>Shares and Shareholders</td>\n<td>Rights, voting, and government shareholding.</td>\n</tr>\n<tr>\n<td>V</td>\n<td>Management and Governance</td>\n<td>Central Board, Chairman, MDs, and Local Boards.</td>\n</tr>\n<tr>\n<td>VI</td>\n<td>Business of the State Bank</td>\n<td>Banking powers, limitations, and RBI agency role.</td>\n</tr>\n<tr>\n<td>VII</td>\n<td>Accounts, Audit, and Funds</td>\n<td>Financial discipline, reserves, and reporting.</td>\n</tr>\n<tr>\n<td>VIII</td>\n<td>Miscellaneous</td>\n<td>Administrative, legal, and transitional provisions.</td>\n</tr>\n</tbody>\n</table></div>\n\n<h3>LEGAL NATURE OF SBI</h3>\n<div class=\"table-responsive\"><table class=\"blog-table\"><thead><tr><th>Feature</th><th>Meaning</th></tr></thead>\n<tbody>\n\n<tr>\n<td>Body Corporate</td>\n<td>SBI is a legal entity — can sue or be sued.</td>\n</tr>\n<tr>\n<td>Government-Owned</td>\n<td>Central Government must hold at least 51% of its share capital.</td>\n</tr>\n<tr>\n<td>Statutory Bank</td>\n<td>Created by a Parliamentary Act, not by company registration.</td>\n</tr>\n<tr>\n<td>Public Purpose Institution</td>\n<td>Works for national economic growth, not merely private profit.</td>\n</tr>\n</tbody>\n</table></div>\n<p>Imperial Bank vs. State Bank of India”</p>\n<div class=\"table-responsive\"><table class=\"blog-table\"><thead><tr><th>Basis</th><th>Imperial Bank of India</th><th>State Bank of India</th></tr></thead>\n<tbody>\n\n<tr>\n<td>Ownership</td>\n<td>Private shareholders</td>\n<td>Government-controlled (public sector)</td>\n</tr>\n<tr>\n<td>Purpose</td>\n<td>Profit-making</td>\n<td>Public service and development</td>\n</tr>\n<tr>\n<td>Rural Banking</td>\n<td>Negligible</td>\n<td>Primary focus area</td>\n</tr>\n<tr>\n<td>Control</td>\n<td>Managed by private Board</td>\n<td>Managed by Central Board under Government</td>\n</tr>\n<tr>\n<td>Year of Establishment</td>\n<td>1921</td>\n<td>1955</td>\n</tr>\n<tr>\n<td>Legal Authority</td>\n<td>Imperial Bank of India Act, 1920</td>\n<td>State Bank of India Act, 1955</td>\n</tr>\n</tbody>\n</table></div>\n\n<p>Enactment:</p>\n<ul>\n<li>Name: State Bank of India Act, 1955</li>\n<li>Act No.: 23 of 1955</li>\n<li>Date of Enactment: 8 May 1955</li>\n<li>Came into Force: 1 July 1955</li>\n<li>Objective: To constitute the State Bank of India, to transfer to it the undertaking of the Imperial Bank of India, and to provide for matters connected therewith.</li>\n</ul>\n\n<h3>CHAPTER I – PRELIMINARY</h3>\n<p>Section 1 – Short Title and Commencement</p>\n<ol>\n<li>Short Title:<br/>\nThe Act is called the State Bank of India Act, 1955.<br/>\n→ This gives the official name of the legislation.</li>\n<li>Commencement:\n<ul>\n<li>It came into force on 1st July, 1955,</li>\n<li>by a notification of the Central Government in the Official Gazette.</li>\n</ul>\n</li>\n</ol>\n<p>Section 2 – Definitions</p>\n<p>This section defines key terms used in the Act. Let’s simplify some of the most important ones:</p>\n<div class=\"table-responsive\"><table class=\"blog-table\"><thead><tr><th>Term</th><th>Meaning (Simplified)</th></tr></thead>\n<tbody>\n\n<tr>\n<td>Appointed Day</td>\n<td>The day the Act came into force → 1st July, 1955.</td>\n</tr>\n<tr>\n<td>Central Board</td>\n<td>The main governing body of SBI, also called Central Board of Directors. It controls and directs all affairs of the bank.</td>\n</tr>\n<tr>\n<td>Chairman</td>\n<td>Head of the Central Board. The top executive authority of SBI.</td>\n</tr>\n<tr>\n<td>Imperial Bank</td>\n<td>The old bank formed in 1921, whose business was transferred to SBI.</td>\n</tr>\n<tr>\n<td>Local Board</td>\n<td>Smaller boards constituted under Section 21 for different regions (e.g., Mumbai, Kolkata, Chennai).</td>\n</tr>\n<tr>\n<td>Reserve Bank</td>\n<td>Reserve Bank of India (RBI) established under RBI Act, 1934.</td>\n</tr>\n<tr>\n<td>State Bank</td>\n<td>Means the State Bank of India constituted under this Act.</td>\n</tr>\n<tr>\n<td>Workman</td>\n<td>Has the same meaning as in the Industrial Disputes Act, 1947 — includes non-managerial employees engaged in manual or clerical work.</td>\n</tr>\n</tbody>\n</table></div>\n<p><span class=\"legal-badge-icon lightbulb\"><svg width=\"13\" height=\"13\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"><path d=\"M12 2v1M12 21v1M4.22 4.22l.71.71M18.36 18.36l.71.71M1 12h1M21 12h1M4.22 19.78l.71-.71M18.36 5.64l.71-.71\"/></svg></span> Purpose of Definitions:<br/>\nThese terms create clarity and consistency in interpretation throughout the Act.</p>\n\n<p>CHAPTER II – INCORPORATION &amp; SHARE CAPITAL (Sections 3–5)</p>\n<p>Objective of Chapter II</p>\n<p>To provide the legal foundation for the establishment of the State Bank of India (SBI) and to define its capital structure, ownership, and basic corporate character.</p>\n<div class=\"table-responsive\"><table class=\"blog-table\"><thead><tr><th>Section No.</th><th>Section Title</th><th>Core Provision / Meaning</th></tr></thead>\n<tbody>\n\n<tr>\n<td>3</td>\n<td>Establishment of the State Bank of India</td>\n<td>• Constitutes the State Bank of India as a body corporate.<br/>\n• SBI has perpetual succession and a common seal.<br/>\n• It can sue and be sued in its own name.<br/>\n• Central Office to be at Mumbai (Bombay).</td>\n</tr>\n<tr>\n<td>4</td>\n<td>Authorised Capital of the State Bank</td>\n<td>• Total authorised capital of SBI shall be ₹5,000 crore, divided into 500 crore shares of ₹10 each.<br/>\n• Capital may be increased or reduced by the Central Government, in consultation with RBI, through notification.<br/>\n• Shares may be issued in physical or dematerialized form.</td>\n</tr>\n<tr>\n<td>5</td>\n<td>Issued Capital and Government Holding</td>\n<td>• The Central Government must always hold not less than 51% of the issued capital of SBI.<br/>\n• The remaining shares may be held by the public, financial institutions, or others.<br/>\n• Shares are freely transferable, subject to rules.</td>\n</tr>\n</tbody>\n</table></div>\n<p>CHAPTER III – TRANSFER OF UNDERTAKING (Sections 6–9)</p>\n<p>Objective of Chapter III</p>\n<p>To legally transfer the business, assets, liabilities, and employees of the Imperial Bank of India (1921–1955) to the newly established State Bank of India, ensuring continuity, employee protection, and public ownership.</p>\n<div class=\"table-responsive\"><table class=\"blog-table\"><thead><tr><th>Section No.</th><th>Section Title</th><th>Core Provision / Meaning</th></tr></thead>\n<tbody>\n\n<tr>\n<td>6</td>\n<td>Transfer of Assets and Liabilities</td>\n<td>• On the appointed day (1 July 1955), all assets, liabilities, contracts, and undertakings of the Imperial Bank automatically transfer to SBI.<br/>\n• No separate conveyance, deed, or assignment needed.<br/>\n• All legal proceedings by or against the Imperial Bank continue against SBI.</td>\n</tr>\n<tr>\n<td>7</td>\n<td>Transfer of Service of Employees</td>\n<td>• All employees of the Imperial Bank automatically become employees of SBI on the same terms and conditions.<br/>\n• No break in service or loss of benefits (salary, pension, leave, etc.).<br/>\n• Employees cannot claim compensation merely because of the transfer.</td>\n</tr>\n<tr>\n<td>8</td>\n<td>Provident and Pension Funds</td>\n<td>• All provident funds, pension funds, gratuity funds, and other staff welfare funds maintained by the Imperial Bank are transferred to SBI.<br/>\n• Funds continue to be managed for the same purpose and benefit of staff.</td>\n</tr>\n<tr>\n<td>9</td>\n<td>Compensation to Shareholders</td>\n<td>• Shareholders of the Imperial Bank are compensated for the transfer of their shares and interests.<br/>\n• Compensation is calculated as per First Schedule of the Act.<br/>\n• Payment method decided by the Central Government.</td>\n</tr>\n</tbody>\n</table></div>\n<p>CHAPTER IV – SHARES AND SHAREHOLDERS (Sections 10–15)</p>\n<p>Objective of Chapter IV</p>\n<p>To define the ownership structure, rights, and obligations of shareholders of the State Bank of India (SBI).<br/>\nThis Chapter regulates transfer, voting, nomination, and recognition of shares, ensuring government control and investor protection.</p>\n\n<div class=\"table-responsive\"><table class=\"blog-table\"><thead><tr><th>Sec. No.</th><th>Section Title</th><th>Core Provision / Meaning</th></tr></thead>\n<tbody>\n\n<tr>\n<td>10</td>\n<td>Transferability of Shares</td>\n<td>• Shares of SBI are transferable, subject to rules framed by the Central Government and RBI.<br/>\n• The transfer must be registered in the books of SBI.<br/>\n• Transfer does not affect the Government’s minimum 51% shareholding.</td>\n</tr>\n<tr>\n<td>10A</td>\n<td>Nomination</td>\n<td>• A shareholder can nominate any person to whom shares will vest after their death.<br/>\n• Nominee becomes entitled to all rights upon shareholder’s death.<br/>\n• Nomination can be cancelled or varied at any time.</td>\n</tr>\n<tr>\n<td>11</td>\n<td>Voting Rights of Shareholders</td>\n<td>• Each shareholder has one vote per share held.<br/>\n• However, no shareholder other than the Central Government can exercise voting rights exceeding 10% of total voting rights.<br/>\n• Voting may be in person or by proxy.</td>\n</tr>\n<tr>\n<td>12</td>\n<td>Shares as Approved Securities</td>\n<td>• Shares of SBI are deemed “approved securities”under the Indian Trusts Act, 1882 and the Insurance Act, 1938.<br/>\n• This makes them eligible investments for trust funds, insurance companies, and other statutory bodies.</td>\n</tr>\n<tr>\n<td>13</td>\n<td>Register of Shareholders</td>\n<td>• SBI must maintain a Register of Shareholders, containing names, addresses, and shareholdings.<br/>\n• Inspection of the register is allowed as per regulations.</td>\n</tr>\n<tr>\n<td>13A</td>\n<td>Register of beneficial owner</td>\n<td>The register of beneficial owners maintained by depository under section 11 of depositories act 1996 shall be deemed to be a register of shareholders for the purpose of this act</td>\n</tr>\n<tr>\n<td>15</td>\n<td>Trusts Not Recognized</td>\n<td>• SBI will not recognize any trust (public or private) relating to its shares.<br/>\n• Only the registered holder is recognized as the shareholder for all purposes.</td>\n</tr>\n</tbody>\n</table></div>\n\n<p>CHAPTER V – MANAGEMENT (Sections 16–31A)</p>\n<p>Objective of Chapter V</p>\n<p>To lay down the organizational structure, composition, powers, and working of the Central and Local Boards of the State Bank of India (SBI).<br/>\nThis chapter governs who manages the Bank, how they are appointed, their powers, tenure, and meeting procedures.</p>\n<div class=\"table-responsive\"><table class=\"blog-table\"><thead><tr><th>Sec. No.</th><th>Section Title</th><th>Core Provision / Meaning</th></tr></thead>\n<tbody>\n\n<tr>\n<td>16</td>\n<td>Offices and Branches</td>\n<td>• SBI shall have its Central Office at Mumbai (Bombay).<br/>\n• It may establish local head offices, branches, and agencies in India or abroad.<br/>\n• Opening or closing offices requires RBI approval.</td>\n</tr>\n<tr>\n<td>17</td>\n<td>Management of SBI</td>\n<td>• The general superintendence and directionof the bank’s affairs vest in the Central Board of Directors.<br/>\n• The Chairman is the Chief Executive Officer (CEO).</td>\n</tr>\n<tr>\n<td>18</td>\n<td>Directions by Central Government</td>\n<td>• The Central Government, after consultation with RBI, may issue policy directions to SBI in the public interest.<br/>\n• SBI is bound to comply.</td>\n</tr>\n<tr>\n<td>19</td>\n<td>Constitution of Central Board</td>\n<td>• The Central Board consists of:<br/>\n1. Chairman<br/>\n2. Managing Directors (up to 4)<br/>\n3. Official directors (nominated by Govt. and RBI)<br/>\n4. Non-official directors (elected shareholders, employee representatives, etc.)<br/>\n• Total strength and representation prescribed by law.</td>\n</tr>\n<tr>\n<td>19A</td>\n<td>Qualifications of Directors</td>\n<td>• Directors must possess adequate banking, finance, or business experience.<br/>\n• Persons of unsound mind, insolvent, or convicted of offence are disqualified.</td>\n</tr>\n<tr>\n<td>19B</td>\n<td>Additional Directors</td>\n<td>• RBI may appoint one or more additional directors on the Central Board in the interest of banking policy or public interest.</td>\n</tr>\n<tr>\n<td>20</td>\n<td>Term of Office</td>\n<td>• Term of office for directors, Chairman, and MDs fixed by Govt. (usually 3 years, extendable).<br/>\n• They may resign, retire, or be removedearlier by Govt.</td>\n</tr>\n<tr>\n<td>21</td>\n<td>Local Boards</td>\n<td>• SBI may establish Local Boards for specified areas.<br/>\n• Members appointed by Central Board with Govt. approval.<br/>\n• They advise on local banking needs.</td>\n</tr>\n<tr>\n<td>21A</td>\n<td>Powers of Local Boards</td>\n<td>• Local Boards perform functions delegated by Central Board.<br/>\n• Mostly advisory — on local lending, rural banking, etc.</td>\n</tr>\n<tr>\n<td>21B</td>\n<td>Committees of Local Boards</td>\n<td>• Local Boards may form committees to handle specific functions.<br/>\n• Subject to Central Board’s supervision.</td>\n</tr>\n<tr>\n<td>21C</td>\n<td>Advisory Committee for Associates</td>\n<td>• SBI may constitute Advisory Committees to guide operations of associate banks or local matters.</td>\n</tr>\n<tr>\n<td>22</td>\n<td>Disqualifications of Directors</td>\n<td>• Disqualified if:<br/>\n1. Of unsound mind or insolvent<br/>\n2. Convicted of moral turpitude<br/>\n3. Holds conflicting office or interest<br/>\n4. Misses meetings without valid reason</td>\n</tr>\n<tr>\n<td>23</td>\n<td>Vacation of Office</td>\n<td>• Director vacates office if disqualified, resigns, or becomes ineligible.</td>\n</tr>\n<tr>\n<td>24A</td>\n<td>Supersession of Central Board</td>\n<td>• Central Government may supersede the Central Board in public interest, after consultation with RBI.<br/>\n• During supersession, Govt. appoints interim administrators.</td>\n</tr>\n<tr>\n<td>25</td>\n<td>Casual Vacancies</td>\n<td>• Mid-term vacancies filled in same manner as original appointment.<br/>\n• Replacement serves only remainder of predecessor’s term.</td>\n</tr>\n<tr>\n<td>26</td>\n<td>Remuneration of Directors</td>\n<td>• Govt. fixes fees, allowances, and remuneration of directors, Chairman, and MDs (in consultation with RBI).</td>\n</tr>\n<tr>\n<td>27</td>\n<td>Powers and Remuneration of Chairman</td>\n<td>• Chairman = Chief Executive Officer (CEO).<br/>\n• Oversees day-to-day management.<br/>\n• Salary and powers fixed by Govt. + RBI.</td>\n</tr>\n<tr>\n<td>28</td>\n<td>[Omitted]</td>\n<td>Deleted by later amendment.</td>\n</tr>\n<tr>\n<td>29</td>\n<td>Powers and Remuneration of Managing Directors</td>\n<td>• MDs assist Chairman in executing policies.<br/>\n• Powers and pay fixed by Govt. + RBI.</td>\n</tr>\n<tr>\n<td>30</td>\n<td>Executive and Other Committees</td>\n<td>• Central Board may form committees (Executive, Audit, etc.) for specific functions.</td>\n</tr>\n<tr>\n<td>31</td>\n<td>Meetings of Central Board</td>\n<td>• Board meets regularly as per regulations.<br/>\n• Decisions by majority; Chairman has casting vote.</td>\n</tr>\n<tr>\n<td>31A</td>\n<td>Meetings of Local Boards</td>\n<td>• Local Boards meet periodically to discuss regional banking issues.<br/>\n• Their reports go to the Central Board.</td>\n</tr>\n</tbody>\n</table></div>\n<p>Two-tier Management System</p>\n<div class=\"table-responsive\"><table class=\"blog-table\"><thead><tr><th>Level</th><th>Body</th><th>Main Function</th></tr></thead>\n<tbody>\n\n<tr>\n<td>Central Level</td>\n<td>Central Board of Directors</td>\n<td>Overall policy, supervision, and management.</td>\n</tr>\n<tr>\n<td>Regional Level</td>\n<td>Local Boards</td>\n<td>Advisory and local implementation.</td>\n</tr>\n</tbody>\n</table></div>\n<p>Executive Hierarchy</p>\n<p>Chairman → Managing Directors → Committees → Regional/Local Boards.</p>\n<p>CHAPTER VI – BUSINESS OF THE STATE BANK (Sections 32–35)</p>\n<p>Objective of Chapter VI</p>\n<p>To define the functions, powers, and limitations of the State Bank of India in conducting its banking business, and to specify its role as the agent of the Reserve Bank of India (RBI).</p>\n<p>This chapter ensures that SBI operates both as a commercial bank and as a public sector institution serving national financial objectives.</p>\n<div class=\"table-responsive\"><table class=\"blog-table\"><thead><tr><th>Sec. No.</th><th>Section Title</th><th>Core Provision / Meaning</th></tr></thead>\n<tbody>\n\n<tr>\n<td>32</td>\n<td>State Bank to Act as Agent of the Reserve Bank</td>\n<td>• SBI acts as the agent of RBI wherever RBI requires.<br/>\n• Performs functions like:<br/>\n→ Managing Government business(receipts, payments, public debt).<br/>\n→ Conducting currency and remittance services.<br/>\n• RBI may remunerate SBI for its services.</td>\n</tr>\n<tr>\n<td>33</td>\n<td>Other Business Which SBI May Transact</td>\n<td>• SBI may engage in all ordinary banking business, such as:<br/>\n→ Accepting deposits<br/>\n→ Granting loans, advances, and overdrafts<br/>\n→ Issuing letters of credit, drafts, cheques<br/>\n→ Investing in securities<br/>\n→ Managing provident funds, trusts, etc.</td>\n</tr>\n<tr>\n<td>34</td>\n<td>Prohibited Business</td>\n<td>• SBI cannot engage in:<br/>\n→ Trading or buying/selling goods for profit<br/>\n→ Owning immovable property (except for business use)<br/>\n→ Making unsecured loans to directors or related persons.<br/>\n• These restrictions protect public funds and prevent conflicts of interest.</td>\n</tr>\n<tr>\n<td>35</td>\n<td>Power to Acquire Business of Other Banks</td>\n<td>• SBI may acquire the business or assets of any other bank with RBI and Government approval.<br/>\n• Rights and obligations of the acquired bank become those of SBI.</td>\n</tr>\n<tr>\n<td>35A</td>\n<td>Appointment of director by Sbi</td>\n<td>If Sbi has an agreement with company to appoint directors, that appointment is valid, even if conflict with company law or other companies rules, such director:\n<p>·       Serve at Sbi pleasure( Can be removed any time)</p>\n<p>·       Are not personally liable for good faith, action</p>\n<p>·       Are not subject to retirement or age/ Share limit</p></td>\n</tr>\n</tbody>\n</table></div>\n<p>CHAPTER VII – ACCOUNTS, AUDIT AND FUNDS (Sections 36–42)</p>\n<p>Objective of Chapter VII</p>\n<p>To ensure financial discipline, transparency, and accountability in the functioning of the State Bank of India.<br/>\nIt prescribes how SBI must maintain its accounts, manage reserves, distribute profits, and undergo statutory audits.</p>\n<div class=\"table-responsive\"><table class=\"blog-table\"><thead><tr><th>Sec. No.</th><th>Section Title</th><th>Core Provision / Meaning</th></tr></thead>\n<tbody>\n\n<tr>\n<td>36\n<p>37</p></td>\n<td>Funds and Reserves</td>\n<td>• SBI shall create and maintain certain funds, such as:<br/>\n→ Reserve Fund for contingencies.<br/>\n→ Depreciation Fund for assets.<br/>\n→ Bad Debt Reserve.<br/>\n→ Integration and Development Fund (for rural and small sector development).</td>\n</tr>\n<tr>\n<td>38</td>\n<td>Disposal of Profits</td>\n<td>• After paying expenses, losses, and taxes, SBI shall:<br/>\n→ Transfer a portion of profits to Reserve Fund.<br/>\n→ Pay dividend to shareholders (including Govt.).<br/>\n→ Transfer balance to General Reserve or Development Funds.</td>\n</tr>\n<tr>\n<td>39</td>\n<td>Accounts and Balance Sheet</td>\n<td>• SBI must prepare its annual accounts and balance sheet at the end of each accounting year (31st March).<br/>\n• Must follow prescribed accounting standardsapproved by RBI and Government.</td>\n</tr>\n<tr>\n<td>41</td>\n<td>Audit</td>\n<td>• Accounts of SBI shall be audited by auditorsappointed by the Central Government in consultation with the RBI.<br/>\n• Auditor’s report submitted to Central Board and Government.</td>\n</tr>\n<tr>\n<td>40</td>\n<td>Returns</td>\n<td>• SBI shall submit periodic returns and statements to RBI regarding its assets, liabilities, and operations.<br/>\n• Enables RBI to assess SBI’s monetary position and compliance.</td>\n</tr>\n<tr>\n<td>42</td>\n<td>General Meeting and Discussion Balance Sheet</td>\n<td>·       SBI hold general meeting of shareholders every year\n<p>·       The audited balance sheet and profit reports are discussed in the meeting</p>\n<p>·       Shareholder can ask questions and make suggestions</p></td>\n</tr>\n</tbody>\n</table></div>\n<p>CHAPTER VIII – MISCELLANEOUS PROVISIONS (Sections 43–57)</p>\n<p>Objective of Chapter VIII</p>\n<p>This chapter deals with administrative, legal, and transitional provisions of the Act.<br/>\nIt ensures discipline, secrecy, continuity, and regulatory control in the functioning of the State Bank of India after its establishment.</p>\n<div class=\"table-responsive\"><table class=\"blog-table\"><thead><tr><th>Sec. No.</th><th>Section Title</th><th>Core Provision / Meaning</th></tr></thead>\n<tbody>\n\n<tr>\n<td>43</td>\n<td>Appointment of Officers and Employees</td>\n<td>• SBI may appoint officers and staff as necessary for its functioning.<br/>\n• Appointments made as per service regulationsframed by the Central Board with Government approval.</td>\n</tr>\n<tr>\n<td>44</td>\n<td>Obligation of Fidelity and Secrecy</td>\n<td>• All SBI officers and employees must maintain confidentiality regarding customer accounts and bank affairs.<br/>\n• Breach of secrecy is an offence under law.</td>\n</tr>\n<tr>\n<td>45</td>\n<td>Bar to Liquidation</td>\n<td>• SBI cannot be voluntarily wound up or liquidatedunder company law.<br/>\n• Only Parliament can decide to dissolve or restructure SBI.</td>\n</tr>\n<tr>\n<td>46</td>\n<td>Transfer of Employees from Subsidiary Banks</td>\n<td>• Employees of former Imperial Bank or subsidiaries transferred to SBI shall continue under same service conditions, unless altered by consent.</td>\n</tr>\n<tr>\n<td>47</td>\n<td>Delegation of Powers</td>\n<td>• Central Board may delegate powers to Chairman, MDs, or other officers for efficient management.</td>\n</tr>\n<tr>\n<td>49</td>\n<td>Power of Central Government to Make Rules</td>\n<td>• The Central Government may make rules to carry out the purposes of the Act, in consultation with the RBI.</td>\n</tr>\n<tr>\n<td>50</td>\n<td>Power of Central Board to Make Regulations</td>\n<td>• The Central Board may make regulationsconsistent with the Act and rules, covering:<br/>\n→ Service conditions<br/>\n→ Conduct of business<br/>\n→ Meetings and procedures</td>\n</tr>\n<tr>\n<td>51</td>\n<td> Requirement of foreign law,</td>\n<td>• if any foreign country law does not automatically transfer the imperial bank, asset to Sbi, then the imperial Bank must take necessary step under that country law to complete the transfer\n<p>Purpose:-  to ensure that foreign asset and liabilities of imperial bank legally pass to Sbi.</p></td>\n</tr>\n<tr>\n<td>57</td>\n<td>Dissolution of Imperial Bank of India</td>\n<td>• The Imperial Bank of India stands dissolved upon the establishment of SBI.<br/>\n• All its assets, liabilities, and undertakings transferred to SBI.</td>\n</tr>\n<tr>\n<td>55</td>\n<td>No proceeding against imperial Bank after appointed day</td>\n<td>After the appointment day, 1 July 1955\n<p>No one can file case or claim against imperial Bank or its employee in India</p></td>\n</tr>\n<tr>\n<td>56</td>\n<td>Transitional and Savings Provisions</td>\n<td>• Any contracts, rights, or obligations of the Imperial Bank continue with SBI.<br/>\n• Legal continuity ensured.</td>\n</tr>\n</tbody>\n</table></div>\n\n\n    "
   },
   {
-    id: "post-2",
-    slug: "right-of-set-off-in-banking",
-    category: "Banking Law",
-    categoryColor: "#3b82f6",
-    title: "RIGHT OF SET-OFF IN BANKING",
-    author: "Prashant Jha",
-    date: "October 25, 2025",
-    readTime: "6 min read",
-    comments: 0,
-    views: 1120,
-    published: true,
-    excerpt: "In simple terms, Set-off means adjusting one debt against another when two parties owe money to each other...",
-    content: `
-      <h2>RIGHT OF SET-OFF IN BANKING LAW</h2>
-      <h3>1. Meaning of Set-off</h3>
-      <p>In simple terms, Set-off means adjusting one debt against another.</p>
-      <p><span class="legal-badge-icon arrow"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span> When two parties owe money to each other, the right of set-off allows one party to adjust their debt against the amount receivable from the other party.</p>
-      <h3>2. Essential Conditions for Banker's Right of Set-Off</h3>
-      <ul>
-        <li><strong>Mutuality of Debts:</strong> The debts must be between the same parties in the same capacity.</li>
-        <li><strong>Debt Due and Certain:</strong> The debt must be legally enforceable and determined in amount.</li>
-        <li><strong>Notice to Customer:</strong> Prior notice must generally be served to the customer before exercising set-off unless agreed otherwise.</li>
-        <li><strong>Same Capacity:</strong> A personal deposit cannot be set-off against a partner's joint account debt unless specified.</li>
-      </ul>
-      <h3>3. Exceptions & Limitations</h3>
-      <p>The right of set-off cannot be exercised against trust accounts, specific purpose deposits, or unadjusted future debts.</p>
-    `
+    "id": "post-2",
+    "slug": "right-of-set-off-in-banking",
+    "category": "Banking Law",
+    "categoryColor": "#3b82f6",
+    "title": "Right of Set-Off in Banking",
+    "author": "Prashant Jha",
+    "date": "October 25, 2025",
+    "readTime": "6 min read",
+    "comments": 0,
+    "views": 1120,
+    "published": true,
+    "excerpt": "Set-off allows a bank to adjust one debt against another when a customer maintains deposit accounts while having overdue loan liabilities.",
+    "content": "<p><strong>RIGHT OF SET-OFF IN BANKING LAW </strong></p>\n<h3>1. <strong>Meaning of Set-off</strong></h3>\n<p>In simple terms,<br/>\nSet-off means adjusting one debt against another.</p>\n<p><span class=\"legal-badge-icon arrow\"><svg width=\"13\" height=\"13\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.5\"><path d=\"M5 12h14M12 5l7 7-7 7\"/></svg></span> When two parties owe money to each other, the amount due from one can be adjusted against the amount due to the other — instead of making two separate payments.</p>\n<p><span class=\"legal-badge-icon book\"><svg width=\"13\" height=\"13\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"><path d=\"M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5Z\"/><path d=\"M6 6h10M6 10h10\"/></svg></span> Banking Context:</p>\n<p>In banking, the Right of Set-off allows a bank to use the money lying in a customer’s account to recover the dues the customer owes to the bank.</p>\n<p>In short: If a customer owes money to the bank (for example, a loan), and at the same time the customer has money in any of his accounts with the bank,<br/>\nthe bank can adjust (set off) the customer’s deposit balance against his loan dues.</p>\n<h3>2. <b>Simple Everyday Example</b></h3>\n<p>Let’s say:</p>\n<ul>\n<li>Mr. A has ₹2 lakh in his Savings Account with XYZ Bank.</li>\n<li>He also owes ₹1.5 lakh to the same bank for a Personal Loan that has become overdue.</li>\n</ul>\n<p><span class=\"legal-status-badge check\"><svg width=\"13\" height=\"13\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.5\"><circle cx=\"12\" cy=\"12\" r=\"10\"/><path d=\"m9 12 2 2 4-4\"/></svg></span> The bank can set off ₹1.5 lakh from Mr. A’s savings account and adjust it against the outstanding loan.<br/>\nAfter adjustment, his savings account balance will reduce to ₹50,000.</p>\n<h3>3. <b>Legal Foundation</b></h3>\n<p>The Right of Set-off is based on the general principles of justice, equity, and good conscience, and it is recognized under:</p>\n<ul>\n<li>Contract law (Indian Contract Act, 1872) — mutual debts can be set off;</li>\n<li>Banking custom — accepted as a banker’s implied right;</li>\n<li>Judicial recognition — several court decisions have confirmed it as a legitimate banking practice.</li>\n</ul>\n<h3>4. <b>Nature of the Right</b></h3>\n<div class=\"table-responsive\"><table class=\"blog-table\">\n<tbody>\n\n</tbody>\n<thead><tr>\n<th valign=\"top\">Type</th>\n<th valign=\"top\">Description</th>\n</tr></thead><tbody><tr>\n<td valign=\"top\">Legal Right</td>\n<td valign=\"top\">Derived from banking relationship and recognized by courts.</td>\n</tr><tr>\n<td valign=\"top\">Implied Right</td>\n<td valign=\"top\">It doesn’t need to be written in the agreement; it’s implied by law and custom.</td>\n</tr><tr>\n<td valign=\"top\">Self-help Remedy</td>\n<td valign=\"top\">The bank can act on it directly without going to court, if done in good faith.</td>\n</tr></tbody></table></div>\n<h3>5. <b>Conditions for Exercising Right of Set-off</b></h3>\n<p>For a bank to use this right, certain legal and practical conditions must be met </p>\n<p><span class=\"legal-status-badge check\"><svg width=\"13\" height=\"13\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.5\"><circle cx=\"12\" cy=\"12\" r=\"10\"/><path d=\"m9 12 2 2 4-4\"/></svg></span> (1) Mutual Debts</p>\n<ul>\n<li>Both the customer and the bank must owe each other money.</li>\n<li>Example: Customer’s deposit = bank’s debt to customer; Loan = customer’s debt to bank.</li>\n</ul>\n<p><span class=\"legal-status-badge check\"><svg width=\"13\" height=\"13\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.5\"><circle cx=\"12\" cy=\"12\" r=\"10\"/><path d=\"m9 12 2 2 4-4\"/></svg></span> (2) Same Capacity</p>\n<ul>\n<li>The debts must be due in the same right and same capacity.<br/>\nExample:\n<ul>\n<li>If money is in customer’s personal account → can’t be set off against company loan.</li>\n<li>If account is held in trust, fiduciary, or joint name → bank cannot set it off against individual loan.</li>\n</ul>\n</li>\n</ul>\n<p><span class=\"legal-status-badge check\"><svg width=\"13\" height=\"13\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.5\"><circle cx=\"12\" cy=\"12\" r=\"10\"/><path d=\"m9 12 2 2 4-4\"/></svg></span> (3) Debts Must Be Due</p>\n<ul>\n<li>The loan or debt must be actually due and payable (i.e., not a future or contingent liability).</li>\n<li>Example: Bank can’t set off before the loan due date unless the customer defaults.</li>\n</ul>\n<p><span class=\"legal-status-badge check\"><svg width=\"13\" height=\"13\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.5\"><circle cx=\"12\" cy=\"12\" r=\"10\"/><path d=\"m9 12 2 2 4-4\"/></svg></span> (4) No Agreement to the Contrary</p>\n<ul>\n<li>If the bank and customer have an agreement saying “no set-off,” then the bank cannot exercise it.</li>\n</ul>\n<p><span class=\"legal-status-badge check\"><svg width=\"13\" height=\"13\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.5\"><circle cx=\"12\" cy=\"12\" r=\"10\"/><path d=\"m9 12 2 2 4-4\"/></svg></span> (5) No Prejudice to Third Party Rights</p>\n<ul>\n<li>The right cannot be used to harm the interest of others (like joint account holders, guarantors, or trust beneficiaries).</li>\n</ul>\n<h3>6. <b>How It Works – Step-by-Step </b></h3>\n<ol>\n<li>Loan becomes due → customer fails to pay.</li>\n<li>Bank checks whether the same customer has credit balance in any other account.</li>\n<li>Bank verifies the conditions (same name, same right, debt due).</li>\n<li>Bank gives intimation or records adjustment internally (debiting the deposit and crediting the loan).</li>\n<li>Entry is made in books — the debt stands adjusted (partly or fully).</li>\n<li>Bank informs the customer of the set-off.</li>\n</ol>\n<h3>7. <b>Examples of Set-off in Practice</b></h3>\n<p>Example 1: Individual Case</p>\n<p>Mr. X has:</p>\n<ul>\n<li>₹1,00,000 in his Current Account, and</li>\n<li>An overdue loan of ₹80,000.</li>\n</ul>\n<p><span class=\"legal-status-badge check\"><svg width=\"13\" height=\"13\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.5\"><circle cx=\"12\" cy=\"12\" r=\"10\"/><path d=\"m9 12 2 2 4-4\"/></svg></span> Bank can use its Right of Set-off to recover ₹80,000 from the current account.</p>\n<p>Example 2: Joint Account Case</p>\n<p>Mr. A and Mr. B have a joint account with ₹1,00,000.<br/>\nMr. A alone owes ₹50,000 loan to the bank.</p>\n<p><span class=\"legal-status-badge cross\"><svg width=\"13\" height=\"13\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.5\"><circle cx=\"12\" cy=\"12\" r=\"10\"/><path d=\"m15 9-6 6M9 9l6 6\"/></svg></span> Bank cannot set off from the joint account,<br/>\nbecause the debt (loan) is in A’s name only, but the deposit is in joint names.</p>\n<p>Example 3: Different Capacity</p>\n<p>Mr. A is a trustee of an account (Trust Account) but also has a personal loan.</p>\n<p><span class=\"legal-status-badge cross\"><svg width=\"13\" height=\"13\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.5\"><circle cx=\"12\" cy=\"12\" r=\"10\"/><path d=\"m15 9-6 6M9 9l6 6\"/></svg></span> Bank cannot set off money from the trust account to repay A’s personal loan,<br/>\nbecause the capacities are different — trustee vs individual.</p>\n<p>Example 4: Right of Set-off before Garnishee Order</p>\n<p>If the bank receives a Garnishee Order from a court attaching a customer’s account,<br/>\nbut the bank has its own dues (loan/overdraft) already due,<br/>\nthe bank can first exercise its Right of Set-off, and only the remaining balance (if any) is subject to the court’s order.</p>\n<p><span class=\"legal-status-badge check\"><svg width=\"13\" height=\"13\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.5\"><circle cx=\"12\" cy=\"12\" r=\"10\"/><path d=\"m9 12 2 2 4-4\"/></svg></span> The bank’s right of set-off has priority over a Garnishee Order.</p>\n<h3>8. <b>Important Judicial Rulings</b></h3>\n<blockquote class=\"judicial-quote\"><ol>\n<li>State Bank of India v. Collector of Customs (2000):<br/>\nThe bank’s right of set-off has priority over a Garnishee Order.</li>\n<li>Syndicate Bank v. Vijay Kumar (1992):<br/>\nA bank can exercise set-off only when both debts are certain, due, and in same capacity.</li>\n<li>Punjab National Bank v. Arura Mal Durga Dass (1960):<br/>\nThe right of set-off arises from mutual obligations between the banker and the customer.</li>\n</ol></blockquote>\n<h3>9. <b>Types of Set-off</b></h3>\n<div class=\"table-responsive\"><table class=\"blog-table\">\n<tbody>\n\n</tbody>\n<thead><tr>\n<th valign=\"top\">Type</th>\n<th valign=\"top\">Description</th>\n<th valign=\"top\">Example</th>\n</tr></thead><tbody><tr>\n<td valign=\"top\">Legal Set-off</td>\n<td valign=\"top\">Arises automatically by law when both debts are due and certain.</td>\n<td valign=\"top\">Savings balance adjusted against overdue loan.</td>\n</tr><tr>\n<td valign=\"top\">Equitable Set-off</td>\n<td valign=\"top\">Based on fairness — even if debts are not due on same date.</td>\n<td valign=\"top\">Bank may adjust advance against customer’s claim for damages.</td>\n</tr><tr>\n<td valign=\"top\">Contractual Set-off</td>\n<td valign=\"top\">Expressly agreed in the account or loan contract.</td>\n<td valign=\"top\">“Bank may adjust any amount lying to your credit…” clause.</td>\n</tr></tbody></table></div>\n<h3>10. <b>Difference Between Set-off and Lien</b></h3>\n<div class=\"table-responsive\"><table class=\"blog-table\">\n<tbody>\n\n</tbody>\n<thead><tr>\n<th valign=\"top\">Basis</th>\n<th valign=\"top\">Right of Set-off</th>\n<th valign=\"top\">Banker’s Lien</th>\n</tr></thead><tbody><tr>\n<td valign=\"top\">Nature</td>\n<td valign=\"top\">Adjustment of mutual debts</td>\n<td valign=\"top\">Retention of goods or securities</td>\n</tr><tr>\n<td valign=\"top\">What is held</td>\n<td valign=\"top\">Money (deposits)</td>\n<td valign=\"top\">Documents or securities</td>\n</tr><tr>\n<td valign=\"top\">Ownership</td>\n<td valign=\"top\">Both debts belong mutually</td>\n<td valign=\"top\">Property of customer held by bank</td>\n</tr><tr>\n<td valign=\"top\">When exercised</td>\n<td valign=\"top\">When both debts are due</td>\n<td valign=\"top\">When loan not repaid</td>\n</tr><tr>\n<td valign=\"top\">Example</td>\n<td valign=\"top\">Adjusting saving balance against overdue loan</td>\n<td valign=\"top\">Holding title deeds until loan cleared</td>\n</tr></tbody></table></div>\n<h3>11. <b>Precautions for Banks</b></h3>\n<p>Before exercising set-off, banks must:</p>\n<ol>\n<li>Confirm that the loan is due.</li>\n<li>Ensure same name and same right in both accounts.</li>\n<li>Check joint accounts – not allowed if debt is single name.</li>\n<li>Give notice (preferably in writing) to avoid disputes.</li>\n<li>Keep proper record entries in books.</li>\n<li>Avoid set-off in trust or fiduciary accounts.</li>\n</ol>\n<h3>12. <b>Limitations of Set-off</b></h3>\n<ul>\n<li>Cannot be used for future or contingent debts.</li>\n<li>Cannot be used when funds are held in trust or on behalf of someone else.</li>\n<li>Cannot be used for fixed deposits pledged as security (until lien satisfied).</li>\n<li>Cannot override court orders like attachment or insolvency proceedings once those take effect.</li>\n</ul>\n<h3>13. <b>Effect of Insolvency or Death</b></h3>\n<ul>\n<li>After Insolvency: The right of set-off can be exercised only for debts due before insolvency.</li>\n<li>After Death: The bank may set off debts due before death against money in account, but must act carefully regarding legal heirs or executors.</li>\n</ul>\n<h3>14. <b>Why It’s Important for Banks</b></h3>\n<p>The Right of Set-off protects the bank’s financial interest and reduces the risk of non-recovery.<br/>\nWithout this right, banks might lose money to customers who maintain deposits but don’t repay loans.</p>\n<p><span class=\"legal-status-badge check\"><svg width=\"13\" height=\"13\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.5\"><circle cx=\"12\" cy=\"12\" r=\"10\"/><path d=\"m9 12 2 2 4-4\"/></svg></span> It’s one of the key self-help remedies for banks, meaning they don’t need court intervention.</p>\n\n<p>Download Complete Notes on Banking Law: <a href=\"https://teachmelegal.com/product/3512/\" rel=\"noopener noreferrer\" target=\"_blank\">Click here to Download </a></p>",
+    "tags": [
+      "banking",
+      "banking law in India",
+      "bankinglaw"
+    ]
   },
   {
-    id: "post-3",
-    slug: "garnishee-orders-in-banking",
-    category: "Banking Law",
-    categoryColor: "#3b82f6",
-    title: "Garnishee Orders in Banking",
-    author: "Prashant Jha",
-    date: "October 23, 2025",
-    readTime: "5 min read",
-    comments: 0,
-    views: 1540,
-    published: true,
-    excerpt: "A Garnishee Order is an order of a court directing a third person (the Garnishee) who owes money to the judgment debtor to pay...",
-    content: `
-      <h2>Garnishee Orders in Banking</h2>
-      <h3>1. What is a Garnishee Order?</h3>
-      <p>A Garnishee Order is an order of a court directing a third person (the Garnishee), who owes money to the Judgment Debtor, not to pay money to the debtor but to pay it to the Judgment Creditor instead.</p>
-      <h3>2. Two Stages of Garnishee Order</h3>
-      <ul>
-        <li><strong>Garnishee Order Nisi:</strong> A temporary order served on the bank directing it to freeze the debtor's account and explain why the money should not be attached.</li>
-        <li><strong>Garnishee Order Absolute:</strong> A final court order directing the bank to pay the specified amount directly to the court or judgment creditor.</li>
-      </ul>
-      <h3>3. Bank's Duty and Account Exceptions</h3>
-      <p>Upon receipt of Garnishee Order Nisi, the bank must immediately attach the account up to the specified amount and notify the account holder.</p>
-    `
+    "id": "post-3",
+    "slug": "garnishee-orders-in-banking",
+    "category": "Banking Law",
+    "categoryColor": "#3b82f6",
+    "title": "Garnishee Orders in Banking",
+    "author": "Prashant Jha",
+    "date": "October 23, 2025",
+    "readTime": "5 min read",
+    "comments": 0,
+    "views": 1540,
+    "published": true,
+    "excerpt": "A Garnishee Order is a court order directing a third party (like a bank) who holds funds belonging to a judgment debtor to pay those funds directly to the decree holder.",
+    "content": "<h2>Garnishee Orders in Banking</h2>\n<h3>1. What is a Garnishee Order?</h3>\n<p>A Garnishee Order is an order of a court directing a third person (the Garnishee), who owes money to the Judgment Debtor, not to pay that money to the debtor, but instead to pay it to the Decree Holder through the court.</p>\n<p><span class=\"legal-badge-icon arrow\"><svg width=\"13\" height=\"13\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.5\"><path d=\"M5 12h14M12 5l7 7-7 7\"/></svg></span> In simple terms:<br/>\nIf A has to pay B, but C owes money to A, the court can order C to pay B directly.</p>\n<p>This way, the creditor gets paid without waiting for the debtor to act.</p>\n<p><strong>Example</strong></p>\n<p>Suppose:</p>\n<ul>\n<li>Ravi (Debtor) borrowed ₹2 lakh from Bank (Creditor).</li>\n<li>Ravi doesn’t repay.</li>\n<li>But Ravi has ₹2 lakh in his account with SBI Bank.</li>\n</ul>\n<p><span class=\"legal-badge-icon arrow\"><svg width=\"13\" height=\"13\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.5\"><path d=\"M5 12h14M12 5l7 7-7 7\"/></svg></span> The court can issue a Garnishee Order to SBI Bank, asking it to pay the amount directly to the creditor (the Bank in this case).</p>\n<p>Here,</p>\n<ul>\n<li>Ravi = Judgment Debtor</li>\n<li>Bank (who filed case) = Judgment Creditor</li>\n<li>SBI (who holds Ravi’s money) = Garnishee</li>\n</ul>\n<p><b>Example</b></p>\n<p>Suppose:</p>\n<ul>\n<li>Mr. A (Decree Holder) wins a case against Mr. B (Judgment Debtor) for ₹5 lakh.</li>\n<li>Mr. B has ₹5 lakh in his account in XYZ Bank.</li>\n</ul>\n<p>Now, instead of chasing Mr. B directly, Mr. A applies to the court for a Garnishee Order.</p>\n<p>The court issues an order to XYZ Bank (the Garnishee) directing it not to release the money to Mr. B, but to deposit it in court for payment to Mr. A.</p>\n<p><span class=\"legal-status-badge check\"><svg width=\"13\" height=\"13\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.5\"><circle cx=\"12\" cy=\"12\" r=\"10\"/><path d=\"m9 12 2 2 4-4\"/></svg></span> Once XYZ Bank pays the money to the court, the bank’s liability to Mr. B is legally cleared for that amount.</p>\n<h3>2. Parties Involved</h3>\n<div class=\"table-responsive\"><table class=\"blog-table\">\n<tbody>\n\n</tbody>\n<thead><tr>\n<th valign=\"top\">Party</th>\n<th valign=\"top\">Role</th>\n</tr></thead><tbody><tr>\n<td valign=\"top\">Decree Holder</td>\n<td valign=\"top\">The person who has won the case and wants to recover money.</td>\n</tr><tr>\n<td valign=\"top\">Judgment Debtor</td>\n<td valign=\"top\">The person who has lost the case and owes money.</td>\n</tr><tr>\n<td valign=\"top\">Garnishee</td>\n<td valign=\"top\">A third person who holds money or property belonging to the judgment debtor (e.g., a bank or employer).</td>\n</tr></tbody></table></div>\n<h3>3. Purpose of a Garnishee Order</h3>\n<p>The main purpose is to make the process of execution faster and more effective by allowing the decree-holder to directly reach the money of the judgment debtor lying with a third party (like a bank, employer, or customer).</p>\n<p><span class=\"legal-status-badge check\"><svg width=\"13\" height=\"13\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.5\"><circle cx=\"12\" cy=\"12\" r=\"10\"/><path d=\"m9 12 2 2 4-4\"/></svg></span> It saves time, avoids fraudulent transfers by the debtor, and ensures the creditor gets paid without unnecessary delay.</p>\n<h3>4. Meaning of the Term “Garnishee”</h3>\n<p>The word “Garnishee” comes from the old French word “garnir”, meaning to warn or to furnish.</p>\n<p>It reflects the idea of warning the third party not to pay the debtor because that money is legally claimed by the creditor.</p>\n<h3>5. Legal Provision in India</h3>\n<p>In India, Garnishee Orders are governed by Order 21 Rules 46 to 52 of the Code of Civil Procedure, 1908 (CPC).</p>\n<p>These rules deal with the attachment of debts, including money held in bank accounts or due from third parties.</p>\n<p>So, a Garnishee Order is part of the execution of a decree — it helps the decree-holder (creditor) recover the judgment amount.</p>\n<h3>6. How a Garnishee Order Works</h3>\n<p>Step 1: Decree Passed</p>\n<p>The court gives a decree that the debtor must pay a certain amount to the creditor.</p>\n<p>Step 2: Creditor Files Application</p>\n<p>The creditor applies to the court, saying —<br/>\n“The debtor has money with someone else (for example, his bank). Please let me recover my dues from there.”</p>\n<p>Step 3: Court Issues Garnishee Notice</p>\n<p>The court issues a notice to the garnishee (the third party), asking:</p>\n<p>“Do you owe any money to the debtor? If yes, how much?”</p>\n<p>Step 4: Garnishee’s Reply</p>\n<ul>\n<li>If the garnishee admits owing money — the court can order payment directly to the creditor.</li>\n<li>If the garnishee denies — the court holds a short hearing to decide whether money is owed.</li>\n</ul>\n<p>Step 5: Court Passes Garnishee Order Absolute</p>\n<p>If satisfied, the court passes a final order (called “Garnishee Order Absolute”), directing the garnishee to pay the money directly to the creditor.</p>\n<h3>7. Legal Consequences of Disobedience</h3>\n<p>If the Garnishee:</p>\n<ul>\n<li>Fails to pay money into court, and</li>\n<li>Fails to appear or show cause,</li>\n</ul>\n<p>Then the court can treat the order as a decree against the Garnishee himself (Order 21, Rule 46B CPC).<br/>\nThat means the creditor can recover directly from the Garnishee as if he were the debtor.</p>\n<h3>8. Appealability</h3>\n<p>Any order passed in garnishee proceedings is appealable as a decree under Section 96 of CPC.</p>\n<h3>9. Two Types of Garnishee Orders</h3>\n<div class=\"table-responsive\"><table class=\"blog-table\">\n<tbody>\n\n</tbody>\n<thead><tr>\n<th valign=\"top\">Type</th>\n<th valign=\"top\">Meaning</th>\n</tr></thead><tbody><tr>\n<td valign=\"top\">Garnishee Order Nisi</td>\n<td valign=\"top\">Temporary order – gives the garnishee a chance to appear and explain whether they owe money.</td>\n</tr><tr>\n<td valign=\"top\">Garnishee Order Absolute</td>\n<td valign=\"top\">Final order – directs the garnishee to pay the creditor if no valid objection is raised.</td>\n</tr></tbody></table></div>\n<p><span class=\"legal-badge-icon lightbulb\"><svg width=\"13\" height=\"13\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"><path d=\"M12 2v1M12 21v1M4.22 4.22l.71.71M18.36 18.36l.71.71M1 12h1M21 12h1M4.22 19.78l.71-.71M18.36 5.64l.71-.71\"/></svg></span> Think of “nisi” as notice, and “absolute” as final order.</p>\n<h3>10. Example from Daily Life</h3>\n<p> Suppose an employee owes ₹1 lakh to a bank.<br/>\nThe employee’s salary is credited by the employer every month.</p>\n<p><span class=\"legal-badge-icon arrow\"><svg width=\"13\" height=\"13\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.5\"><path d=\"M5 12h14M12 5l7 7-7 7\"/></svg></span> The court can issue a Garnishee Order to the employer, directing them to deduct ₹1 lakh from salary and pay it directly to the bank.</p>\n<p>So, instead of waiting for the employee to pay, the court helps the creditor recover directly.</p>\n<h3>11. Rights and Duties of the Garnishee</h3>\n<ul>\n<li>Must truthfully declare whether they owe money to the debtor.</li>\n<li>Must not ignore the court notice — doing so may make them personally liable.</li>\n<li>If they pay under a garnishee order, that payment acts as full discharge of their debt to the debtor.</li>\n</ul>\n<h3>12. Key Case Laws</h3>\n<blockquote class=\"judicial-quote\"><ol>\n<li>State Bank of India v. National Institute of Information Technology (NIIT), (2000)<br/>\n– The Delhi High Court held that a bank can be treated as a garnishee and made to pay money from a customer’s account under a valid court order.</li>\n<li>Union of India v. Karam Chand Thapar &amp; Bros. (1978)<br/>\n– The Supreme Court explained that a garnishee order is an attachment of debt due from a third party to the judgment debtor.</li>\n</ol></blockquote>\n<h3>13. Importance in Banking Law</h3>\n<ul>\n<li>Very common in loan recovery and money decree cases.</li>\n<li>Banks often become garnishees, as they hold the debtor’s accounts.</li>\n<li>Ensures that creditors actually receive money without the debtor evading payment.</li>\n</ul>\n<p>For example, in a loan recovery case, a bank can get a garnishee order on the debtor’s salary, deposits, or rent.</p>\n<h3>14. Limitations / Exceptions</h3>\n<ul>\n<li>Cannot be issued on future debts (only existing debts).</li>\n<li>Cannot attach salary before it becomes due.</li>\n<li>Certain payments (like pension, gratuity, provident fund) are protected from attachment under Section 60 of CPC.</li>\n<li>Court must ensure the garnishee is not unfairly burdened.</li>\n</ul>\n<p>Complete Notes on Banking Law: <a href=\"https://teachmelegal.com/product/3512/\" rel=\"noopener noreferrer\" target=\"_blank\">Banking Law</a></p>",
+    "tags": [
+      "banking",
+      "banking law in India",
+      "garnishee order",
+      "cpc 1908"
+    ]
   },
   {
-    id: "post-4",
-    slug: "mareva-injunction",
-    category: "Banking Law",
-    categoryColor: "#3b82f6",
-    title: "MAREVA INJUNCTION",
-    author: "Prashant Jha",
-    date: "October 22, 2025",
-    readTime: "7 min read",
-    comments: 0,
-    views: 940,
-    published: true,
-    excerpt: "A Mareva Injunction is a court order restraining a party from disposing of or removing assets out of the jurisdiction prior to judgment...",
-    content: `
-      <h2>MAREVA INJUNCTION</h2>
-      <h3>1. What is a Mareva Injunction?</h3>
-      <p>A Mareva Injunction (also known as a Freezing Order) is an interim court order that restrains a defendant from removing assets from the jurisdiction or disposing of them in order to avoid paying a judgment debt.</p>
-      <h3>2. Why it was needed</h3>
-      <p>To prevent dishonest defendants from draining their bank accounts or transferring assets abroad before trial concludes.</p>
-      <h3>3. Origin & Legal Principles</h3>
-      <p>Originating in the English court case <em>Mareva Compania Naviera SA v International Bulkcarriers SA (1975)</em>, it has been recognized by courts worldwide including Indian courts under Order 38 Rule 5 of CPC.</p>
-    `
+    "id": "post-4",
+    "slug": "mareva-injunction",
+    "category": "Banking Law",
+    "categoryColor": "#3b82f6",
+    "title": "MAREVA INJUNCTION",
+    "author": "Prashant Jha",
+    "date": "October 22, 2025",
+    "readTime": "7 min read",
+    "comments": 0,
+    "views": 940,
+    "published": true,
+    "excerpt": "A Mareva Injunction is a court order restraining a party from disposing of or removing assets out of the jurisdiction prior to judgment...",
+    "content": "\n      <h2>MAREVA INJUNCTION</h2>\n      <h3>1. What is a Mareva Injunction?</h3>\n      <p>A Mareva Injunction (also known as a Freezing Order) is an interim court order that restrains a defendant from removing assets from the jurisdiction or disposing of them in order to avoid paying a judgment debt.</p>\n      <h3>2. Why it was needed</h3>\n      <p>To prevent dishonest defendants from draining their bank accounts or transferring assets abroad before trial concludes.</p>\n      <h3>3. Origin & Legal Principles</h3>\n      <p>Originating in the English court case <em>Mareva Compania Naviera SA v International Bulkcarriers SA (1975)</em>, it has been recognized by courts worldwide including Indian courts under Order 38 Rule 5 of CPC.</p>\n    "
   },
   {
-    id: "post-5",
-    slug: "introduction-to-banking-law",
-    category: "Banking Law",
-    categoryColor: "#3b82f6",
-    title: "INTRODUCTION TO BANKING LAW",
-    author: "Prashant Jha",
-    date: "September 21, 2025",
-    readTime: "9 min read",
-    comments: 0,
-    views: 2450,
-    published: true,
-    excerpt: "Nature, Scope, and Functions of Banking Law — Banking law is a set of legal rules and regulations that control how banks operate...",
-    content: `
-      <h2>INTRODUCTION TO BANKING LAW</h2>
-      <h3>1. Nature, Scope, and Functions of Banking Law</h3>
-      <p>Banking law is a set of legal rules and regulations that control how banks and financial institutions operate, accept deposits, grant credit, and facilitate national monetary stability.</p>
-      <h3>2. Essential Statutory Framework in India</h3>
-      <ul>
-        <li>Banking Regulation Act, 1949</li>
-        <li>Reserve Bank of India Act, 1934</li>
-        <li>State Bank of India Act, 1955</li>
-        <li>Negotiable Instruments Act, 1881</li>
-      </ul>
-      <h3>3. Relationship Between Banker and Customer</h3>
-      <p>Primary relationship is Debtor and Creditor, alongside secondary agency and trustee relationships.</p>
-    `
+    "id": "post-5",
+    "slug": "introduction-to-banking-law",
+    "category": "Banking Law",
+    "categoryColor": "#3b82f6",
+    "title": "INTRODUCTION TO BANKING LAW",
+    "author": "Prashant Jha",
+    "date": "September 21, 2025",
+    "readTime": "9 min read",
+    "comments": 0,
+    "views": 2450,
+    "published": true,
+    "excerpt": "Nature, Scope, and Functions of Banking Law — Banking law is a set of legal rules and regulations that control how banks operate...",
+    "content": "\n      <h2>INTRODUCTION TO BANKING LAW</h2>\n      <h3>1. Nature, Scope, and Functions of Banking Law</h3>\n      <p>Banking law is a set of legal rules and regulations that control how banks and financial institutions operate, accept deposits, grant credit, and facilitate national monetary stability.</p>\n      <h3>2. Essential Statutory Framework in India</h3>\n      <ul>\n        <li>Banking Regulation Act, 1949</li>\n        <li>Reserve Bank of India Act, 1934</li>\n        <li>State Bank of India Act, 1955</li>\n        <li>Negotiable Instruments Act, 1881</li>\n      </ul>\n      <h3>3. Relationship Between Banker and Customer</h3>\n      <p>Primary relationship is Debtor and Creditor, alongside secondary agency and trustee relationships.</p>\n    "
   },
   {
-    id: "post-6",
-    slug: "why-teachmelegal-journey-making-law-simple",
-    category: "Teachmelegal",
-    categoryColor: "#c5a059",
-    title: "Why Teachmelegal? – The Journey of Making Law Simple",
-    author: "Prashant Jha",
-    date: "September 21, 2025",
-    readTime: "5 min read",
-    comments: 0,
-    views: 1980,
-    published: true,
-    excerpt: "When I started my legal career, one thing became very clear to me—law is often taught in a way that feels complicated and disconnected...",
-    content: `
-      <h2>Why Teachmelegal? – The Journey of Making Law Simple</h2>
-      <p>When I started my legal career, one thing became very clear to me—law is often taught in a way that feels complicated and disconnected from real life. Students memorize sections, but miss out on practical legal application.</p>
-      <h3>Our Vision</h3>
-      <p>To bridge the gap between classroom theory and real Supreme Court advocacy. We break down complex statutes into structured tables, flowcharts, and clear explanations that make learning law engaging and memorable.</p>
-      <h3>What Makes Teach Me Legal Unique?</h3>
-      <ul>
-        <li>Direct insights from practicing Supreme Court advocates</li>
-        <li>Comprehensive subject-wise notes and revision charts</li>
-        <li>Dedicated video lectures and question bank materials</li>
-      </ul>
-    `
+    "id": "post-6",
+    "slug": "why-teachmelegal-journey-making-law-simple",
+    "category": "Teachmelegal",
+    "categoryColor": "#c5a059",
+    "title": "Why Teachmelegal? – The Journey of Making Law Simple",
+    "author": "Prashant Jha",
+    "date": "September 21, 2025",
+    "readTime": "5 min read",
+    "comments": 0,
+    "views": 1980,
+    "published": true,
+    "excerpt": "When I started my legal career, one thing became very clear to me—law is often taught in a way that feels complicated and disconnected...",
+    "content": "\n      <h2>Why Teachmelegal? – The Journey of Making Law Simple</h2>\n      <p>When I started my legal career, one thing became very clear to me—law is often taught in a way that feels complicated and disconnected from real life. Students memorize sections, but miss out on practical legal application.</p>\n      <h3>Our Vision</h3>\n      <p>To bridge the gap between classroom theory and real Supreme Court advocacy. We break down complex statutes into structured tables, flowcharts, and clear explanations that make learning law engaging and memorable.</p>\n      <h3>What Makes Teach Me Legal Unique?</h3>\n      <ul>\n        <li>Direct insights from practicing Supreme Court advocates</li>\n        <li>Comprehensive subject-wise notes and revision charts</li>\n        <li>Dedicated video lectures and question bank materials</li>\n      </ul>\n    "
   }
 ];
 

@@ -6,7 +6,7 @@ import Navbar from '../../components/Navbar';
 import Footer from '../../components/Footer';
 import PdfPreviewModal from '../../components/PdfPreviewModal';
 import { useCart } from '../../context/CartContext';
-import { IconBookOpen, IconDocument, IconUser } from '../../components/Icons';
+import { IconBookOpen, IconDocument, IconUser, IconMail, IconScales, IconCheckCircle } from '../../components/Icons';
 import './account.css';
 
 export default function AccountPage() {
@@ -88,9 +88,9 @@ export default function AccountPage() {
             </div>
             <div className="user-meta-info">
               <h1>{student.name}</h1>
-              <p className="user-email-text">✉️ {student.email}</p>
+              <p className="user-email-text"><IconMail size={14} style={{ display: 'inline', verticalAlign: 'middle', marginRight: '6px' }} /> {student.email}</p>
               <div className="user-badges-row">
-                <span className="student-role-badge">⚖️ ENROLLED SCHOLAR</span>
+                <span className="student-role-badge"><IconScales size={13} style={{ display: 'inline', verticalAlign: 'middle', marginRight: '5px' }} /> ENROLLED SCHOLAR</span>
                 <span className="capsule-badge-outline">MEMBER SINCE 2026</span>
               </div>
             </div>
@@ -195,7 +195,8 @@ export default function AccountPage() {
           <div className="settings-card">
             {savedSuccess && (
               <div className="form-success-banner mb-4">
-                ✅ Profile settings updated successfully!
+                <IconCheckCircle size={15} style={{ display: 'inline', verticalAlign: 'middle', marginRight: '6px' }} />
+                Profile settings updated successfully!
               </div>
             )}
             <form onSubmit={handleProfileSave} className="settings-form">
