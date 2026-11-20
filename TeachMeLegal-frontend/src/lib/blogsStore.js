@@ -16,6 +16,7 @@ const INITIAL_POSTS = [
     comments: 0,
     views: 1420,
     published: true,
+    tags: ["banking", "banking law in India", "bankinglaw"],
     excerpt: "Objective of the Act to establish the State Bank of India (SBI) as a public sector banking institution by taking over the business of the Imperial Bank of India...",
     content: `
 

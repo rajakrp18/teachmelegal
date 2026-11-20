@@ -3,6 +3,7 @@ import Footer from '../../../components/Footer';
 import Link from 'next/link';
 import { getPostBySlug, getAllPosts } from '../../../lib/blogsStore';
 import { IconUser, IconCalendar, IconClock, IconEye, IconScales, IconBookOpen, IconDocument } from '../../../components/Icons';
+import BlogComments from '@/components/BlogComments';
 import './post.css';
 
 export async function generateStaticParams() {
@@ -59,7 +60,10 @@ export default async function BlogPost({ params }) {
 
       <section className="post-body-section">
         <div className="container post-body-layout">
-          <article className="post-content prose" dangerouslySetInnerHTML={{ __html: post.content }} />
+          <div className="post-main-column">
+            <article className="post-content prose" dangerouslySetInnerHTML={{ __html: post.content }} />
+            <BlogComments post={post} />
+          </div>
 
           <aside className="post-sidebar">
             <div className="post-sidebar-widget">
