@@ -22,41 +22,27 @@ import {
 import './account.css';
 
 export default function AccountPage() {
-  const { user, logoutUser, enrolledCourses, orderHistory, updateUserProfile } = useCart();
+  const { user, authLoaded, loginUser, logoutUser, enrolledCourses, orderHistory, updateUserProfile } = useCart();
   const [activeTab, setActiveTab] = useState('courses'); // 'courses', 'orders', 'settings'
   const [previewPdf, setPreviewPdf] = useState(null);
   const [saving, setSaving] = useState(false);
   const [savedSuccess, setSavedSuccess] = useState(false);
   const [saveError, setSaveError] = useState('');
-
-  // Default fallback user profile if not signed in yet
-  const student = user || {
-    name: 'Legal Scholar',
-    email: 'student@teachmelegal.com',
-    phone: '+91 98765 43210',
-    role: 'STUDENT PREVIEW',
-    memberSince: 'September 2026',
-    profession: 'Judicial Services Aspirant',
-    targetExam: 'State Judicial Services (PCS-J)',
-    university: 'Faculty of Law, Delhi University',
-    yearOfStudy: 'Final Year',
-    state: 'Delhi NCR',
-    bio: 'Dedicated legal scholar focusing on Criminal Procedure, Constitutional Law, and Banking Regulations.'
-  };
+  const [demoLoading, setDemoLoading] = useState(false);
 
   const [profileForm, setProfileForm] = useState({
-    name: student.name || '',
-    email: student.email || '',
-    phone: student.phone || '',
-    profession: student.profession || 'Judicial Services Aspirant',
-    targetExam: student.targetExam || 'State Judicial Services (PCS-J)',
-    university: student.university || '',
-    yearOfStudy: student.yearOfStudy || 'Final Year',
-    state: student.state || 'Delhi NCR',
-    bio: student.bio || ''
+    name: '',
+    email: '',
+    phone: '',
+    profession: 'Judicial Services Aspirant',
+    targetExam: 'State Judicial Services (PCS-J)',
+    university: '',
+    yearOfStudy: 'Final Year',
+    state: 'Delhi NCR',
+    bio: ''
   });
 
-  // Sync form if user loads from storage
+  // Sync profile form when real user is loaded
   useEffect(() => {
     if (user) {
       setProfileForm({
@@ -113,7 +99,6 @@ export default function AccountPage() {
       setTimeout(() => setSavedSuccess(false), 4000);
     } catch (err) {
       console.error('Error saving profile:', err);
-      // Fallback for offline/local storage
       updateUserProfile(profileForm);
       setSavedSuccess(true);
       setTimeout(() => setSavedSuccess(false), 4000);
@@ -122,72 +107,128 @@ export default function AccountPage() {
     }
   };
 
+  // Quick 1-click login for test scholar rajpoddar8907@gmail.com
+  const handleQuickDemoLogin = async () => {
+    setDemoLoading(true);
+    try {
+      const res = await fetch('/api/auth/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: 'rajpoddar8907@gmail.com', password: 'password123' })
+      });
+      const data = await res.json();
+      if (data.success) {
+        loginUser(data.user, data.enrolledCourses, data.orderHistory);
+      }
+    } catch (err) {
+      console.error('Demo login failed:', err);
+    } finally {
+      setDemoLoading(false);
+    }
+  };
+
+  // 1. Loading State while reading authentication session
+  if (!authLoaded) {
+    return (
+      <main className="account-page-wrapper">
+        <Navbar />
+        <div className="container account-container" style={{ minHeight: '60vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+          <div className="account-loading-spinner" />
+        </div>
+        <Footer />
+      </main>
+    );
+  }
+
+  // 2. Unauthenticated State: Clear Sign In Gate (NO fake dummy profile)
+  if (!user) {
+    return (
+      <main className="account-page-wrapper">
+        <Navbar />
+        <div className="container account-container">
+          <div className="account-auth-gate">
+            <div className="gate-icon-bubble">
+              <IconLock size={38} style={{ color: 'var(--accent-gold)' }} />
+            </div>
+            <h1 className="gate-title">Sign In to Access Your Scholar Account</h1>
+            <p className="gate-subtitle">
+              You need to sign in to access your enrolled legal masterclasses, bare act notes, and order receipts.
+            </p>
+
+            <div className="gate-actions">
+              <Link href="/login" className="btn btn-gold btn-gate-action">
+                <span>Sign In to Account</span>
+                <IconArrowUpRight size={14} />
+              </Link>
+              <Link href="/signup" className="btn-gate-secondary">
+                <span>Create Free Account</span>
+              </Link>
+            </div>
+
+            <div 
+              className="gate-demo-box"
+              onClick={handleQuickDemoLogin}
+              title="Click to sign in instantly with test credentials"
+            >
+              <span>
+                {demoLoading ? 'Signing in demo scholar...' : '✨ Click here to Sign In with Demo Account (rajpoddar8907@gmail.com)'}
+              </span>
+            </div>
+
+            <div style={{ marginTop: '24px' }}>
+              <Link href="/courses" style={{ color: 'var(--accent-gold)', fontSize: '0.88rem', textDecoration: 'underline' }}>
+                ← Browse Legal Courses & Bare Act Notes
+              </Link>
+            </div>
+          </div>
+        </div>
+        <Footer />
+      </main>
+    );
+  }
+
+  // 3. Authenticated State: Real User Dashboard
+  const avatarLetter = (user.name || user.email || 'S').charAt(0).toUpperCase();
+
   return (
     <main className="account-page-wrapper">
       <Navbar />
 
       <div className="container account-container">
 
-        {/* Not Logged In Banner */}
-        {!user && (
-          <div className="account-guest-banner">
-            <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-              <IconSparkles size={22} style={{ color: 'var(--accent-gold)' }} />
-              <div>
-                <strong>You are viewing in Scholar Preview mode.</strong>
-                <p style={{ margin: 0, fontSize: '0.85rem', color: 'var(--text-muted)' }}>
-                  Sign in or create an account to permanently sync your purchased notes and orders across all devices.
-                </p>
-              </div>
-            </div>
-            <div style={{ display: 'flex', gap: '10px' }}>
-              <Link href="/login" className="btn btn-gold" style={{ padding: '8px 18px', fontSize: '0.85rem' }}>
-                Sign In
-              </Link>
-              <Link href="/signup" className="btn btn-gold" style={{ padding: '8px 18px', fontSize: '0.85rem', background: 'transparent', border: '1px solid var(--accent-gold)', color: 'var(--accent-gold)' }}>
-                Sign Up Free
-              </Link>
-            </div>
-          </div>
-        )}
-
         {/* User Hero Profile Banner */}
         <div className="account-user-card">
           <div className="user-profile-left">
             <div className="user-avatar-bubble">
-              {student.name ? student.name.charAt(0).toUpperCase() : 'S'}
+              {avatarLetter}
             </div>
             <div className="user-meta-info">
-              <h1>{student.name}</h1>
+              <h1>{user.name || 'Enrolled Scholar'}</h1>
               <p className="user-email-text">
                 <IconMail size={14} style={{ display: 'inline', verticalAlign: 'middle', marginRight: '6px' }} /> 
-                {student.email}
+                {user.email}
               </p>
               <div className="user-badges-row">
                 <span className="student-role-badge">
                   <IconScales size={13} style={{ display: 'inline', verticalAlign: 'middle', marginRight: '5px' }} /> 
-                  {student.role || 'ENROLLED SCHOLAR'}
+                  {user.role || 'ENROLLED SCHOLAR'}
                 </span>
+                {user.profession && (
+                  <span className="capsule-badge-outline">
+                    {user.profession}
+                  </span>
+                )}
                 <span className="capsule-badge-outline">
-                  {student.profession || 'Judicial Services Aspirant'}
-                </span>
-                <span className="capsule-badge-outline">
-                  {student.memberSince ? `MEMBER SINCE ${student.memberSince.toUpperCase()}` : 'MEMBER SINCE 2026'}
+                  {user.memberSince ? `MEMBER SINCE ${user.memberSince.toUpperCase()}` : 'MEMBER SINCE 2026'}
                 </span>
               </div>
             </div>
           </div>
 
           <div>
-            {user ? (
-              <button onClick={logoutUser} className="btn-account-logout">
-                Sign Out ↗
-              </button>
-            ) : (
-              <Link href="/login" className="btn btn-gold" style={{ padding: '10px 22px', fontSize: '0.88rem' }}>
-                Sign In ↗
-              </Link>
-            )}
+            <button onClick={logoutUser} className="btn-account-logout">
+              Sign Out ↗
+            </button>
           </div>
         </div>
 

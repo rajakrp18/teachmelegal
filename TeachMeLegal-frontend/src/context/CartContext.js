@@ -7,6 +7,7 @@ export function CartProvider({ children }) {
   const [cartItems, setCartItems] = useState([]);
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [user, setUser] = useState(null);
+  const [authLoaded, setAuthLoaded] = useState(false);
   const [enrolledCourses, setEnrolledCourses] = useState([]);
   const [orderHistory, setOrderHistory] = useState([]);
 
@@ -43,6 +44,8 @@ export function CartProvider({ children }) {
       }
     } catch (err) {
       console.error('Failed to load initial cart/user state:', err);
+    } finally {
+      setAuthLoaded(true);
     }
   }, []);
 
@@ -230,6 +233,7 @@ export function CartProvider({ children }) {
         discountAmount,
         finalTotal,
         user,
+        authLoaded,
         enrolledCourses,
         orderHistory,
         loginUser,
