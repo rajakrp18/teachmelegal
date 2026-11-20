@@ -7,8 +7,9 @@ const REVIEWS_DATA = [
   {
     id: 1,
     name: "Priyanka Kashyap",
+    initials: "PK",
+    gradient: "linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%)",
     role: "LL.B Scholar • Delhi University",
-    image: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=300",
     content: "What an Explanation!! Exceptionally good. Thank you so much sir. Tomorrow is my exam and just like many others I was overwhelmed, but your structured notes made every concept clear.",
     rating: 5,
     course: "Constitutional Law"
@@ -16,8 +17,9 @@ const REVIEWS_DATA = [
   {
     id: 2,
     name: "Shruti Sharma",
+    initials: "SS",
+    gradient: "linear-gradient(135deg, #78350f 0%, #d97706 100%)",
     role: "Judicial Services Aspirant",
-    image: "https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?auto=format&fit=crop&q=80&w=300",
     content: "Thank you so much Prashant Sir. Jiski kitaab dekhne ka mann tak nahi karta usko aapne mere liye ekdam asaan kar diya. The statutory charts are pure gold for judiciary preparation.",
     rating: 5,
     course: "Banking & Financial Law"
@@ -25,8 +27,9 @@ const REVIEWS_DATA = [
   {
     id: 3,
     name: "Anand Kashyap",
+    initials: "AK",
+    gradient: "linear-gradient(135deg, #064e3b 0%, #10b981 100%)",
     role: "Law Student • 4th Year",
-    image: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&q=80&w=300",
     content: "Sir I am a law student. I am really thankful to you sir for making complex legal history and IPC concepts so intuitive. It has been invaluable for me and my batchmates.",
     rating: 5,
     course: "Legal History & Jurisprudence"
@@ -34,8 +37,9 @@ const REVIEWS_DATA = [
   {
     id: 4,
     name: "Vikramaditya Singh",
+    initials: "VS",
+    gradient: "linear-gradient(135deg, #4c1d95 0%, #8b5cf6 100%)",
     role: "Judiciary Aspirant • UP PCS-J",
-    image: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&q=80&w=300",
     content: "Advocate Prashant Jha sir explains case laws with real courtroom litigation examples. The best, most authoritative legal learning platform for competitive exam prep!",
     rating: 5,
     course: "Indian Evidence Act"
@@ -43,8 +47,9 @@ const REVIEWS_DATA = [
   {
     id: 5,
     name: "Neha Verma",
+    initials: "NV",
+    gradient: "linear-gradient(135deg, #831843 0%, #ec4899 100%)",
     role: "CLAT PG Rankholder",
-    image: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=300",
     content: "The subject-wise notes and revision charts are extremely helpful! Made my last-minute exam revision incredibly rapid and structured.",
     rating: 5,
     course: "Criminal Major Acts"
@@ -52,8 +57,9 @@ const REVIEWS_DATA = [
   {
     id: 6,
     name: "Rohan Kapoor",
+    initials: "RK",
+    gradient: "linear-gradient(135deg, #134e4a 0%, #14b8a6 100%)",
     role: "Junior Advocate • High Court",
-    image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&q=80&w=300",
     content: "Practical insights on drafting, bail jurisprudence, and writ petitions that university classes never cover. Essential training for every entering advocate!",
     rating: 5,
     course: "Courtroom Practice & Drafting"
@@ -78,13 +84,12 @@ const Reviews = () => {
           {REVIEWS_DATA.map((review) => (
             <div key={review.id} className="review-card">
               <div className="review-card-top">
-                <div className="review-avatar">
-                  <img 
-                    src={review.image} 
-                    alt={review.name} 
-                    className="review-avatar-img"
-                    loading="lazy"
-                  />
+                <div 
+                  className="review-avatar review-avatar-initials" 
+                  style={{ background: review.gradient }}
+                  aria-label={review.name}
+                >
+                  <span className="review-initials-text">{review.initials}</span>
                 </div>
                 <div>
                   <h4 className="review-author">{review.name}</h4>

@@ -6,7 +6,7 @@ import './YouTubeLectures.css';
 const YOUTUBE_VIDEOS = [
   {
     id: 'rxJYGzzhY7I',
-    title: 'Charter of 1600 & Legal History | Complete Revision',
+    title: 'Charter of 1600 | Establishment of East India Company & Legal History',
     duration: '25 min',
     views: '85K',
     fallbackThumb: 'https://images.unsplash.com/photo-1589829085413-56de8ae18c73?auto=format&fit=crop&q=80&w=800'
@@ -20,28 +20,28 @@ const YOUTUBE_VIDEOS = [
   },
   {
     id: 'czGgMUU0ukM',
-    title: 'Hans Kelsen Pure Theory of Law | Grundnorm Explained',
+    title: 'Analytical School of Jurisprudence | Austin, Bentham, Hart & Kelsen',
     duration: '46 min',
     views: '92K',
     fallbackThumb: 'https://images.unsplash.com/photo-1507679799987-c73779587ccf?auto=format&fit=crop&q=80&w=800'
   },
   {
     id: 'dapZlSgL_S4',
-    title: 'Jeremy Bentham & Utilitarianism | Analytical School',
+    title: 'John Austin & Command Theory of Law | Complete Revision',
     duration: '1 hr 14 min',
     views: '150K',
     fallbackThumb: 'https://images.unsplash.com/photo-1450101499163-c8848c66cb85?auto=format&fit=crop&q=80&w=800'
   },
   {
     id: 'VMcdDDPwhoo',
-    title: 'Hugo Grotius | Philosophical School & Natural Law Theory',
+    title: 'Immanuel Kant | Philosophical School of Jurisprudence & Justice',
     duration: '52 min',
     views: '78K',
     fallbackThumb: 'https://images.unsplash.com/photo-1521587760476-6c12a4b040da?auto=format&fit=crop&q=80&w=800'
   },
   {
     id: 'MLCFRb16bo8',
-    title: 'Leon Duguit | Sociological School & Social Solidarity',
+    title: 'Max Weber | Sociological School of Jurisprudence | Law & Authority',
     duration: '41 min',
     views: '65K',
     fallbackThumb: 'https://images.unsplash.com/photo-1423592707957-3b212afa6733?auto=format&fit=crop&q=80&w=800'
