@@ -290,7 +290,7 @@ The Act is called the State Bank of India Act, 1955.<br/>
 </tr>
 </tbody>
 </table></div>
-<p>💡 Purpose of Definitions:<br/>
+<p><span class="legal-badge-icon lightbulb"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v1M12 21v1M4.22 4.22l.71.71M18.36 18.36l.71.71M1 12h1M21 12h1M4.22 19.78l.71-.71M18.36 5.64l.71-.71"/></svg></span> Purpose of Definitions:<br/>
 These terms create clarity and consistency in interpretation throughout the Act.</p>
 
 <p>CHAPTER II – INCORPORATION &amp; SHARE CAPITAL (Sections 3–5)</p>
@@ -774,7 +774,7 @@ It ensures discipline, secrecy, continuity, and regulatory control in the functi
       <h2>RIGHT OF SET-OFF IN BANKING LAW</h2>
       <h3>1. Meaning of Set-off</h3>
       <p>In simple terms, Set-off means adjusting one debt against another.</p>
-      <p>👉 When two parties owe money to each other, the right of set-off allows one party to adjust their debt against the amount receivable from the other party.</p>
+      <p><span class="legal-badge-icon arrow"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span> When two parties owe money to each other, the right of set-off allows one party to adjust their debt against the amount receivable from the other party.</p>
       <h3>2. Essential Conditions for Banker's Right of Set-Off</h3>
       <ul>
         <li><strong>Mutuality of Debts:</strong> The debts must be between the same parties in the same capacity.</li>

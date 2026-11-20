@@ -6,43 +6,43 @@ import './YouTubeLectures.css';
 const YOUTUBE_VIDEOS = [
   {
     id: 'rxJYGzzhY7I',
-    title: 'Introduction to Jurisprudence | Law Simplified',
+    title: 'Charter of 1600 & Legal History | Complete Revision',
     duration: '25 min',
     views: '85K',
     fallbackThumb: 'https://images.unsplash.com/photo-1589829085413-56de8ae18c73?auto=format&fit=crop&q=80&w=800'
   },
   {
     id: 'hy5ji_1vu2M',
-    title: 'Indian Constitution explained | Preamble of India',
-    duration: '32 min',
+    title: 'Sir Henry Maine & Historical School of Jurisprudence',
+    duration: '35 min',
     views: '120K',
     fallbackThumb: 'https://images.unsplash.com/photo-1585829365295-ab7cd400c167?auto=format&fit=crop&q=80&w=800'
   },
   {
-    id: 'rxJYGzzhY7I', // Valid fallback video ID
-    title: 'IPC Section 302 | Murder & Culpable Homicide | Criminal Law',
-    duration: '28 min',
-    views: '95K',
+    id: 'czGgMUU0ukM',
+    title: 'Hans Kelsen Pure Theory of Law | Grundnorm Explained',
+    duration: '46 min',
+    views: '92K',
     fallbackThumb: 'https://images.unsplash.com/photo-1507679799987-c73779587ccf?auto=format&fit=crop&q=80&w=800'
   },
   {
-    id: 'hy5ji_1vu2M', // Valid fallback video ID
-    title: 'What is Law? | Introduction to Law for Beginners',
-    duration: '18 min',
+    id: 'dapZlSgL_S4',
+    title: 'Jeremy Bentham & Utilitarianism | Analytical School',
+    duration: '1 hr 14 min',
     views: '150K',
     fallbackThumb: 'https://images.unsplash.com/photo-1450101499163-c8848c66cb85?auto=format&fit=crop&q=80&w=800'
   },
   {
-    id: 'rxJYGzzhY7I', // Valid fallback video ID
-    title: 'Contract Act 1872 | Essentials of a Valid Contract',
-    duration: '30 min',
+    id: 'VMcdDDPwhoo',
+    title: 'Hugo Grotius | Philosophical School & Natural Law Theory',
+    duration: '52 min',
     views: '78K',
     fallbackThumb: 'https://images.unsplash.com/photo-1521587760476-6c12a4b040da?auto=format&fit=crop&q=80&w=800'
   },
   {
-    id: 'hy5ji_1vu2M', // Valid fallback video ID
-    title: 'Evidence Act | Burden of Proof Explained Simply',
-    duration: '22 min',
+    id: 'MLCFRb16bo8',
+    title: 'Leon Duguit | Sociological School & Social Solidarity',
+    duration: '41 min',
     views: '65K',
     fallbackThumb: 'https://images.unsplash.com/photo-1423592707957-3b212afa6733?auto=format&fit=crop&q=80&w=800'
   },

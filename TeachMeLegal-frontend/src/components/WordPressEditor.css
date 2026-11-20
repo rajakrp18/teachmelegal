@@ -330,3 +330,63 @@
   background: var(--border-light, #e2e8f0);
   margin: 32px 0;
 }
+
+/* Luxury Legal Status & Icon Badges */
+.wp-visual-canvas .legal-status-badge,
+.wp-preview-pane .legal-status-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  border-radius: 6px;
+  margin-right: 8px;
+  vertical-align: -3px;
+}
+
+.wp-visual-canvas .legal-status-badge.check,
+.wp-preview-pane .legal-status-badge.check {
+  background: rgba(16, 185, 129, 0.12);
+  color: #10b981;
+  border: 1px solid rgba(16, 185, 129, 0.28);
+}
+
+.wp-visual-canvas .legal-status-badge.cross,
+.wp-preview-pane .legal-status-badge.cross {
+  background: rgba(239, 68, 68, 0.12);
+  color: #ef4444;
+  border: 1px solid rgba(239, 68, 68, 0.28);
+}
+
+.wp-visual-canvas .legal-badge-icon,
+.wp-preview-pane .legal-badge-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 6px;
+  margin-right: 8px;
+  vertical-align: -3px;
+}
+
+.wp-visual-canvas .legal-badge-icon.arrow,
+.wp-preview-pane .legal-badge-icon.arrow {
+  background: rgba(207, 168, 86, 0.14);
+  color: #cfa856;
+  border: 1px solid rgba(207, 168, 86, 0.3);
+}
+
+.wp-visual-canvas .legal-badge-icon.book,
+.wp-preview-pane .legal-badge-icon.book {
+  background: rgba(59, 130, 246, 0.12);
+  color: #3b82f6;
+  border: 1px solid rgba(59, 130, 246, 0.28);
+}
+
+.wp-visual-canvas .legal-badge-icon.lightbulb,
+.wp-preview-pane .legal-badge-icon.lightbulb {
+  background: rgba(245, 158, 11, 0.14);
+  color: #f59e0b;
+  border: 1px solid rgba(245, 158, 11, 0.28);
+}
