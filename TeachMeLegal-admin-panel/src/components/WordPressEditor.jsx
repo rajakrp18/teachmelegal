@@ -36,8 +36,8 @@ export default function WordPressEditor({ value = '', onChange }) {
   // Popover menus state
   const [showFontMenu, setShowFontMenu] = useState(false);
   const [showSizeMenu, setShowSizeMenu] = useState(false);
-  const [currentFontLabel, setCurrentFontLabel] = useState('Select Font');
-  const [currentSizeLabel, setCurrentSizeLabel] = useState('Font Size');
+  const [currentFontLabel, setCurrentFontLabel] = useState('Font Family');
+  const [currentSizeLabel, setCurrentSizeLabel] = useState('Size');
   const [showTableModal, setShowTableModal] = useState(false);
   const [showBulletMenu, setShowBulletMenu] = useState(false);
   const [showNumberMenu, setShowNumberMenu] = useState(false);
@@ -531,7 +531,7 @@ export default function WordPressEditor({ value = '', onChange }) {
             onClick={() => handleTabSwitch('split')}
             title="Side-by-side editing and real-time live student reader preview"
           >
-            ⚡ Split View (Editor + Live Preview)
+            Split View (Editor + Live Preview)
           </button>
           <button
             type="button"
@@ -539,7 +539,7 @@ export default function WordPressEditor({ value = '', onChange }) {
             onClick={() => handleTabSwitch('visual')}
             title="Full-width visual WYSIWYG rich text editor"
           >
-            ✏️ Visual Editor
+            Visual Editor
           </button>
           <button
             type="button"
@@ -555,7 +555,7 @@ export default function WordPressEditor({ value = '', onChange }) {
             onClick={() => handleTabSwitch('preview')}
             title="Full-width simulated student reader view"
           >
-            👁️ Full Reader Preview
+            Full Reader Preview
           </button>
         </div>
       </div>
@@ -607,8 +607,7 @@ export default function WordPressEditor({ value = '', onChange }) {
                   setShowHighlightPicker(false);
                 }}
               >
-                <span>🔤 {currentFontLabel}</span>
-                <span style={{ fontSize: '0.65rem' }}>▼</span>
+                <span>{currentFontLabel}</span>
               </button>
 
               {showFontMenu && (
@@ -662,8 +661,7 @@ export default function WordPressEditor({ value = '', onChange }) {
                   setShowHighlightPicker(false);
                 }}
               >
-                <span>📏 {currentSizeLabel}</span>
-                <span style={{ fontSize: '0.65rem' }}>▼</span>
+                <span>{currentSizeLabel}</span>
               </button>
 
               {showSizeMenu && (
@@ -742,7 +740,6 @@ export default function WordPressEditor({ value = '', onChange }) {
                 }}
               >
                 <span style={{ borderBottom: '3px solid #cfa856', paddingBottom: '1px', fontWeight: 800 }}>A</span>
-                <span style={{ fontSize: '0.65rem' }}>▼</span>
               </button>
 
               {showColorPicker && (
@@ -773,8 +770,7 @@ export default function WordPressEditor({ value = '', onChange }) {
                   setShowColorPicker(false);
                 }}
               >
-                <span>🖍️</span>
-                <span style={{ fontSize: '0.65rem' }}>▼</span>
+                <span style={{ background: 'rgba(207, 168, 86, 0.25)', padding: '1px 5px', borderRadius: '4px', fontWeight: 700 }}>Highlight</span>
               </button>
 
               {showHighlightPicker && (
@@ -811,7 +807,7 @@ export default function WordPressEditor({ value = '', onChange }) {
                   setShowTableModal(false);
                 }}
               >
-                • All Bullets ▾
+                Bullets
               </button>
 
               {showBulletMenu && (
@@ -897,7 +893,7 @@ export default function WordPressEditor({ value = '', onChange }) {
                   setShowTableModal(false);
                 }}
               >
-                1. Numbers & Clauses ▾
+                Numbers & Clauses
               </button>
 
               {showNumberMenu && (
@@ -959,7 +955,7 @@ export default function WordPressEditor({ value = '', onChange }) {
               onMouseDown={(e) => e.preventDefault()}
               onClick={() => insertBulletList('check')}
             >
-              ✓ Conditions
+              Conditions
             </button>
             <button
               type="button"
@@ -968,7 +964,7 @@ export default function WordPressEditor({ value = '', onChange }) {
               onMouseDown={(e) => e.preventDefault()}
               onClick={() => insertBulletList('arrow')}
             >
-              ➔ Takeaways
+              Takeaways
             </button>
           </div>
 
@@ -988,7 +984,7 @@ export default function WordPressEditor({ value = '', onChange }) {
                 setShowNumberMenu(false);
               }}
             >
-              ⊞ Tables ▾
+              Tables
             </button>
             <button
               type="button"
@@ -997,7 +993,7 @@ export default function WordPressEditor({ value = '', onChange }) {
               onMouseDown={(e) => e.preventDefault()}
               onClick={insertSectionTable}
             >
-              ⚖️ Section Table
+              Section Table
             </button>
             <button
               type="button"
@@ -1006,7 +1002,7 @@ export default function WordPressEditor({ value = '', onChange }) {
               onMouseDown={(e) => e.preventDefault()}
               onClick={insertCaseLawTable}
             >
-              📜 Case Table
+              Case Table
             </button>
             <button
               type="button"
@@ -1015,7 +1011,7 @@ export default function WordPressEditor({ value = '', onChange }) {
               onMouseDown={(e) => e.preventDefault()}
               onClick={insertComparisonTable}
             >
-              📊 Compare
+              Compare
             </button>
           </div>
 
@@ -1031,7 +1027,7 @@ export default function WordPressEditor({ value = '', onChange }) {
                 insertHtmlAtCursor(quoteHtml);
               }}
             >
-              ❝ Quote
+              Quote
             </button>
             <button
               type="button"
@@ -1039,11 +1035,11 @@ export default function WordPressEditor({ value = '', onChange }) {
               title="Insert Statutory Ratio Callout Box"
               onMouseDown={(e) => e.preventDefault()}
               onClick={() => {
-                const callout = '<div class="statutory-callout"><strong>📌 STATUTORY RATIO:</strong> Enter pivotal legal principle, test of admissibility, or courtroom practice advice...</div><p><br></p>';
+                const callout = '<div class="statutory-callout"><strong>STATUTORY RATIO:</strong> Enter pivotal legal principle, test of admissibility, or courtroom practice advice...</div><p><br></p>';
                 insertHtmlAtCursor(callout);
               }}
             >
-              📌 Callout Box
+              Callout Box
             </button>
             <button
               type="button"
@@ -1055,7 +1051,7 @@ export default function WordPressEditor({ value = '', onChange }) {
                 insertHtmlAtCursor(hrHtml);
               }}
             >
-              ― Line
+              Line
             </button>
           </div>
         </div>
@@ -1065,7 +1061,7 @@ export default function WordPressEditor({ value = '', onChange }) {
       {showTableModal && (
         <div className="wp-table-modal" onClick={(e) => e.stopPropagation()}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '14px' }}>
-            <h4 style={{ margin: 0 }}>⊞ Insert Table in Middle of Paragraph</h4>
+            <h4 style={{ margin: 0 }}>Insert Table in Middle of Paragraph</h4>
             <button 
               type="button" 
               onClick={() => setShowTableModal(false)}
@@ -1078,13 +1074,13 @@ export default function WordPressEditor({ value = '', onChange }) {
           <div className="wp-table-templates-bar">
             <span style={{ fontSize: '0.8rem', fontWeight: 700, color: 'var(--admin-gold)' }}>One-Click Presets:</span>
             <button type="button" className="btn-preset-pill" onClick={insertSectionTable}>
-              ⚖️ Section Table (3 Cols)
+              Section Table (3 Cols)
             </button>
             <button type="button" className="btn-preset-pill" onClick={insertCaseLawTable}>
-              📜 Case Law Summary Table
+              Case Law Summary Table
             </button>
             <button type="button" className="btn-preset-pill" onClick={insertComparisonTable}>
-              📊 Legal Comparison Table
+              Legal Comparison Table
             </button>
           </div>
 
@@ -1128,7 +1124,7 @@ export default function WordPressEditor({ value = '', onChange }) {
                 Cancel
               </button>
               <button type="button" className="btn-table-insert" onClick={insertCustomTable}>
-                ✓ Insert Custom Table at Cursor
+                Insert Custom Table at Cursor
               </button>
             </div>
           </div>
@@ -1142,7 +1138,7 @@ export default function WordPressEditor({ value = '', onChange }) {
           <div className="wp-pane wp-pane-editor">
             {activeTab === 'split' && (
               <div className="wp-pane-label">
-                <span>✏️ VISUAL WYSIWYG CANVAS (Edit paragraphs, legal fonts, tables & bullets here)</span>
+                <span>VISUAL WYSIWYG CANVAS (Edit paragraphs, legal fonts, tables & bullets here)</span>
               </div>
             )}
             <div
@@ -1177,7 +1173,7 @@ export default function WordPressEditor({ value = '', onChange }) {
         {(activeTab === 'preview' || activeTab === 'split') && (
           <div className="wp-pane wp-pane-preview">
             <div className="wp-preview-notice">
-              <span>👁️ LIVE READER PREVIEW • Real-time student view with TeachMeLegal styling</span>
+              <span>LIVE READER PREVIEW • Real-time student view with TeachMeLegal styling</span>
             </div>
             <article className="post-content prose" dangerouslySetInnerHTML={{ __html: content || '<p style="color: #94a3b8; font-style: italic;">Live article preview will render here as you type...</p>' }} />
           </div>
@@ -1194,7 +1190,7 @@ export default function WordPressEditor({ value = '', onChange }) {
           <span><strong>HTML:</strong> {content.length} chars</span>
         </div>
         <span style={{ color: 'var(--admin-gold)', fontWeight: 700 }}>
-          {activeTab === 'split' ? '⚡ Dual-Pane Live Mode Active' : activeTab === 'preview' ? '👁️ Previewing Full Layout' : '✏️ Edit Mode Active'}
+          {activeTab === 'split' ? 'Dual-Pane Live Mode Active' : activeTab === 'preview' ? 'Previewing Full Layout' : 'Edit Mode Active'}
         </span>
       </div>
     </div>

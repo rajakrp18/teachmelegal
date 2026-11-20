@@ -134,7 +134,7 @@ export default function AdminBooksPage() {
         </div>
         <div className="admin-header-actions">
           <button onClick={openAddModal} className="admin-btn admin-btn-primary">
-            ➕ Add New Book / Notes
+            Add New Book / Notes
           </button>
         </div>
       </header>
@@ -227,7 +227,7 @@ export default function AdminBooksPage() {
                         </span>
                       </td>
                       <td style={{ color: 'var(--admin-text-sub)', whiteSpace: 'nowrap' }}>
-                        📅 {book.date || 'Nov 2026'}
+                        {book.date || 'Nov 2026'}
                       </td>
                       <td style={{ textDecoration: 'line-through', color: 'var(--admin-text-sub)' }}>{book.originalPrice}</td>
                       <td><strong style={{ color: '#047857' }}>{book.salePrice}</strong></td>

@@ -72,7 +72,7 @@ export default function AdminAnalyticsPage() {
           {/* Top Read Legal Articles */}
           <div className="admin-card">
             <div className="admin-card-header">
-              <h2 className="admin-card-title">🔥 Most Read Legal Articles</h2>
+              <h2 className="admin-card-title">Most Read Legal Articles</h2>
             </div>
             <div className="admin-table-wrapper">
               <table className="admin-table">
@@ -108,7 +108,7 @@ export default function AdminAnalyticsPage() {
 
           {/* Traffic Breakdown Cards */}
           <div className="admin-card" style={{ padding: '24px' }}>
-            <h2 className="admin-card-title" style={{ marginBottom: '20px' }}>🌐 Traffic Sources</h2>
+            <h2 className="admin-card-title" style={{ marginBottom: '20px' }}>Traffic Sources</h2>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
               {loading ? (
                 <div style={{ padding: '20px', textAlign: 'center' }}>Loading...</div>

@@ -245,7 +245,7 @@ export default function AdminUsersPage() {
 
                         <td>
                           <div style={{ fontSize: '0.85rem', color: 'var(--admin-text-sub)', whiteSpace: 'nowrap' }}>
-                            📅 {u.memberSince || 'Sep 2026'}
+                            {u.memberSince || 'Sep 2026'}
                           </div>
                         </td>
 
@@ -267,7 +267,7 @@ export default function AdminUsersPage() {
                             className="admin-btn admin-btn-primary"
                             style={{ padding: '6px 14px', fontSize: '0.82rem' }}
                           >
-                            Target / Inspect 🎯
+                            Target / Inspect
                           </button>
                         </td>
                       </tr>
@@ -308,13 +308,13 @@ export default function AdminUsersPage() {
                 onClick={() => copyToClipboard(selectedUser.phone || selectedUser.email)}
                 className="admin-btn-pill"
               >
-                {copiedPhone ? '✓ Phone Copied!' : `📞 Call / WhatsApp: ${selectedUser.phone || 'N/A'}`}
+                {copiedPhone ? 'Phone Copied' : `Call / WhatsApp: ${selectedUser.phone || 'N/A'}`}
               </button>
               <a 
                 href={`mailto:${selectedUser.email}?subject=Exclusive Judicial Mentorship - TeachMeLegal`}
                 className="admin-btn-pill"
               >
-                ✉️ Send Judicial Guidance Email
+                Send Judicial Guidance Email
               </a>
             </div>
 

@@ -89,7 +89,7 @@ export default function AdminBlogsPage() {
         </div>
         <div className="admin-header-actions">
           <Link href="/blogs/new" className="admin-btn admin-btn-primary">
-            ➕ Write New Blog
+            Write New Blog
           </Link>
         </div>
       </header>
@@ -181,7 +181,7 @@ export default function AdminBlogsPage() {
                         </span>
                       </td>
                       <td style={{ color: 'var(--admin-text-sub)', whiteSpace: 'nowrap' }}>
-                        📅 {post.date}
+                        {post.date}
                       </td>
                       <td><strong>{post.views || 0}</strong></td>
                       <td>

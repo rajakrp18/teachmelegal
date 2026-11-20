@@ -131,7 +131,7 @@ export default function AdminCoursesPage() {
         </div>
         <div className="admin-header-actions">
           <button onClick={openAddModal} className="admin-btn admin-btn-primary">
-            ➕ Add New Course
+            Add New Course
           </button>
         </div>
       </header>
@@ -234,10 +234,10 @@ export default function AdminCoursesPage() {
                         </span>
                       </td>
                       <td style={{ color: 'var(--admin-text-sub)', whiteSpace: 'nowrap' }}>
-                        📅 {course.date || 'Nov 2026'}
+                        {course.date || 'Nov 2026'}
                       </td>
                       <td><strong>{course.price}</strong></td>
-                      <td>👥 {course.students}</td>
+                      <td>{course.students} students</td>
                       <td>★ {course.rating}</td>
                       <td>
                         <span className={`badge ${course.active ? 'badge-published' : 'badge-draft'}`}>

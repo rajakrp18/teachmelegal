@@ -76,7 +76,7 @@ export default function NewBlogPage() {
             className="admin-btn admin-btn-secondary"
             title="Preview how this article looks to students on TeachMeLegal"
           >
-            👁️ Live Student Preview
+            Live Student Preview
           </button>
           <Link href="/blogs" className="admin-btn admin-btn-secondary">
             ← Cancel
@@ -87,7 +87,7 @@ export default function NewBlogPage() {
             className="admin-btn admin-btn-primary" 
             disabled={loading}
           >
-            {loading ? 'Publishing...' : '🚀 Save & Publish'}
+            {loading ? 'Publishing...' : 'Save & Publish'}
           </button>
         </div>
       </header>
@@ -96,7 +96,7 @@ export default function NewBlogPage() {
       <main className="admin-content" style={{ width: '100%', maxWidth: '100%' }}>
         {error && (
           <div style={{ background: '#fef2f2', border: '1px solid #fca5a5', color: '#dc2626', padding: '14px 20px', borderRadius: '12px', marginBottom: '8px' }}>
-            ⚠️ {error}
+            {error}
           </div>
         )}
 
@@ -208,7 +208,7 @@ export default function NewBlogPage() {
                   Article Content Canvas
                 </h2>
                 <span style={{ fontSize: '0.84rem', color: 'var(--admin-text-sub)' }}>
-                  Use <strong>⚡ Split View</strong> to write on the left while observing the real-time student layout on the right.
+                  Use <strong>Split View</strong> to write on the left while observing the real-time student layout on the right.
                 </span>
               </div>
             </div>
@@ -236,7 +236,7 @@ export default function NewBlogPage() {
                   onClick={() => setShowPreviewModal(true)}
                   className="admin-btn admin-btn-secondary"
                 >
-                  👁️ Live Student Preview
+                  Live Student Preview
                 </button>
                 <button 
                   type="submit" 
@@ -244,7 +244,7 @@ export default function NewBlogPage() {
                   disabled={loading} 
                   style={{ padding: '12px 34px' }}
                 >
-                  {loading ? 'Publishing...' : '🚀 Save & Publish Post'}
+                  {loading ? 'Publishing...' : 'Save & Publish Post'}
                 </button>
               </div>
             </div>
@@ -284,9 +284,9 @@ export default function NewBlogPage() {
               </h1>
               
               <div style={{ display: 'flex', gap: '18px', color: 'var(--admin-text-sub)', fontSize: '0.88rem', borderBottom: '1px solid var(--admin-border)', paddingBottom: '16px', marginBottom: '24px' }}>
-                <span>✍️ {form.author || 'Adv. Prashant Jha'}</span>
-                <span>📅 Published Today</span>
-                <span>⏱️ {form.readTime}</span>
+                <span>{form.author || 'Adv. Prashant Jha'}</span>
+                <span>Published Today</span>
+                <span>{form.readTime}</span>
               </div>
 
               {form.excerpt && (

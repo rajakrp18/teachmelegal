@@ -93,7 +93,7 @@ export default function EditBlogPage({ params }) {
             className="admin-btn admin-btn-secondary"
             title="Preview how this article looks to students on TeachMeLegal"
           >
-            👁️ Live Student Preview
+            Live Student Preview
           </button>
           <Link href="/blogs" className="admin-btn admin-btn-secondary">
             ← Back to Blogs
@@ -104,7 +104,7 @@ export default function EditBlogPage({ params }) {
             className="admin-btn admin-btn-primary" 
             disabled={saving}
           >
-            {saving ? 'Saving...' : '💾 Save Changes'}
+            {saving ? 'Saving...' : 'Save Changes'}
           </button>
         </div>
       </header>
@@ -113,7 +113,7 @@ export default function EditBlogPage({ params }) {
       <main className="admin-content" style={{ width: '100%', maxWidth: '100%' }}>
         {error && (
           <div style={{ background: '#fef2f2', border: '1px solid #fca5a5', color: '#dc2626', padding: '14px 20px', borderRadius: '12px', marginBottom: '8px' }}>
-            ⚠️ {error}
+            {error}
           </div>
         )}
 
@@ -217,7 +217,7 @@ export default function EditBlogPage({ params }) {
                   Article Content Canvas
                 </h2>
                 <span style={{ fontSize: '0.84rem', color: 'var(--admin-text-sub)' }}>
-                  Use <strong>⚡ Split View</strong> to edit on the left while observing the real-time student layout on the right.
+                  Use <strong>Split View</strong> to edit on the left while observing the real-time student layout on the right.
                 </span>
               </div>
             </div>
@@ -245,7 +245,7 @@ export default function EditBlogPage({ params }) {
                   onClick={() => setShowPreviewModal(true)}
                   className="admin-btn admin-btn-secondary"
                 >
-                  👁️ Live Student Preview
+                  Live Student Preview
                 </button>
                 <button 
                   type="submit" 
@@ -253,7 +253,7 @@ export default function EditBlogPage({ params }) {
                   disabled={saving} 
                   style={{ padding: '12px 34px' }}
                 >
-                  {saving ? 'Saving...' : '💾 Save Changes'}
+                  {saving ? 'Saving...' : 'Save Changes'}
                 </button>
               </div>
             </div>
@@ -293,9 +293,9 @@ export default function EditBlogPage({ params }) {
               </h1>
               
               <div style={{ display: 'flex', gap: '18px', color: 'var(--admin-text-sub)', fontSize: '0.88rem', borderBottom: '1px solid var(--admin-border)', paddingBottom: '16px', marginBottom: '24px' }}>
-                <span>✍️ {form.author || 'Adv. Prashant Jha'}</span>
-                <span>📅 Published</span>
-                <span>⏱️ {form.readTime}</span>
+                <span>{form.author || 'Adv. Prashant Jha'}</span>
+                <span>Published</span>
+                <span>{form.readTime}</span>
               </div>
 
               {form.excerpt && (

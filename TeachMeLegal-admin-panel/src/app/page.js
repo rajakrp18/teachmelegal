@@ -70,7 +70,7 @@ export default function AdminDashboardPage() {
             <span>+ Write New Blog</span>
           </Link>
           <Link href="/users" className="admin-btn admin-btn-secondary">
-            <span>Inspect Scholars 👥</span>
+            <span>Inspect Scholars</span>
           </Link>
         </div>
       </header>

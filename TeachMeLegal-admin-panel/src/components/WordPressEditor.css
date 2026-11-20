@@ -198,8 +198,8 @@
   border-color: rgba(207, 168, 86, 0.35);
   color: var(--admin-text-main, #0f172a);
   font-weight: 700;
-  min-width: 130px;
-  justify-content: space-between;
+  min-width: 105px;
+  justify-content: center;
 }
 
 [data-theme='dark'] .wp-btn-font {
@@ -211,8 +211,8 @@
   border-color: var(--admin-border, #cbd5e1);
   color: var(--admin-text-main, #0f172a);
   font-weight: 700;
-  min-width: 95px;
-  justify-content: space-between;
+  min-width: 65px;
+  justify-content: center;
 }
 
 [data-theme='dark'] .wp-btn-size {
