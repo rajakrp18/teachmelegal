@@ -1,77 +1,125 @@
 "use client";
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Navbar from '../../components/Navbar';
 import Footer from '../../components/Footer';
 import PdfPreviewModal from '../../components/PdfPreviewModal';
 import { useCart } from '../../context/CartContext';
-import { IconBookOpen, IconDocument, IconUser, IconMail, IconScales, IconCheckCircle } from '../../components/Icons';
+import { 
+  IconBookOpen, 
+  IconDocument, 
+  IconUser, 
+  IconMail, 
+  IconScales, 
+  IconCheckCircle,
+  IconLock,
+  IconPhone,
+  IconGraduationCap,
+  IconSparkles,
+  IconArrowUpRight
+} from '../../components/Icons';
 import './account.css';
 
 export default function AccountPage() {
-  const { user, logoutUser } = useCart();
+  const { user, logoutUser, enrolledCourses, orderHistory, updateUserProfile } = useCart();
   const [activeTab, setActiveTab] = useState('courses'); // 'courses', 'orders', 'settings'
   const [previewPdf, setPreviewPdf] = useState(null);
+  const [saving, setSaving] = useState(false);
+  const [savedSuccess, setSavedSuccess] = useState(false);
+  const [saveError, setSaveError] = useState('');
 
-  // Default fallback user profile if not signed in via Firebase/CartContext yet
+  // Default fallback user profile if not signed in yet
   const student = user || {
-    name: 'Law Student',
+    name: 'Legal Scholar',
     email: 'student@teachmelegal.com',
+    phone: '+91 98765 43210',
+    role: 'STUDENT PREVIEW',
     memberSince: 'September 2026',
+    profession: 'Judicial Services Aspirant',
+    targetExam: 'State Judicial Services (PCS-J)',
+    university: 'Faculty of Law, Delhi University',
+    yearOfStudy: 'Final Year',
+    state: 'Delhi NCR',
+    bio: 'Dedicated legal scholar focusing on Criminal Procedure, Constitutional Law, and Banking Regulations.'
   };
 
-  // Sample active enrolled courses & books
-  const enrolledItems = [
-    {
-      id: 'pmla-2002',
-      title: 'Prevention of Money Laundering Act, 2002',
-      category: 'Exam Notes',
-      pdfUrl: '/books/sample.pdf',
-    },
-    {
-      id: 'jurisprudence-notes',
-      title: 'Jurisprudence & Legal Theory Notes',
-      category: 'Judiciary Revision',
-      pdfUrl: '/books/sample.pdf',
-    },
-    {
-      id: 'banking-law-notes',
-      title: 'Banking Law & Case Studies Guide',
-      category: 'Video Course & Handbook',
-      pdfUrl: '/books/sample.pdf',
-    },
-  ];
-
-  // Sample order history
-  const orderHistory = [
-    {
-      id: 'TML-ORD-9842',
-      date: '20 Sep 2026',
-      items: 'Prevention of Money Laundering Act, 2002',
-      amount: '₹99.00',
-      status: 'PAID',
-    },
-    {
-      id: 'TML-ORD-8711',
-      date: '14 Sep 2026',
-      items: 'Jurisprudence Notes + Banking Law',
-      amount: '₹144.00',
-      status: 'PAID',
-    },
-  ];
-
   const [profileForm, setProfileForm] = useState({
-    name: student.name,
-    email: student.email,
-    phone: '+91 98765 43210',
+    name: student.name || '',
+    email: student.email || '',
+    phone: student.phone || '',
+    profession: student.profession || 'Judicial Services Aspirant',
+    targetExam: student.targetExam || 'State Judicial Services (PCS-J)',
+    university: student.university || '',
+    yearOfStudy: student.yearOfStudy || 'Final Year',
+    state: student.state || 'Delhi NCR',
+    bio: student.bio || ''
   });
-  const [savedSuccess, setSavedSuccess] = useState(false);
 
-  const handleProfileSave = (e) => {
+  // Sync form if user loads from storage
+  useEffect(() => {
+    if (user) {
+      setProfileForm({
+        name: user.name || '',
+        email: user.email || '',
+        phone: user.phone || '',
+        profession: user.profession || 'Judicial Services Aspirant',
+        targetExam: user.targetExam || 'State Judicial Services (PCS-J)',
+        university: user.university || '',
+        yearOfStudy: user.yearOfStudy || 'Final Year',
+        state: user.state || 'Delhi NCR',
+        bio: user.bio || ''
+      });
+    }
+  }, [user]);
+
+  const handleProfileChange = (e) => {
+    setProfileForm({ ...profileForm, [e.target.name]: e.target.value });
+  };
+
+  const handleProfileSave = async (e) => {
     e.preventDefault();
-    setSavedSuccess(true);
-    setTimeout(() => setSavedSuccess(false), 3000);
+    setSaving(true);
+    setSaveError('');
+    setSavedSuccess(false);
+
+    try {
+      const res = await fetch('/api/auth/profile', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          email: user?.email || profileForm.email,
+          name: profileForm.name,
+          phone: profileForm.phone,
+          profession: profileForm.profession,
+          targetExam: profileForm.targetExam,
+          university: profileForm.university,
+          yearOfStudy: profileForm.yearOfStudy,
+          state: profileForm.state,
+          bio: profileForm.bio
+        })
+      });
+
+      const data = await res.json();
+
+      if (!res.ok || !data.success) {
+        setSaveError(data.error || 'Failed to update profile settings.');
+        return;
+      }
+
+      // Update in context & localStorage
+      updateUserProfile(data.user);
+      setSavedSuccess(true);
+      setTimeout(() => setSavedSuccess(false), 4000);
+    } catch (err) {
+      console.error('Error saving profile:', err);
+      // Fallback for offline/local storage
+      updateUserProfile(profileForm);
+      setSavedSuccess(true);
+      setTimeout(() => setSavedSuccess(false), 4000);
+    } finally {
+      setSaving(false);
+    }
   };
 
   return (
@@ -79,6 +127,29 @@ export default function AccountPage() {
       <Navbar />
 
       <div className="container account-container">
+
+        {/* Not Logged In Banner */}
+        {!user && (
+          <div className="account-guest-banner">
+            <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+              <IconSparkles size={22} style={{ color: 'var(--accent-gold)' }} />
+              <div>
+                <strong>You are viewing in Scholar Preview mode.</strong>
+                <p style={{ margin: 0, fontSize: '0.85rem', color: 'var(--text-muted)' }}>
+                  Sign in or create an account to permanently sync your purchased notes and orders across all devices.
+                </p>
+              </div>
+            </div>
+            <div style={{ display: 'flex', gap: '10px' }}>
+              <Link href="/login" className="btn btn-gold" style={{ padding: '8px 18px', fontSize: '0.85rem' }}>
+                Sign In
+              </Link>
+              <Link href="/signup" className="btn btn-gold" style={{ padding: '8px 18px', fontSize: '0.85rem', background: 'transparent', border: '1px solid var(--accent-gold)', color: 'var(--accent-gold)' }}>
+                Sign Up Free
+              </Link>
+            </div>
+          </div>
+        )}
 
         {/* User Hero Profile Banner */}
         <div className="account-user-card">
@@ -88,17 +159,35 @@ export default function AccountPage() {
             </div>
             <div className="user-meta-info">
               <h1>{student.name}</h1>
-              <p className="user-email-text"><IconMail size={14} style={{ display: 'inline', verticalAlign: 'middle', marginRight: '6px' }} /> {student.email}</p>
+              <p className="user-email-text">
+                <IconMail size={14} style={{ display: 'inline', verticalAlign: 'middle', marginRight: '6px' }} /> 
+                {student.email}
+              </p>
               <div className="user-badges-row">
-                <span className="student-role-badge"><IconScales size={13} style={{ display: 'inline', verticalAlign: 'middle', marginRight: '5px' }} /> ENROLLED SCHOLAR</span>
-                <span className="capsule-badge-outline">MEMBER SINCE 2026</span>
+                <span className="student-role-badge">
+                  <IconScales size={13} style={{ display: 'inline', verticalAlign: 'middle', marginRight: '5px' }} /> 
+                  {student.role || 'ENROLLED SCHOLAR'}
+                </span>
+                <span className="capsule-badge-outline">
+                  {student.profession || 'Judicial Services Aspirant'}
+                </span>
+                <span className="capsule-badge-outline">
+                  {student.memberSince ? `MEMBER SINCE ${student.memberSince.toUpperCase()}` : 'MEMBER SINCE 2026'}
+                </span>
               </div>
             </div>
           </div>
+
           <div>
-            <button onClick={logoutUser} className="btn-account-logout">
-              Sign Out ↗
-            </button>
+            {user ? (
+              <button onClick={logoutUser} className="btn-account-logout">
+                Sign Out ↗
+              </button>
+            ) : (
+              <Link href="/login" className="btn btn-gold" style={{ padding: '10px 22px', fontSize: '0.88rem' }}>
+                Sign In ↗
+              </Link>
+            )}
           </div>
         </div>
 
@@ -110,7 +199,7 @@ export default function AccountPage() {
             style={{ display: 'inline-flex', alignItems: 'center', gap: '8px' }}
           >
             <IconBookOpen size={16} />
-            <span>My Courses & Books ({enrolledItems.length})</span>
+            <span>My Courses & Books ({enrolledCourses.length})</span>
           </button>
           <button
             className={`account-tab-btn ${activeTab === 'orders' ? 'active' : ''}`}
@@ -126,114 +215,274 @@ export default function AccountPage() {
             style={{ display: 'inline-flex', alignItems: 'center', gap: '8px' }}
           >
             <IconUser size={16} />
-            <span>Profile & Settings</span>
+            <span>Profile & Legal Bio</span>
           </button>
         </div>
 
         {/* TAB 1: Enrolled Courses & Study Notes */}
         {activeTab === 'courses' && (
-          <div className="enrolled-grid">
-            {enrolledItems.map((item) => (
-              <div key={item.id} className="enrolled-card">
-                <div>
-                  <div className="enrolled-card-header">
-                    <span className="enrolled-book-icon" style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center' }}>
-                      <IconBookOpen size={20} />
-                    </span>
+          <div>
+            {enrolledCourses.length > 0 ? (
+              <div className="enrolled-grid">
+                {enrolledCourses.map((item, idx) => (
+                  <div key={item.id || idx} className="enrolled-card">
                     <div>
-                      <span className="enrolled-card-tag">{item.category}</span>
-                      <h3 className="enrolled-card-title">{item.title}</h3>
+                      <div className="enrolled-card-header">
+                        <span className="enrolled-book-icon" style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center' }}>
+                          <IconBookOpen size={20} />
+                        </span>
+                        <div>
+                          <span className="enrolled-card-tag">{item.category || 'Study Material'}</span>
+                          <h3 className="enrolled-card-title">{item.title}</h3>
+                          {item.enrolledDate && (
+                            <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>
+                              Enrolled: {item.enrolledDate}
+                            </span>
+                          )}
+                        </div>
+                      </div>
                     </div>
-                  </div>
-                </div>
 
-                <button
-                  onClick={() => setPreviewPdf({ title: item.title, file: item.pdfUrl })}
-                  className="btn-open-material"
-                  style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: '8px' }}
-                >
-                  <IconBookOpen size={16} />
-                  <span>Open & Read Notes PDF</span>
-                </button>
+                    <button
+                      onClick={() => setPreviewPdf({ title: item.title, file: item.pdfUrl || '/books/sample.pdf' })}
+                      className="btn-open-material"
+                      style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: '8px' }}
+                    >
+                      <IconBookOpen size={16} />
+                      <span>Open & Read Notes PDF</span>
+                    </button>
+                  </div>
+                ))}
               </div>
-            ))}
+            ) : (
+              <div className="account-empty-state">
+                <div className="empty-icon-bubble">
+                  <IconBookOpen size={36} style={{ color: 'var(--accent-gold)' }} />
+                </div>
+                <h3>No Enrolled Courses or Notes Yet</h3>
+                <p>Unlock comprehensive judicial notes, landmark case breakdowns, and video masterclasses with instant PDF access.</p>
+                <Link href="/books" className="btn btn-gold" style={{ display: 'inline-flex', alignItems: 'center', gap: '8px' }}>
+                  <span>Browse Judicial Study Notes</span>
+                  <IconArrowUpRight size={14} />
+                </Link>
+              </div>
+            )}
           </div>
         )}
 
         {/* TAB 2: Order History */}
         {activeTab === 'orders' && (
-          <div className="orders-table-wrapper">
-            <table className="orders-table">
-              <thead>
-                <tr>
-                  <th>Order ID</th>
-                  <th>Date</th>
-                  <th>Purchased Items</th>
-                  <th>Total Amount</th>
-                  <th>Status</th>
-                </tr>
-              </thead>
-              <tbody>
-                {orderHistory.map((ord) => (
-                  <tr key={ord.id}>
-                    <td className="order-id-code">{ord.id}</td>
-                    <td>{ord.date}</td>
-                    <td>{ord.items}</td>
-                    <td><strong>{ord.amount}</strong></td>
-                    <td>
-                      <span className="order-status-pill">COMPLETED</span>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+          <div>
+            {orderHistory.length > 0 ? (
+              <div className="orders-table-wrapper">
+                <table className="orders-table">
+                  <thead>
+                    <tr>
+                      <th>Order ID</th>
+                      <th>Date</th>
+                      <th>Purchased Items</th>
+                      <th>Total Amount</th>
+                      <th>Status</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {orderHistory.map((ord, idx) => (
+                      <tr key={ord.id || idx}>
+                        <td className="order-id-code">{ord.id}</td>
+                        <td>{ord.date}</td>
+                        <td>{ord.items}</td>
+                        <td><strong>{ord.amount}</strong></td>
+                        <td>
+                          <span className="order-status-pill">{ord.status || 'COMPLETED'}</span>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            ) : (
+              <div className="account-empty-state">
+                <div className="empty-icon-bubble">
+                  <IconDocument size={36} style={{ color: 'var(--accent-gold)' }} />
+                </div>
+                <h3>No Previous Orders Found</h3>
+                <p>All completed purchases, transaction receipts, and course invoices will be logged here securely.</p>
+                <Link href="/books" className="btn btn-gold" style={{ display: 'inline-flex', alignItems: 'center', gap: '8px' }}>
+                  <span>Explore Study Notes</span>
+                  <IconArrowUpRight size={14} />
+                </Link>
+              </div>
+            )}
           </div>
         )}
 
-        {/* TAB 3: Profile Settings */}
+        {/* TAB 3: Profile Settings & Legal Bio */}
         {activeTab === 'settings' && (
           <div className="settings-card">
+            <div className="settings-header">
+              <h2>Legal Scholar Profile</h2>
+              <p>Personalize your judicial target examination, academic credentials, and law chambers background.</p>
+            </div>
+
             {savedSuccess && (
-              <div className="form-success-banner mb-4">
-                <IconCheckCircle size={15} style={{ display: 'inline', verticalAlign: 'middle', marginRight: '6px' }} />
-                Profile settings updated successfully!
+              <div className="form-success-banner">
+                <IconCheckCircle size={16} style={{ display: 'inline', verticalAlign: 'middle', marginRight: '8px' }} />
+                Profile details saved successfully! Your scholar record has been updated.
               </div>
             )}
+
+            {saveError && (
+              <div className="form-error-banner">
+                {saveError}
+              </div>
+            )}
+
             <form onSubmit={handleProfileSave} className="settings-form">
-              <div className="auth-field">
-                <label className="auth-label">Full Name</label>
-                <input
-                  type="text"
-                  value={profileForm.name}
-                  onChange={(e) => setProfileForm({ ...profileForm, name: e.target.value })}
-                  className="auth-input"
-                  required
-                />
+              <div className="form-grid-2">
+                <div className="auth-field">
+                  <label className="auth-label">Full Name</label>
+                  <input
+                    type="text"
+                    name="name"
+                    value={profileForm.name}
+                    onChange={handleProfileChange}
+                    className="auth-input"
+                    required
+                  />
+                </div>
+
+                <div className="auth-field">
+                  <label className="auth-label">Email Address</label>
+                  <input
+                    type="email"
+                    name="email"
+                    value={profileForm.email}
+                    onChange={handleProfileChange}
+                    className="auth-input"
+                    disabled={Boolean(user?.email)}
+                    title={user?.email ? "Email cannot be changed directly." : ""}
+                    required
+                  />
+                </div>
+              </div>
+
+              <div className="form-grid-2">
+                <div className="auth-field">
+                  <label className="auth-label">Phone Number</label>
+                  <input
+                    type="tel"
+                    name="phone"
+                    value={profileForm.phone}
+                    onChange={handleProfileChange}
+                    placeholder="+91 98765 43210"
+                    className="auth-input"
+                  />
+                </div>
+
+                <div className="auth-field">
+                  <label className="auth-label">Target Judicial Exam / Goal</label>
+                  <select
+                    name="targetExam"
+                    value={profileForm.targetExam}
+                    onChange={handleProfileChange}
+                    className="auth-input auth-select"
+                  >
+                    <option value="State Judicial Services (PCS-J)">State Judicial Services (PCS-J)</option>
+                    <option value="Delhi Judicial Services (DJS)">Delhi Judicial Services (DJS)</option>
+                    <option value="Supreme Court & High Court Litigation">Supreme Court & High Court Litigation</option>
+                    <option value="LL.B. Semester & University Exams">LL.B. Semester & University Exams</option>
+                    <option value="CLAT PG / LL.M. Entrance">CLAT PG / LL.M. Entrance</option>
+                    <option value="AIBE (All India Bar Examination)">AIBE (All India Bar Examination)</option>
+                    <option value="Banking Law & Regulatory (IBPS SO / SEBI / RBI)">Banking Law & Regulatory (IBPS SO / SEBI / RBI)</option>
+                  </select>
+                </div>
+              </div>
+
+              <div className="form-grid-2">
+                <div className="auth-field">
+                  <label className="auth-label">Legal Profession / Status</label>
+                  <select
+                    name="profession"
+                    value={profileForm.profession}
+                    onChange={handleProfileChange}
+                    className="auth-input auth-select"
+                  >
+                    <option value="LL.B. Scholar (3-Yr / 5-Yr)">LL.B. Scholar (3-Yr / 5-Yr)</option>
+                    <option value="LL.M. Candidate">LL.M. Candidate</option>
+                    <option value="Judicial Services Aspirant">Judicial Services Aspirant</option>
+                    <option value="Practicing Advocate (District Courts)">Practicing Advocate (District Courts)</option>
+                    <option value="Practicing Advocate (High Court)">Practicing Advocate (High Court)</option>
+                    <option value="Junior Chambers Counsel">Junior Chambers Counsel</option>
+                    <option value="In-house Legal Counsel / Bank Officer">In-house Legal Counsel / Bank Officer</option>
+                  </select>
+                </div>
+
+                <div className="auth-field">
+                  <label className="auth-label">Year of Study / Practice</label>
+                  <select
+                    name="yearOfStudy"
+                    value={profileForm.yearOfStudy}
+                    onChange={handleProfileChange}
+                    className="auth-input auth-select"
+                  >
+                    <option value="1st Year">1st Year</option>
+                    <option value="2nd Year">2nd Year</option>
+                    <option value="3rd Year">3rd Year</option>
+                    <option value="4th Year">4th Year</option>
+                    <option value="Final Year">Final Year</option>
+                    <option value="1-3 Years at Bar">1-3 Years at Bar</option>
+                    <option value="3-5 Years at Bar">3-5 Years at Bar</option>
+                    <option value="5+ Years Litigation Practice">5+ Years Litigation Practice</option>
+                  </select>
+                </div>
+              </div>
+
+              <div className="form-grid-2">
+                <div className="auth-field">
+                  <label className="auth-label">University / Law School / Bar Council</label>
+                  <input
+                    type="text"
+                    name="university"
+                    value={profileForm.university}
+                    onChange={handleProfileChange}
+                    placeholder="e.g. Faculty of Law, University of Delhi / Bar Council of Delhi"
+                    className="auth-input"
+                  />
+                </div>
+
+                <div className="auth-field">
+                  <label className="auth-label">State / Jurisdiction</label>
+                  <input
+                    type="text"
+                    name="state"
+                    value={profileForm.state}
+                    onChange={handleProfileChange}
+                    placeholder="e.g. Delhi NCR, Uttar Pradesh, Bihar, Maharashtra"
+                    className="auth-input"
+                  />
+                </div>
               </div>
 
               <div className="auth-field">
-                <label className="auth-label">Email Address</label>
-                <input
-                  type="email"
-                  value={profileForm.email}
-                  onChange={(e) => setProfileForm({ ...profileForm, email: e.target.value })}
-                  className="auth-input"
-                  required
+                <label className="auth-label">Legal Bio & Core Focus Areas</label>
+                <textarea
+                  name="bio"
+                  rows={4}
+                  value={profileForm.bio}
+                  onChange={handleProfileChange}
+                  placeholder="Share your primary areas of study or practice (e.g. Banking Law, Criminal Defense, Constitutional Writs, ADR)..."
+                  className="auth-input auth-textarea"
                 />
               </div>
 
-              <div className="auth-field">
-                <label className="auth-label">Phone Number</label>
-                <input
-                  type="tel"
-                  value={profileForm.phone}
-                  onChange={(e) => setProfileForm({ ...profileForm, phone: e.target.value })}
-                  className="auth-input"
-                />
-              </div>
-
-              <button type="submit" className="btn btn-gold mt-2" style={{ width: 'max-content' }}>
-                <span>Save Profile Changes</span>
+              <button 
+                type="submit" 
+                className="btn btn-gold mt-2" 
+                disabled={saving}
+                style={{ width: 'max-content', display: 'inline-flex', alignItems: 'center', gap: '8px' }}
+              >
+                <span>{saving ? 'Saving...' : 'Save Profile Changes'}</span>
+                <IconCheckCircle size={16} />
               </button>
             </form>
           </div>

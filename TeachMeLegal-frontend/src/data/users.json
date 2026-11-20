@@ -1,0 +1,56 @@
+[
+  {
+    "id": "usr-1",
+    "name": "rajpoddar8907",
+    "email": "rajpoddar8907@gmail.com",
+    "phone": "+91 98765 43210",
+    "targetExam": "State Judicial Services (PCS-J)",
+    "profession": "Judicial Services Aspirant",
+    "university": "Faculty of Law, Delhi University",
+    "yearOfStudy": "Final Year",
+    "state": "Delhi NCR",
+    "bio": "Focused on Banking Law, Criminal Procedure, and Constitutional Writs.",
+    "memberSince": "September 2026",
+    "role": "ENROLLED SCHOLAR",
+    "passwordHash": "b3af4a237970e913d955cc54ef692c02:707cd849bfbf546442b110b143aff56931559d6754a5d9f5c74451043e4780cb",
+    "enrolledCourses": [
+      {
+        "id": "pmla-2002",
+        "title": "Prevention of Money Laundering Act, 2002",
+        "category": "Exam Notes",
+        "pdfUrl": "/books/sample.pdf",
+        "enrolledDate": "20 Sep 2026"
+      },
+      {
+        "id": "jurisprudence-notes",
+        "title": "Jurisprudence & Legal Theory Notes",
+        "category": "Judiciary Revision",
+        "pdfUrl": "/books/sample.pdf",
+        "enrolledDate": "14 Sep 2026"
+      },
+      {
+        "id": "banking-law-notes",
+        "title": "Banking Law & Case Studies Guide",
+        "category": "Video Course & Handbook",
+        "pdfUrl": "/books/sample.pdf",
+        "enrolledDate": "14 Sep 2026"
+      }
+    ],
+    "orderHistory": [
+      {
+        "id": "TML-ORD-9842",
+        "date": "20 Sep 2026",
+        "items": "Prevention of Money Laundering Act, 2002",
+        "amount": "\u20b999.00",
+        "status": "COMPLETED"
+      },
+      {
+        "id": "TML-ORD-8711",
+        "date": "14 Sep 2026",
+        "items": "Jurisprudence Notes + Banking Law",
+        "amount": "\u20b9144.00",
+        "status": "COMPLETED"
+      }
+    ]
+  }
+]

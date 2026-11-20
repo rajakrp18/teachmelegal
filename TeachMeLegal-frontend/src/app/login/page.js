@@ -2,7 +2,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { useState } from 'react';
-import { IconGoogle, IconCheckCircle } from '../../components/Icons';
+import { IconGoogle, IconCheckCircle, IconLock } from '../../components/Icons';
 import '../auth.css';
 
 import { useCart } from '../../context/CartContext';
@@ -17,17 +17,38 @@ export default function LoginPage() {
 
   const handleChange = (e) => setForm({ ...form, [e.target.name]: e.target.value });
 
+  const fillDemoAccount = () => {
+    setForm({
+      email: 'rajpoddar8907@gmail.com',
+      password: 'password123'
+    });
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
     setError('');
 
     try {
-      // Authenticate student
-      loginUser({ name: form.email.split('@')[0], email: form.email });
-      router.push('/');
+      const res = await fetch('/api/auth/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: form.email, password: form.password })
+      });
+
+      const data = await res.json();
+
+      if (!res.ok || !data.success) {
+        setError(data.error || 'Invalid credentials. Please verify your email and password.');
+        return;
+      }
+
+      // Successful authentication
+      loginUser(data.user, data.enrolledCourses, data.orderHistory);
+      router.push('/account');
     } catch (err) {
-      setError('Invalid credentials. Please try again.');
+      console.error('Login request failed:', err);
+      setError('Unable to reach authentication server. Please try again.');
     } finally {
       setLoading(false);
     }
@@ -38,7 +59,7 @@ export default function LoginPage() {
       <div className="auth-left">
         <div className="auth-left-content">
           <Link href="/" className="auth-logo">
-            <Image src="/logo.png" alt="Teach Me Legal" width={60} height={60} style={{ width: 'auto', height: 'auto' }} />
+            <Image src="/logo.png" alt="Teach Me Legal" width={60} height={60} style={{ width: 'auto', height: 'auto' }} priority />
             <span>Teach Me <b>Legal</b></span>
           </Link>
           <h2 className="auth-left-title">India's Premier Legal Learning Platform</h2>
@@ -48,13 +69,13 @@ export default function LoginPage() {
               <IconCheckCircle size={18} style={{ color: 'var(--accent-gold)', flexShrink: 0 }} /> Access to 50+ courses & notes
             </div>
             <div className="auth-benefit">
-              <IconCheckCircle size={18} style={{ color: 'var(--accent-gold)', flexShrink: 0 }} /> Free YouTube lectures
+              <IconCheckCircle size={18} style={{ color: 'var(--accent-gold)', flexShrink: 0 }} /> Free YouTube lectures & updates
             </div>
             <div className="auth-benefit">
-              <IconCheckCircle size={18} style={{ color: 'var(--accent-gold)', flexShrink: 0 }} /> Direct download of study material
+              <IconCheckCircle size={18} style={{ color: 'var(--accent-gold)', flexShrink: 0 }} /> Direct download of study material & notes
             </div>
             <div className="auth-benefit">
-              <IconCheckCircle size={18} style={{ color: 'var(--accent-gold)', flexShrink: 0 }} /> Exclusive student discounts
+              <IconCheckCircle size={18} style={{ color: 'var(--accent-gold)', flexShrink: 0 }} /> Permanent access to enrolled items
             </div>
           </div>
         </div>
@@ -65,6 +86,28 @@ export default function LoginPage() {
         <div className="auth-form-box">
           <h1 className="auth-title">Welcome Back</h1>
           <p className="auth-subtitle">Sign in to your account to continue learning</p>
+
+          {/* Quick Demo Fill Pill */}
+          <div 
+            onClick={fillDemoAccount}
+            style={{
+              background: 'rgba(207, 168, 86, 0.1)',
+              border: '1px dashed var(--accent-gold-border)',
+              borderRadius: '12px',
+              padding: '10px 14px',
+              marginBottom: '20px',
+              cursor: 'pointer',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              fontSize: '0.82rem',
+              color: 'var(--accent-gold)'
+            }}
+            title="Click to pre-fill test scholar credentials"
+          >
+            <span>✨ <strong>Demo Account:</strong> rajpoddar8907@gmail.com</span>
+            <span style={{ textDecoration: 'underline', fontWeight: 600 }}>Click to Fill</span>
+          </div>
 
           {error && <div className="auth-error">{error}</div>}
 
@@ -98,15 +141,23 @@ export default function LoginPage() {
             </div>
 
             <button type="submit" className="auth-submit-btn" disabled={loading}>
-              {loading ? <span className="auth-spinner" /> : 'Sign In'}
+              {loading ? <span className="auth-spinner" /> : (
+                <span style={{ display: 'inline-flex', alignItems: 'center', gap: '8px' }}>
+                  Sign In <IconLock size={15} />
+                </span>
+              )}
             </button>
           </form>
 
           <div className="auth-divider"><span>or continue with</span></div>
 
           <div className="auth-social-btns">
-            <button className="auth-social-btn google">
-              <IconGoogle size={18} /> Continue with Google
+            <button 
+              type="button" 
+              className="auth-social-btn google"
+              onClick={fillDemoAccount}
+            >
+              <IconGoogle size={18} /> Quick Sign In Demo
             </button>
           </div>
 
