@@ -1,22 +1,27 @@
 "use client";
 import { useEffect, useState } from 'react';
+import { IconSearch, IconBookOpen, IconCalendar } from '../../components/Icons';
 
 export default function AdminBooksPage() {
   const [books, setBooks] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [search, setSearch] = useState('');
+  const [categoryFilter, setCategoryFilter] = useState('ALL');
+  const [statusFilter, setStatusFilter] = useState('ALL');
   const [showModal, setShowModal] = useState(false);
   const [editingBook, setEditingBook] = useState(null);
 
   const [form, setForm] = useState({
     title: '',
-    category: 'Exam Material',
+    category: 'Exam Materials',
     originalPrice: '₹299',
     salePrice: '₹99',
     numericPrice: 99,
-    badge: 'Sale',
+    badge: 'Sale!',
     badgeColor: '#22c55e',
     coverColor: '#1e3a5f',
     icon: '📘',
+    date: 'Nov 2026',
     active: true
   });
 
@@ -43,14 +48,15 @@ export default function AdminBooksPage() {
     setEditingBook(null);
     setForm({
       title: '',
-      category: 'Exam Material',
+      category: 'Exam Materials',
       originalPrice: '₹299',
       salePrice: '₹99',
       numericPrice: 99,
-      badge: 'Sale',
+      badge: 'Sale!',
       badgeColor: '#22c55e',
       coverColor: '#1e3a5f',
       icon: '📘',
+      date: new Date().toLocaleDateString('en-US', { month: 'short', year: 'numeric' }),
       active: true
     });
     setShowModal(true);
@@ -58,7 +64,10 @@ export default function AdminBooksPage() {
 
   const openEditModal = (book) => {
     setEditingBook(book);
-    setForm(book);
+    setForm({
+      ...book,
+      date: book.date || 'Nov 2026'
+    });
     setShowModal(true);
   };
 
@@ -100,10 +109,29 @@ export default function AdminBooksPage() {
     }
   };
 
+  const filteredBooks = books.filter(b => {
+    const q = search.toLowerCase();
+    const matchesSearch = !q ||
+      b.title.toLowerCase().includes(q) ||
+      b.category.toLowerCase().includes(q) ||
+      (b.badge && b.badge.toLowerCase().includes(q)) ||
+      (b.author && b.author.toLowerCase().includes(q));
+
+    const matchesCategory = categoryFilter === 'ALL' || b.category === categoryFilter;
+    const matchesStatus = statusFilter === 'ALL' || (statusFilter === 'Active' ? b.active : !b.active);
+
+    return matchesSearch && matchesCategory && matchesStatus;
+  });
+
   return (
     <>
       <header className="admin-header">
-        <h1 className="admin-header-title">Books, Notes & Revision Material Management</h1>
+        <div>
+          <h1 className="admin-header-title">Books, Notes & Revision Material Management</h1>
+          <p className="admin-header-subtitle">
+            Curate bare act revision notes, question banks, and statutory subject charts.
+          </p>
+        </div>
         <div className="admin-header-actions">
           <button onClick={openAddModal} className="admin-btn admin-btn-primary">
             ➕ Add New Book / Notes
@@ -114,15 +142,54 @@ export default function AdminBooksPage() {
       <main className="admin-content">
         <div className="admin-card">
           <div className="admin-card-header">
-            <h2 className="admin-card-title">All Legal Notes & Materials ({books.length})</h2>
+            <div className="admin-filter-bar">
+              <div className="admin-search-wrapper">
+                <span className="search-icon"><IconSearch size={16} /></span>
+                <input
+                  type="text"
+                  placeholder="Search notes & books..."
+                  value={search}
+                  onChange={(e) => setSearch(e.target.value)}
+                  className="admin-search-input"
+                />
+              </div>
+
+              <select
+                value={categoryFilter}
+                onChange={(e) => setCategoryFilter(e.target.value)}
+                className="admin-select"
+              >
+                <option value="ALL">All Categories</option>
+                <option value="Exam Materials">Exam Materials</option>
+                <option value="Question Bank">Question Bank</option>
+                <option value="Revision Chart">Revision Chart</option>
+                <option value="Subject wise Notes">Subject wise Notes</option>
+              </select>
+
+              <select
+                value={statusFilter}
+                onChange={(e) => setStatusFilter(e.target.value)}
+                className="admin-select"
+              >
+                <option value="ALL">All Status</option>
+                <option value="Active">Active Only</option>
+                <option value="Hidden">Hidden Only</option>
+              </select>
+            </div>
+
+            <span style={{ fontSize: '0.88rem', color: 'var(--admin-text-sub)' }}>
+              Showing {filteredBooks.length} of {books.length} publications
+            </span>
           </div>
 
           <div className="admin-table-wrapper">
             <table className="admin-table">
               <thead>
                 <tr>
+                  <th style={{ width: '70px' }}>SL No.</th>
                   <th>Book / Notes Title</th>
                   <th>Category</th>
+                  <th>Published Date</th>
                   <th>Original Price</th>
                   <th>Sale Price</th>
                   <th>Badge</th>
@@ -133,17 +200,25 @@ export default function AdminBooksPage() {
               <tbody>
                 {loading ? (
                   <tr>
-                    <td colSpan="7" style={{ textAlign: 'center', padding: '40px' }}>Loading books...</td>
+                    <td colSpan="9" style={{ textAlign: 'center', padding: '40px' }}>
+                      <div className="admin-loading-spinner" style={{ margin: '0 auto 12px' }} />
+                      Loading books & study notes...
+                    </td>
                   </tr>
-                ) : books.length === 0 ? (
+                ) : filteredBooks.length === 0 ? (
                   <tr>
-                    <td colSpan="7" style={{ textAlign: 'center', padding: '40px' }}>No books added yet.</td>
+                    <td colSpan="9" style={{ textAlign: 'center', padding: '40px', color: 'var(--admin-text-sub)' }}>
+                      No legal materials found matching current search and filters.
+                    </td>
                   </tr>
                 ) : (
-                  books.map((book) => (
+                  filteredBooks.map((book, idx) => (
                     <tr key={book.id}>
-                      <td style={{ fontWeight: 600, color: 'var(--admin-primary)' }}>
-                        <span style={{ marginRight: '8px' }}>{book.icon}</span>
+                      <td style={{ fontWeight: 800, color: 'var(--admin-gold)' }}>
+                        #{idx + 1}
+                      </td>
+                      <td style={{ fontWeight: 700, color: 'var(--admin-text-main)' }}>
+                        <span style={{ marginRight: '8px' }}>{book.icon || '📘'}</span>
                         {book.title}
                       </td>
                       <td>
@@ -151,16 +226,19 @@ export default function AdminBooksPage() {
                           {book.category}
                         </span>
                       </td>
+                      <td style={{ color: 'var(--admin-text-sub)', whiteSpace: 'nowrap' }}>
+                        📅 {book.date || 'Nov 2026'}
+                      </td>
                       <td style={{ textDecoration: 'line-through', color: 'var(--admin-text-sub)' }}>{book.originalPrice}</td>
                       <td><strong style={{ color: '#047857' }}>{book.salePrice}</strong></td>
                       <td>
-                        <span className="badge" style={{ background: `${book.badgeColor}20`, color: book.badgeColor }}>
+                        <span className="badge" style={{ background: `${book.badgeColor || '#cfa856'}20`, color: book.badgeColor || 'var(--admin-gold)' }}>
                           {book.badge}
                         </span>
                       </td>
                       <td>
                         <span className={`badge ${book.active ? 'badge-published' : 'badge-draft'}`}>
-                          {book.active ? 'Active' : 'Hidden'}
+                          {book.active ? '● Active' : '○ Hidden'}
                         </span>
                       </td>
                       <td>
@@ -209,8 +287,9 @@ export default function AdminBooksPage() {
                       value={form.category}
                       onChange={(e) => setForm({ ...form, category: e.target.value })}
                       className="admin-select"
+                      style={{ width: '100%', borderRadius: '12px' }}
                     >
-                      <option value="Exam Material">Exam Material</option>
+                      <option value="Exam Materials">Exam Materials</option>
                       <option value="Question Bank">Question Bank</option>
                       <option value="Revision Chart">Revision Chart</option>
                       <option value="Subject wise Notes">Subject wise Notes</option>
@@ -254,7 +333,7 @@ export default function AdminBooksPage() {
 
                 <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
                   <div className="admin-form-group">
-                    <label className="admin-label">Badge Label (e.g. Sale, 50% Off)</label>
+                    <label className="admin-label">Badge Label (e.g. Sale!, 50% Off)</label>
                     <input
                       type="text"
                       value={form.badge}
@@ -264,12 +343,13 @@ export default function AdminBooksPage() {
                   </div>
 
                   <div className="admin-form-group">
-                    <label className="admin-label">Cover Background Color</label>
+                    <label className="admin-label">Published Date</label>
                     <input
-                      type="color"
-                      value={form.coverColor}
-                      onChange={(e) => setForm({ ...form, coverColor: e.target.value })}
-                      style={{ width: '100%', height: '45px', border: 'none', borderRadius: '8px', cursor: 'pointer' }}
+                      type="text"
+                      value={form.date}
+                      onChange={(e) => setForm({ ...form, date: e.target.value })}
+                      placeholder="e.g. Nov 2026"
+                      className="admin-input"
                     />
                   </div>
                 </div>

@@ -1,11 +1,13 @@
 "use client";
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
+import { IconSearch, IconBlog, IconCalendar } from '../../components/Icons';
 
 export default function AdminBlogsPage() {
   const [blogs, setBlogs] = useState([]);
   const [search, setSearch] = useState('');
   const [categoryFilter, setCategoryFilter] = useState('ALL');
+  const [sortOrder, setSortOrder] = useState('NEWEST');
   const [loading, setLoading] = useState(true);
 
   const API_URL = '/api/admin';
@@ -61,16 +63,30 @@ export default function AdminBlogsPage() {
   };
 
   const filteredBlogs = blogs.filter(post => {
-    const matchesSearch = post.title.toLowerCase().includes(search.toLowerCase()) ||
-                          post.excerpt?.toLowerCase().includes(search.toLowerCase());
+    const matchesSearch = !search || 
+      post.title.toLowerCase().includes(search.toLowerCase()) ||
+      post.excerpt?.toLowerCase().includes(search.toLowerCase());
     const matchesCategory = categoryFilter === 'ALL' || post.category === categoryFilter;
     return matchesSearch && matchesCategory;
+  }).sort((a, b) => {
+    if (sortOrder === 'VIEWS') {
+      return (b.views || 0) - (a.views || 0);
+    }
+    if (sortOrder === 'OLDEST') {
+      return (new Date(a.date) || 0) - (new Date(b.date) || 0);
+    }
+    return (new Date(b.date) || 0) - (new Date(a.date) || 0);
   });
 
   return (
     <>
       <header className="admin-header">
-        <h1 className="admin-header-title">Blog Management</h1>
+        <div>
+          <h1 className="admin-header-title">Blog Management</h1>
+          <p className="admin-header-subtitle">
+            Manage legal editorial, banking law briefs, and judicial exam articles.
+          </p>
+        </div>
         <div className="admin-header-actions">
           <Link href="/blogs/new" className="admin-btn admin-btn-primary">
             ➕ Write New Blog
@@ -82,23 +98,36 @@ export default function AdminBlogsPage() {
         <div className="admin-card">
           <div className="admin-card-header">
             <div className="admin-filter-bar">
-              <input
-                type="text"
-                placeholder="Search blog title..."
-                value={search}
-                onChange={(e) => setSearch(e.target.value)}
-                className="admin-search-input"
-              />
+              <div className="admin-search-wrapper">
+                <span className="search-icon"><IconSearch size={16} /></span>
+                <input
+                  type="text"
+                  placeholder="Search articles by title or keyword..."
+                  value={search}
+                  onChange={(e) => setSearch(e.target.value)}
+                  className="admin-search-input"
+                />
+              </div>
+
               <select
                 value={categoryFilter}
                 onChange={(e) => setCategoryFilter(e.target.value)}
-                className="admin-search-input"
-                style={{ width: '160px' }}
+                className="admin-select"
               >
                 <option value="ALL">All Categories</option>
                 <option value="Banking Law">Banking Law</option>
                 <option value="Teachmelegal">Teachmelegal</option>
                 <option value="Constitutional Law">Constitutional Law</option>
+              </select>
+
+              <select
+                value={sortOrder}
+                onChange={(e) => setSortOrder(e.target.value)}
+                className="admin-select"
+              >
+                <option value="NEWEST">Date: Newest First</option>
+                <option value="OLDEST">Date: Oldest First</option>
+                <option value="VIEWS">Most Viewed Articles</option>
               </select>
             </div>
 
@@ -111,7 +140,8 @@ export default function AdminBlogsPage() {
             <table className="admin-table">
               <thead>
                 <tr>
-                  <th>Title</th>
+                  <th style={{ width: '70px' }}>SL No.</th>
+                  <th>Article Title</th>
                   <th>Category</th>
                   <th>Published Date</th>
                   <th>Views</th>
@@ -122,27 +152,37 @@ export default function AdminBlogsPage() {
               <tbody>
                 {loading ? (
                   <tr>
-                    <td colSpan="6" style={{ textAlign: 'center', padding: '40px' }}>Loading blogs...</td>
+                    <td colSpan="7" style={{ textAlign: 'center', padding: '40px' }}>
+                      <div className="admin-loading-spinner" style={{ margin: '0 auto 12px' }} />
+                      Loading articles...
+                    </td>
                   </tr>
                 ) : filteredBlogs.length === 0 ? (
                   <tr>
-                    <td colSpan="6" style={{ textAlign: 'center', padding: '40px' }}>No blog posts match your search.</td>
+                    <td colSpan="7" style={{ textAlign: 'center', padding: '40px', color: 'var(--admin-text-sub)' }}>
+                      No blog posts match your current search and filters.
+                    </td>
                   </tr>
                 ) : (
-                  filteredBlogs.map((post) => (
+                  filteredBlogs.map((post, idx) => (
                     <tr key={post.id}>
-                      <td style={{ fontWeight: 600, color: 'var(--admin-primary)', maxWidth: '320px' }}>
+                      <td style={{ fontWeight: 800, color: 'var(--admin-gold)' }}>
+                        #{idx + 1}
+                      </td>
+                      <td style={{ fontWeight: 700, color: 'var(--admin-text-main)', maxWidth: '320px' }}>
                         <div>{post.title}</div>
                         <div style={{ fontSize: '0.78rem', color: 'var(--admin-text-sub)', fontWeight: 400, marginTop: '4px' }}>
                           /{post.slug}
                         </div>
                       </td>
                       <td>
-                        <span className="badge" style={{ background: `${post.categoryColor}15`, color: post.categoryColor }}>
+                        <span className="badge" style={{ background: `${post.categoryColor || '#cfa856'}15`, color: post.categoryColor || 'var(--admin-gold)', border: '1px solid rgba(207, 168, 86, 0.25)' }}>
                           {post.category}
                         </span>
                       </td>
-                      <td style={{ color: 'var(--admin-text-sub)' }}>{post.date}</td>
+                      <td style={{ color: 'var(--admin-text-sub)', whiteSpace: 'nowrap' }}>
+                        📅 {post.date}
+                      </td>
                       <td><strong>{post.views || 0}</strong></td>
                       <td>
                         <button
@@ -156,9 +196,9 @@ export default function AdminBlogsPage() {
                       </td>
                       <td>
                         <div style={{ display: 'flex', gap: '8px' }}>
-                          <a href={`http://localhost:3000/blog/${post.slug}`} target="_blank" rel="noreferrer" className="admin-btn admin-btn-secondary" style={{ padding: '6px 12px', fontSize: '0.8rem' }}>
-                            View
-                          </a>
+                          <Link href={`http://localhost:3000/blog/${post.slug}`} target="_blank" rel="noreferrer" className="admin-btn admin-btn-secondary" style={{ padding: '6px 12px', fontSize: '0.8rem' }}>
+                            View ↗
+                          </Link>
                           <Link href={`/blogs/edit/${post.id}`} className="admin-btn admin-btn-primary" style={{ padding: '6px 12px', fontSize: '0.8rem' }}>
                             Edit
                           </Link>

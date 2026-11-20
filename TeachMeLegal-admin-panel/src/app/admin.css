@@ -86,17 +86,21 @@ body {
 }
 
 .sidebar-collapsed .admin-brand-wrapper {
-  padding: 0;
+  padding: 14px 0 10px;
+  height: auto;
+  min-height: 92px;
+  display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
-  height: 76px;
+  gap: 8px;
 }
 
 .sidebar-collapsed .admin-brand {
   padding: 0;
   justify-content: center;
   margin: 0 auto;
-  width: 100%;
+  width: auto;
 }
 
 .admin-brand-img-collapsed {
@@ -114,6 +118,29 @@ body {
 
 .sidebar-collapsed .admin-sidebar-toggle {
   display: none !important;
+}
+
+.admin-sidebar-expand-btn {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: rgba(207, 168, 86, 0.18);
+  border: 1px solid var(--admin-gold-border);
+  color: var(--admin-gold);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.22s ease;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.25);
+  margin: 0 auto;
+}
+
+.admin-sidebar-expand-btn:hover {
+  background: var(--admin-gold);
+  color: #060e17;
+  transform: scale(1.14);
+  box-shadow: 0 4px 14px rgba(207, 168, 86, 0.45);
 }
 
 .admin-brand-wrapper {
@@ -434,6 +461,64 @@ body {
   border-color: var(--admin-gold);
   box-shadow: 0 0 0 3px rgba(207, 168, 86, 0.2);
   width: 300px;
+}
+
+.admin-filter-bar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.admin-select {
+  padding: 9px 16px;
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--admin-border);
+  background: var(--admin-body-bg);
+  color: var(--admin-text-main);
+  font-size: 0.88rem;
+  font-weight: 500;
+  outline: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.admin-select:focus {
+  border-color: var(--admin-gold);
+  box-shadow: 0 0 0 3px rgba(207, 168, 86, 0.2);
+}
+
+.admin-input,
+.admin-textarea {
+  width: 100%;
+  padding: 10px 16px;
+  border-radius: 12px;
+  border: 1px solid var(--admin-border);
+  background: var(--admin-body-bg);
+  color: var(--admin-text-main);
+  font-size: 0.9rem;
+  outline: none;
+  transition: all 0.2s ease;
+}
+
+.admin-input:focus,
+.admin-textarea:focus {
+  border-color: var(--admin-gold);
+  box-shadow: 0 0 0 3px rgba(207, 168, 86, 0.2);
+}
+
+.admin-form-group {
+  margin-bottom: 16px;
+}
+
+.admin-label {
+  display: block;
+  font-size: 0.82rem;
+  font-weight: 700;
+  margin-bottom: 6px;
+  color: var(--admin-text-sub);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
 }
 
 /* ── Buttons ── */

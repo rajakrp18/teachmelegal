@@ -183,7 +183,7 @@ export default function AdminDashboardPage() {
                 ) : (
                   filteredBlogs.slice(0, 8).map((post, idx) => (
                     <tr key={post.id || idx}>
-                      <td style={{ color: 'var(--admin-text-sub)', fontWeight: 600 }}>{idx + 1}</td>
+                      <td style={{ fontWeight: 800, color: 'var(--admin-gold)' }}>#{idx + 1}</td>
                       <td style={{ fontWeight: 700, color: 'var(--admin-text-main)', maxWidth: '320px' }}>
                         {post.title}
                       </td>
@@ -197,7 +197,9 @@ export default function AdminDashboardPage() {
                         </span>
                       </td>
                       <td style={{ fontWeight: 500 }}>{post.author || 'Adv. Prashant Jha'}</td>
-                      <td style={{ color: 'var(--admin-text-sub)' }}>{post.date || 'Recently'}</td>
+                      <td style={{ color: 'var(--admin-text-sub)', whiteSpace: 'nowrap' }}>
+                        📅 {post.date || 'Recently'}
+                      </td>
                       <td><strong>{post.views || 0}</strong></td>
                       <td>
                         <span className={`badge ${post.published !== false ? 'badge-published' : 'badge-draft'}`}>

@@ -9,6 +9,7 @@ const INITIAL_BOOKS = [
     badge: 'Sale!',
     image: '/books/money-laundering-act-2002.png',
     author: 'Adv. Prashant Jha',
+    date: 'Nov 2026',
     active: true
   },
   {
@@ -21,6 +22,7 @@ const INITIAL_BOOKS = [
     badge: 'Sale!',
     image: '/books/question-bank-constitutional-history.png',
     author: 'Adv. Prashant Jha',
+    date: 'Nov 2026',
     active: true
   },
   {
@@ -33,6 +35,7 @@ const INITIAL_BOOKS = [
     badge: 'Sale!',
     image: '/books/question-bank-environmental-law.png',
     author: 'Adv. Prashant Jha',
+    date: 'Oct 2026',
     active: true
   },
   {
@@ -45,6 +48,7 @@ const INITIAL_BOOKS = [
     badge: 'Sale!',
     image: '/books/question-bank-jurisprudence.png',
     author: 'Adv. Prashant Jha',
+    date: 'Oct 2026',
     active: true
   },
   {
@@ -57,6 +61,7 @@ const INITIAL_BOOKS = [
     badge: 'Sale!',
     image: '/books/revision-jurisprudence.jpeg',
     author: 'Adv. Prashant Jha',
+    date: 'Oct 2026',
     active: true
   },
   {
@@ -69,6 +74,7 @@ const INITIAL_BOOKS = [
     badge: 'Sale!',
     image: '/books/jurisprudence-notes.jpg',
     author: 'Adv. Prashant Jha',
+    date: 'Sep 2026',
     active: true
   },
   {
@@ -81,6 +87,7 @@ const INITIAL_BOOKS = [
     badge: 'Sale!',
     image: '/books/banking-law-notes.jpg',
     author: 'Adv. Prashant Jha',
+    date: 'Sep 2026',
     active: true
   },
   {
@@ -93,6 +100,7 @@ const INITIAL_BOOKS = [
     badge: 'Sale!',
     image: '/books/environmental-law-in-india.png',
     author: 'Adv. Prashant Jha',
+    date: 'Sep 2026',
     active: true
   },
   {
@@ -105,6 +113,7 @@ const INITIAL_BOOKS = [
     badge: 'Sale!',
     image: '/books/revision-environmental-law.jpeg',
     author: 'Adv. Prashant Jha',
+    date: 'Aug 2026',
     active: true
   },
   {
@@ -117,6 +126,7 @@ const INITIAL_BOOKS = [
     badge: 'Sale!',
     image: '/books/indian-legal-constitutional-history.png',
     author: 'Adv. Prashant Jha',
+    date: 'Aug 2026',
     active: true
   }
 ];
@@ -144,6 +154,7 @@ export function createBook(data) {
     badge: data.badge || 'Sale!',
     image: data.image || '/books/money-laundering-act-2002.png',
     author: data.author || 'Adv. Prashant Jha',
+    date: data.date || new Date().toLocaleDateString('en-US', { month: 'short', year: 'numeric' }),
     active: data.active !== false
   };
   global.__adminBooksStore.unshift(newBook);

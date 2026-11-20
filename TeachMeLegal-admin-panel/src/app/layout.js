@@ -12,7 +12,9 @@ import {
   IconBookOpen,
   IconAnalytics,
   IconSun,
-  IconMoon
+  IconMoon,
+  IconChevronRight,
+  IconChevronLeft
 } from '../components/Icons';
 
 export default function RootLayout({ children }) {
@@ -92,8 +94,8 @@ export default function RootLayout({ children }) {
                 )}
               </Link>
 
-              {/* Only show collapse arrow button when sidebar is expanded */}
-              {isSidebarExpanded && (
+              {/* Sidebar toggle buttons */}
+              {isSidebarExpanded ? (
                 <button 
                   type="button"
                   className="admin-sidebar-toggle" 
@@ -102,8 +104,22 @@ export default function RootLayout({ children }) {
                     toggleSidebar();
                   }} 
                   title="Collapse Sidebar"
+                  aria-label="Collapse Sidebar"
                 >
-                  ◀
+                  <IconChevronLeft size={16} />
+                </button>
+              ) : (
+                <button 
+                  type="button"
+                  className="admin-sidebar-expand-btn" 
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    toggleSidebar();
+                  }} 
+                  title="Expand Sidebar"
+                  aria-label="Expand Sidebar"
+                >
+                  <IconChevronRight size={16} />
                 </button>
               )}
             </div>

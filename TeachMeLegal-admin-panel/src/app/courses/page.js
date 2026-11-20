@@ -1,9 +1,13 @@
 "use client";
 import { useEffect, useState } from 'react';
+import { IconSearch, IconGraduationCap, IconCalendar } from '../../components/Icons';
 
 export default function AdminCoursesPage() {
   const [courses, setCourses] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [search, setSearch] = useState('');
+  const [categoryFilter, setCategoryFilter] = useState('ALL');
+  const [statusFilter, setStatusFilter] = useState('ALL');
   const [showModal, setShowModal] = useState(false);
   const [editingCourse, setEditingCourse] = useState(null);
 
@@ -16,6 +20,7 @@ export default function AdminCoursesPage() {
     students: '100+',
     image: 'https://images.unsplash.com/photo-1589829085413-56de8ae18c73?auto=format&fit=crop&q=80&w=800',
     description: '',
+    date: 'Nov 2026',
     active: true
   });
 
@@ -49,6 +54,7 @@ export default function AdminCoursesPage() {
       students: '100+',
       image: 'https://images.unsplash.com/photo-1589829085413-56de8ae18c73?auto=format&fit=crop&q=80&w=800',
       description: '',
+      date: new Date().toLocaleDateString('en-US', { month: 'short', year: 'numeric' }),
       active: true
     });
     setShowModal(true);
@@ -56,7 +62,10 @@ export default function AdminCoursesPage() {
 
   const openEditModal = (course) => {
     setEditingCourse(course);
-    setForm(course);
+    setForm({
+      ...course,
+      date: course.date || 'Nov 2026'
+    });
     setShowModal(true);
   };
 
@@ -98,10 +107,28 @@ export default function AdminCoursesPage() {
     }
   };
 
+  const filteredCourses = courses.filter(c => {
+    const q = search.toLowerCase();
+    const matchesSearch = !q ||
+      c.title.toLowerCase().includes(q) ||
+      (c.description && c.description.toLowerCase().includes(q)) ||
+      c.category.toLowerCase().includes(q);
+
+    const matchesCategory = categoryFilter === 'ALL' || c.category === categoryFilter;
+    const matchesStatus = statusFilter === 'ALL' || (statusFilter === 'Active' ? c.active : !c.active);
+
+    return matchesSearch && matchesCategory && matchesStatus;
+  });
+
   return (
     <>
       <header className="admin-header">
-        <h1 className="admin-header-title">Courses & Video Lectures Management</h1>
+        <div>
+          <h1 className="admin-header-title">Courses & Video Lectures Management</h1>
+          <p className="admin-header-subtitle">
+            Curate supreme court masterclasses, statutory video handbooks, and curriculum.
+          </p>
+        </div>
         <div className="admin-header-actions">
           <button onClick={openAddModal} className="admin-btn admin-btn-primary">
             ➕ Add New Course
@@ -112,15 +139,53 @@ export default function AdminCoursesPage() {
       <main className="admin-content">
         <div className="admin-card">
           <div className="admin-card-header">
-            <h2 className="admin-card-title">All Active & Inactive Courses ({courses.length})</h2>
+            <div className="admin-filter-bar">
+              <div className="admin-search-wrapper">
+                <span className="search-icon"><IconSearch size={16} /></span>
+                <input
+                  type="text"
+                  placeholder="Search courses by title..."
+                  value={search}
+                  onChange={(e) => setSearch(e.target.value)}
+                  className="admin-search-input"
+                />
+              </div>
+
+              <select
+                value={categoryFilter}
+                onChange={(e) => setCategoryFilter(e.target.value)}
+                className="admin-select"
+              >
+                <option value="ALL">All Categories</option>
+                <option value="Course">Course</option>
+                <option value="Book">Book</option>
+                <option value="Masterclass">Masterclass</option>
+              </select>
+
+              <select
+                value={statusFilter}
+                onChange={(e) => setStatusFilter(e.target.value)}
+                className="admin-select"
+              >
+                <option value="ALL">All Status</option>
+                <option value="Active">Active Only</option>
+                <option value="Hidden">Hidden Only</option>
+              </select>
+            </div>
+
+            <span style={{ fontSize: '0.88rem', color: 'var(--admin-text-sub)' }}>
+              Showing {filteredCourses.length} of {courses.length} courses
+            </span>
           </div>
 
           <div className="admin-table-wrapper">
             <table className="admin-table">
               <thead>
                 <tr>
+                  <th style={{ width: '70px' }}>SL No.</th>
                   <th>Course Title</th>
                   <th>Category</th>
+                  <th>Published Date</th>
                   <th>Price</th>
                   <th>Students Enrolled</th>
                   <th>Rating</th>
@@ -131,27 +196,52 @@ export default function AdminCoursesPage() {
               <tbody>
                 {loading ? (
                   <tr>
-                    <td colSpan="7" style={{ textAlign: 'center', padding: '40px' }}>Loading courses...</td>
+                    <td colSpan="9" style={{ textAlign: 'center', padding: '40px' }}>
+                      <div className="admin-loading-spinner" style={{ margin: '0 auto 12px' }} />
+                      Loading legal courses...
+                    </td>
                   </tr>
-                ) : courses.length === 0 ? (
+                ) : filteredCourses.length === 0 ? (
                   <tr>
-                    <td colSpan="7" style={{ textAlign: 'center', padding: '40px' }}>No courses added yet.</td>
+                    <td colSpan="9" style={{ textAlign: 'center', padding: '40px', color: 'var(--admin-text-sub)' }}>
+                      No courses found matching current search and filters.
+                    </td>
                   </tr>
                 ) : (
-                  courses.map((course) => (
+                  filteredCourses.map((course, idx) => (
                     <tr key={course.id}>
-                      <td style={{ fontWeight: 600, color: 'var(--admin-primary)' }}>{course.title}</td>
+                      <td style={{ fontWeight: 800, color: 'var(--admin-gold)' }}>
+                        #{idx + 1}
+                      </td>
+                      <td style={{ fontWeight: 700, color: 'var(--admin-text-main)' }}>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                          <img 
+                            src={course.image} 
+                            alt={course.title}
+                            style={{ width: '38px', height: '38px', borderRadius: '8px', objectFit: 'cover' }} 
+                          />
+                          <div>
+                            <div>{course.title}</div>
+                            <div style={{ fontSize: '0.78rem', color: 'var(--admin-text-sub)', fontWeight: 400 }}>
+                              ID: {course.id}
+                            </div>
+                          </div>
+                        </div>
+                      </td>
                       <td>
-                        <span className="badge" style={{ background: '#eff6ff', color: '#3b82f6' }}>
+                        <span className="badge" style={{ background: '#eff6ff', color: '#3b82f6', border: '1px solid rgba(59, 130, 246, 0.25)' }}>
                           {course.category}
                         </span>
+                      </td>
+                      <td style={{ color: 'var(--admin-text-sub)', whiteSpace: 'nowrap' }}>
+                        📅 {course.date || 'Nov 2026'}
                       </td>
                       <td><strong>{course.price}</strong></td>
                       <td>👥 {course.students}</td>
                       <td>★ {course.rating}</td>
                       <td>
                         <span className={`badge ${course.active ? 'badge-published' : 'badge-draft'}`}>
-                          {course.active ? 'Active' : 'Hidden'}
+                          {course.active ? '● Active' : '○ Hidden'}
                         </span>
                       </td>
                       <td>
@@ -194,6 +284,33 @@ export default function AdminCoursesPage() {
 
                 <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
                   <div className="admin-form-group">
+                    <label className="admin-label">Category</label>
+                    <select
+                      value={form.category}
+                      onChange={(e) => setForm({ ...form, category: e.target.value })}
+                      className="admin-select"
+                      style={{ width: '100%', borderRadius: '12px' }}
+                    >
+                      <option value="Course">Course</option>
+                      <option value="Book">Book</option>
+                      <option value="Masterclass">Masterclass</option>
+                    </select>
+                  </div>
+
+                  <div className="admin-form-group">
+                    <label className="admin-label">Published Date</label>
+                    <input
+                      type="text"
+                      value={form.date}
+                      onChange={(e) => setForm({ ...form, date: e.target.value })}
+                      placeholder="e.g. Nov 2026"
+                      className="admin-input"
+                    />
+                  </div>
+                </div>
+
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
+                  <div className="admin-form-group">
                     <label className="admin-label">Display Price (e.g. ₹499 or $49)</label>
                     <input
                       type="text"
@@ -205,7 +322,7 @@ export default function AdminCoursesPage() {
                   </div>
 
                   <div className="admin-form-group">
-                    <label className="admin-label">Numeric Price (for Payment Gateway)</label>
+                    <label className="admin-label">Numeric Price (for Gateway)</label>
                     <input
                       type="number"
                       value={form.numericPrice}
@@ -254,7 +371,7 @@ export default function AdminCoursesPage() {
                     value={form.description}
                     onChange={(e) => setForm({ ...form, description: e.target.value })}
                     className="admin-textarea"
-                    style={{ minHeight: '100px' }}
+                    style={{ minHeight: '90px' }}
                   />
                 </div>
 

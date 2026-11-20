@@ -16,6 +16,8 @@ export default function AdminUsersPage() {
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState('');
+  const [examFilter, setExamFilter] = useState('ALL');
+  const [dateFilter, setDateFilter] = useState('ALL');
   const [selectedUser, setSelectedUser] = useState(null);
   const [copiedPhone, setCopiedPhone] = useState(false);
 
@@ -38,14 +40,26 @@ export default function AdminUsersPage() {
 
   const filteredUsers = users.filter((u) => {
     const q = search.toLowerCase();
-    return (
+    const matchesSearch =
+      !q ||
       (u.name && u.name.toLowerCase().includes(q)) ||
       (u.email && u.email.toLowerCase().includes(q)) ||
       (u.targetExam && u.targetExam.toLowerCase().includes(q)) ||
       (u.profession && u.profession.toLowerCase().includes(q)) ||
+      (u.university && u.university.toLowerCase().includes(q)) ||
       (u.state && u.state.toLowerCase().includes(q)) ||
-      (u.phone && u.phone.includes(q))
-    );
+      (u.phone && u.phone.includes(q)) ||
+      (u.id && u.id.toLowerCase().includes(q));
+
+    const matchesExam = 
+      examFilter === 'ALL' || 
+      (u.targetExam && u.targetExam.toLowerCase().includes(examFilter.toLowerCase()));
+
+    const matchesDate = 
+      dateFilter === 'ALL' || 
+      (u.memberSince && u.memberSince.toLowerCase().includes(dateFilter.toLowerCase()));
+
+    return matchesSearch && matchesExam && matchesDate;
   });
 
   const totalEnrollments = users.reduce((acc, u) => acc + (u.enrolledCourses?.length || 0), 0);
@@ -67,15 +81,38 @@ export default function AdminUsersPage() {
           </p>
         </div>
         <div className="admin-header-actions">
-          <div className="admin-search-wrapper">
-            <span className="search-icon"><IconSearch size={16} /></span>
-            <input
-              type="text"
-              placeholder="Search by name, exam, phone, state..."
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-              className="admin-search-input"
-            />
+          <div className="admin-filter-bar">
+            <div className="admin-search-wrapper">
+              <span className="search-icon"><IconSearch size={16} /></span>
+              <input
+                type="text"
+                placeholder="Search scholars by name, phone, state..."
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+                className="admin-search-input"
+              />
+            </div>
+            <select
+              value={examFilter}
+              onChange={(e) => setExamFilter(e.target.value)}
+              className="admin-select"
+            >
+              <option value="ALL">All Judicial Exams</option>
+              <option value="PCS-J">State Judicial (PCS-J)</option>
+              <option value="DJS">Delhi Judicial (DJS)</option>
+              <option value="UP HJS">UP Higher Judicial (UP HJS)</option>
+              <option value="Aspirant">Judiciary Aspirants</option>
+            </select>
+            <select
+              value={dateFilter}
+              onChange={(e) => setDateFilter(e.target.value)}
+              className="admin-select"
+            >
+              <option value="ALL">All Joining Dates</option>
+              <option value="September 2026">September 2026</option>
+              <option value="October 2026">October 2026</option>
+              <option value="November 2026">November 2026</option>
+            </select>
           </div>
         </div>
       </header>
@@ -143,10 +180,12 @@ export default function AdminUsersPage() {
             <table className="admin-table">
               <thead>
                 <tr>
+                  <th style={{ width: '70px' }}>SL No.</th>
                   <th>Scholar Profile</th>
                   <th>Contact Info</th>
                   <th>Target Judicial Exam / Role</th>
                   <th>University & State</th>
+                  <th>Joined Date</th>
                   <th>Enrolled Items</th>
                   <th>Total Orders</th>
                   <th>Outreach Actions</th>
@@ -155,22 +194,26 @@ export default function AdminUsersPage() {
               <tbody>
                 {loading ? (
                   <tr>
-                    <td colSpan="7" style={{ textAlign: 'center', padding: '40px' }}>
+                    <td colSpan="9" style={{ textAlign: 'center', padding: '40px' }}>
                       <div className="admin-loading-spinner" style={{ margin: '0 auto 12px' }} />
                       Loading legal scholar profiles...
                     </td>
                   </tr>
                 ) : filteredUsers.length === 0 ? (
                   <tr>
-                    <td colSpan="7" style={{ textAlign: 'center', padding: '40px', color: 'var(--admin-text-sub)' }}>
-                      No scholars found matching "{search}".
+                    <td colSpan="9" style={{ textAlign: 'center', padding: '40px', color: 'var(--admin-text-sub)' }}>
+                      No scholars found matching current search and filters.
                     </td>
                   </tr>
                 ) : (
-                  filteredUsers.map((u) => {
+                  filteredUsers.map((u, idx) => {
                     const avatarLetter = (u.name || u.email || 'S').charAt(0).toUpperCase();
                     return (
                       <tr key={u.id}>
+                        <td style={{ fontWeight: 800, color: 'var(--admin-gold)' }}>
+                          #{idx + 1}
+                        </td>
+
                         <td>
                           <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
                             <div className="admin-scholar-avatar">
@@ -198,6 +241,12 @@ export default function AdminUsersPage() {
                         <td>
                           <div style={{ fontSize: '0.88rem', fontWeight: 500 }}>{u.university || 'Not specified'}</div>
                           <div style={{ fontSize: '0.78rem', color: 'var(--admin-text-sub)' }}>{u.state || 'India'}</div>
+                        </td>
+
+                        <td>
+                          <div style={{ fontSize: '0.85rem', color: 'var(--admin-text-sub)', whiteSpace: 'nowrap' }}>
+                            📅 {u.memberSince || 'Sep 2026'}
+                          </div>
                         </td>
 
                         <td>
