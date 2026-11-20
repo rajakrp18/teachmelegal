@@ -11,14 +11,16 @@ try {
 
 function getBlogFilePaths() {
   const currentDir = process.cwd();
-  const paths = [
+  const candidates = [
     path.join(currentDir, 'src', 'data', 'blogs.json'),
     path.resolve(currentDir, '..', 'TeachMeLegal-frontend', 'src', 'data', 'blogs.json'),
     path.resolve(currentDir, '..', 'TeachMeLegal-admin-panel', 'src', 'data', 'blogs.json'),
-    path.resolve('c:/teachmelegal/TeachMeLegal-frontend/src/data/blogs.json'),
-    path.resolve('c:/teachmelegal/TeachMeLegal-admin-panel/src/data/blogs.json')
+    'c:/teachmelegal/TeachMeLegal-frontend/src/data/blogs.json',
+    'c:/teachmelegal/TeachMeLegal-admin-panel/src/data/blogs.json'
   ];
-  return [...new Set(paths)];
+  return [...new Set(candidates.map(p => path.resolve(p)))].filter(fp => {
+    return fs.existsSync(path.dirname(fp)) && (fp.includes('TeachMeLegal-frontend') || fp.includes('TeachMeLegal-admin-panel'));
+  });
 }
 
 function initStore() {

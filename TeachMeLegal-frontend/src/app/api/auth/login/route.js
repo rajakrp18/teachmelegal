@@ -1,6 +1,9 @@
 import { NextResponse } from 'next/server';
 import { findUserByEmail, verifyPassword, sanitizeUser } from '../../../../lib/usersStore';
 
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
+
 export async function POST(request) {
   try {
     const { email, password } = await request.json();

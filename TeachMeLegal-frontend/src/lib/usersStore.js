@@ -12,14 +12,16 @@ try {
 
 function getUserFilePaths() {
   const currentDir = process.cwd();
-  const paths = [
+  const candidates = [
     path.join(currentDir, 'src', 'data', 'users.json'),
     path.resolve(currentDir, '..', 'TeachMeLegal-frontend', 'src', 'data', 'users.json'),
     path.resolve(currentDir, '..', 'TeachMeLegal-admin-panel', 'src', 'data', 'users.json'),
-    path.resolve('c:/teachmelegal/TeachMeLegal-frontend/src/data/users.json'),
-    path.resolve('c:/teachmelegal/TeachMeLegal-admin-panel/src/data/users.json')
+    'c:/teachmelegal/TeachMeLegal-frontend/src/data/users.json',
+    'c:/teachmelegal/TeachMeLegal-admin-panel/src/data/users.json'
   ];
-  return [...new Set(paths)];
+  return [...new Set(candidates.map(p => path.resolve(p)))].filter(fp => {
+    return fs.existsSync(path.dirname(fp)) && (fp.includes('TeachMeLegal-frontend') || fp.includes('TeachMeLegal-admin-panel'));
+  });
 }
 
 export function hashPassword(password) {
@@ -107,21 +109,21 @@ function saveUsersToDisk() {
 
 export function findUserByEmail(email) {
   if (!email) return null;
-  const users = initUsersStore();
-  return users.find(u => u.email.toLowerCase() === email.trim().toLowerCase());
+  initUsersStore();
+  return global.__usersStore.find(u => u.email.toLowerCase() === email.trim().toLowerCase());
 }
 
 export function createUser({ name, email, password, phone, profession, targetExam, university, state, bio }) {
-  const users = initUsersStore();
+  initUsersStore();
   const normalizedEmail = email.trim().toLowerCase();
 
-  const existingUser = findUserByEmail(normalizedEmail);
-  if (existingUser) {
-    existingUser.name = name.trim();
-    if (phone) existingUser.phone = phone;
-    existingUser.passwordHash = hashPassword(password);
+  const existingIndex = global.__usersStore.findIndex(u => u.email.toLowerCase() === normalizedEmail);
+  if (existingIndex !== -1) {
+    global.__usersStore[existingIndex].name = name.trim();
+    if (phone) global.__usersStore[existingIndex].phone = phone;
+    global.__usersStore[existingIndex].passwordHash = hashPassword(password);
     saveUsersToDisk();
-    return sanitizeUser(existingUser);
+    return sanitizeUser(global.__usersStore[existingIndex]);
   }
 
   const newUser = {
@@ -142,21 +144,20 @@ export function createUser({ name, email, password, phone, profession, targetExa
     orderHistory: []
   };
 
-  users.push(newUser);
+  global.__usersStore.push(newUser);
   saveUsersToDisk();
   return sanitizeUser(newUser);
 }
 
 export function updateUserProfile(email, updates) {
-  const users = initUsersStore();
+  initUsersStore();
   const normalizedEmail = email.trim().toLowerCase();
-  const index = users.findIndex(u => u.email.toLowerCase() === normalizedEmail);
+  const index = global.__usersStore.findIndex(u => u.email.toLowerCase() === normalizedEmail);
 
   if (index === -1) {
     throw new Error('User not found.');
   }
 
-  const user = users[index];
   const allowedUpdates = [
     'name',
     'phone',
@@ -170,21 +171,21 @@ export function updateUserProfile(email, updates) {
 
   for (const field of allowedUpdates) {
     if (updates[field] !== undefined) {
-      user[field] = updates[field];
+      global.__usersStore[index][field] = updates[field];
     }
   }
 
   saveUsersToDisk();
-  return sanitizeUser(user);
+  return sanitizeUser(global.__usersStore[index]);
 }
 
 export function addOrderAndEnrollUser(email, order, items = []) {
-  const users = initUsersStore();
+  initUsersStore();
   const normalizedEmail = email.trim().toLowerCase();
-  let user = users.find(u => u.email.toLowerCase() === normalizedEmail);
+  let index = global.__usersStore.findIndex(u => u.email.toLowerCase() === normalizedEmail);
 
-  if (!user) {
-    user = {
+  if (index === -1) {
+    const user = {
       id: `usr-${Date.now()}`,
       name: normalizedEmail.split('@')[0],
       email: normalizedEmail,
@@ -201,20 +202,21 @@ export function addOrderAndEnrollUser(email, order, items = []) {
       enrolledCourses: [],
       orderHistory: []
     };
-    users.push(user);
+    global.__usersStore.push(user);
+    index = global.__usersStore.length - 1;
   }
 
-  if (!Array.isArray(user.enrolledCourses)) user.enrolledCourses = [];
-  if (!Array.isArray(user.orderHistory)) user.orderHistory = [];
+  if (!Array.isArray(global.__usersStore[index].enrolledCourses)) global.__usersStore[index].enrolledCourses = [];
+  if (!Array.isArray(global.__usersStore[index].orderHistory)) global.__usersStore[index].orderHistory = [];
 
   // Add order to history
-  user.orderHistory.unshift(order);
+  global.__usersStore[index].orderHistory.unshift(order);
 
   // Enroll in items
   for (const item of items) {
-    const alreadyEnrolled = user.enrolledCourses.some(c => c.id === item.id || c.title === item.title);
+    const alreadyEnrolled = global.__usersStore[index].enrolledCourses.some(c => c.id === item.id || c.title === item.title);
     if (!alreadyEnrolled) {
-      user.enrolledCourses.unshift({
+      global.__usersStore[index].enrolledCourses.unshift({
         id: item.id || `item-${Date.now()}`,
         title: item.title,
         category: item.category || 'Study Material',
@@ -226,13 +228,13 @@ export function addOrderAndEnrollUser(email, order, items = []) {
 
   saveUsersToDisk();
   return {
-    user: sanitizeUser(user),
-    enrolledCourses: user.enrolledCourses,
-    orderHistory: user.orderHistory
+    user: sanitizeUser(global.__usersStore[index]),
+    enrolledCourses: global.__usersStore[index].enrolledCourses,
+    orderHistory: global.__usersStore[index].orderHistory
   };
 }
 
 export function getAllUsers() {
-  const users = initUsersStore();
-  return users.map(u => sanitizeUser(u));
+  initUsersStore();
+  return global.__usersStore.map(u => sanitizeUser(u));
 }
