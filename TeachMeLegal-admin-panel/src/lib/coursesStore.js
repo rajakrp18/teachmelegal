@@ -102,6 +102,7 @@ export function createCourse(data) {
     rating: data.rating || '5.0',
     students: data.students || '100+',
     description: data.description || '',
+    driveUrl: data.driveUrl || '',
     date: data.date || new Date().toLocaleDateString('en-US', { month: 'short', year: 'numeric' }),
     active: data.active !== false
   };

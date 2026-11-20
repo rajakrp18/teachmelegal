@@ -154,6 +154,8 @@ export function createBook(data) {
     badge: data.badge || 'Sale!',
     image: data.image || '/books/money-laundering-act-2002.png',
     author: data.author || 'Adv. Prashant Jha',
+    icon: data.icon || '📘',
+    driveUrl: data.driveUrl || '',
     date: data.date || new Date().toLocaleDateString('en-US', { month: 'short', year: 'numeric' }),
     active: data.active !== false
   };

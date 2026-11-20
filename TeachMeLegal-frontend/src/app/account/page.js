@@ -274,14 +274,28 @@ export default function AccountPage() {
                       </div>
                     </div>
 
-                    <button
-                      onClick={() => setPreviewPdf({ title: item.title, file: item.pdfUrl || '/books/sample.pdf' })}
-                      className="btn-open-material"
-                      style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: '8px' }}
-                    >
-                      <IconBookOpen size={16} />
-                      <span>Open & Read Notes PDF</span>
-                    </button>
+                    <div style={{ display: 'flex', gap: '8px', width: '100%' }}>
+                      <button
+                        onClick={() => setPreviewPdf({ title: item.title, file: item.pdfUrl || item.driveUrl || '/books/sample.pdf' })}
+                        className="btn-open-material"
+                        style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: '8px', flex: 1 }}
+                      >
+                        <IconBookOpen size={16} />
+                        <span>Open & Read Notes PDF</span>
+                      </button>
+                      {item.driveUrl && (
+                        <a
+                          href={item.driveUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="btn-open-material"
+                          style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: '4px', width: 'auto', padding: '0 12px', background: 'rgba(207, 168, 86, 0.15)', color: 'var(--accent-gold)', borderColor: 'var(--border-gold)' }}
+                          title="Open Direct Google Drive Link"
+                        >
+                          <span>Drive ↗</span>
+                        </a>
+                      )}
+                    </div>
                   </div>
                 ))}
               </div>

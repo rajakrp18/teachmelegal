@@ -8,6 +8,8 @@ export default function AdminCoursesPage() {
   const [search, setSearch] = useState('');
   const [categoryFilter, setCategoryFilter] = useState('ALL');
   const [statusFilter, setStatusFilter] = useState('ALL');
+  const [startDate, setStartDate] = useState('');
+  const [endDate, setEndDate] = useState('');
   const [showModal, setShowModal] = useState(false);
   const [editingCourse, setEditingCourse] = useState(null);
 
@@ -20,6 +22,7 @@ export default function AdminCoursesPage() {
     students: '100+',
     image: 'https://images.unsplash.com/photo-1589829085413-56de8ae18c73?auto=format&fit=crop&q=80&w=800',
     description: '',
+    driveUrl: '',
     date: 'Nov 2026',
     active: true
   });
@@ -54,6 +57,7 @@ export default function AdminCoursesPage() {
       students: '100+',
       image: 'https://images.unsplash.com/photo-1589829085413-56de8ae18c73?auto=format&fit=crop&q=80&w=800',
       description: '',
+      driveUrl: '',
       date: new Date().toLocaleDateString('en-US', { month: 'short', year: 'numeric' }),
       active: true
     });
@@ -64,6 +68,7 @@ export default function AdminCoursesPage() {
     setEditingCourse(course);
     setForm({
       ...course,
+      driveUrl: course.driveUrl || '',
       date: course.date || 'Nov 2026'
     });
     setShowModal(true);
@@ -107,6 +112,36 @@ export default function AdminCoursesPage() {
     }
   };
 
+  const parseItemDate = (dateStr) => {
+    if (!dateStr) return null;
+    const months = {
+      january: 0, jan: 0,
+      february: 1, feb: 1,
+      march: 2, mar: 2,
+      april: 3, apr: 3,
+      may: 4,
+      june: 5, jun: 5,
+      july: 6, jul: 6,
+      august: 7, aug: 7,
+      september: 8, sep: 8,
+      october: 9, oct: 9,
+      november: 10, nov: 10,
+      december: 11, dec: 11
+    };
+    const parts = dateStr.toLowerCase().split(/[\s,]+/);
+    if (parts.length >= 2) {
+      let month = -1, year = -1, day = 1;
+      for (const p of parts) {
+        if (months[p] !== undefined) month = months[p];
+        else if (/^\d{4}$/.test(p)) year = parseInt(p, 10);
+        else if (/^\d{1,2}$/.test(p)) day = parseInt(p, 10);
+      }
+      if (month !== -1 && year !== -1) return new Date(year, month, day);
+    }
+    const d = new Date(dateStr);
+    return isNaN(d.getTime()) ? null : d;
+  };
+
   const filteredCourses = courses.filter(c => {
     const q = search.toLowerCase();
     const matchesSearch = !q ||
@@ -117,8 +152,31 @@ export default function AdminCoursesPage() {
     const matchesCategory = categoryFilter === 'ALL' || c.category === categoryFilter;
     const matchesStatus = statusFilter === 'ALL' || (statusFilter === 'Active' ? c.active : !c.active);
 
-    return matchesSearch && matchesCategory && matchesStatus;
+    let matchesDate = true;
+    const itemDate = parseItemDate(c.date);
+    if (itemDate) {
+      if (startDate) {
+        const start = new Date(`${startDate}T00:00:00`);
+        if (itemDate < start) matchesDate = false;
+      }
+      if (endDate) {
+        const end = new Date(`${endDate}T23:59:59`);
+        if (itemDate > end) matchesDate = false;
+      }
+    }
+
+    return matchesSearch && matchesCategory && matchesStatus && matchesDate;
   });
+
+  const hasActiveFilters = Boolean(search || categoryFilter !== 'ALL' || statusFilter !== 'ALL' || startDate || endDate);
+
+  const handleResetFilters = () => {
+    setSearch('');
+    setCategoryFilter('ALL');
+    setStatusFilter('ALL');
+    setStartDate('');
+    setEndDate('');
+  };
 
   return (
     <>
@@ -171,9 +229,43 @@ export default function AdminCoursesPage() {
                 <option value="Active">Active Only</option>
                 <option value="Hidden">Hidden Only</option>
               </select>
+
+              {/* Date Filter: From Date to That Date */}
+              <div className="admin-date-picker-wrap">
+                <label>From:</label>
+                <input
+                  type="date"
+                  value={startDate}
+                  onChange={(e) => setStartDate(e.target.value)}
+                  className="admin-date-input"
+                  title="Filter courses published on or after this date"
+                />
+              </div>
+
+              <div className="admin-date-picker-wrap">
+                <label>To:</label>
+                <input
+                  type="date"
+                  value={endDate}
+                  onChange={(e) => setEndDate(e.target.value)}
+                  className="admin-date-input"
+                  title="Filter courses published on or before this date"
+                />
+              </div>
+
+              {hasActiveFilters && (
+                <button
+                  type="button"
+                  onClick={handleResetFilters}
+                  className="admin-btn-reset"
+                  title="Reset search and date filters"
+                >
+                  Clear Filters
+                </button>
+              )}
             </div>
 
-            <span style={{ fontSize: '0.88rem', color: 'var(--admin-text-sub)' }}>
+            <span style={{ fontSize: '0.84rem', color: 'var(--admin-text-sub)' }}>
               Showing {filteredCourses.length} of {courses.length} courses
             </span>
           </div>
@@ -182,74 +274,88 @@ export default function AdminCoursesPage() {
             <table className="admin-table">
               <thead>
                 <tr>
-                  <th style={{ width: '70px' }}>SL No.</th>
-                  <th>Course Title</th>
-                  <th>Category</th>
-                  <th>Published Date</th>
-                  <th>Price</th>
-                  <th>Students Enrolled</th>
-                  <th>Rating</th>
-                  <th>Status</th>
-                  <th>Actions</th>
+                  <th style={{ width: '55px', textAlign: 'center' }}>SL No.</th>
+                  <th style={{ minWidth: '180px' }}>Course Title</th>
+                  <th style={{ minWidth: '95px' }}>Category</th>
+                  <th style={{ minWidth: '100px' }}>Published Date</th>
+                  <th style={{ minWidth: '80px' }}>Price</th>
+                  <th style={{ minWidth: '100px' }}>Students</th>
+                  <th style={{ minWidth: '70px' }}>Rating</th>
+                  <th style={{ minWidth: '85px' }}>Status</th>
+                  <th style={{ minWidth: '120px', textAlign: 'center' }}>Actions</th>
                 </tr>
               </thead>
               <tbody>
                 {loading ? (
                   <tr>
-                    <td colSpan="9" style={{ textAlign: 'center', padding: '40px' }}>
-                      <div className="admin-loading-spinner" style={{ margin: '0 auto 12px' }} />
+                    <td colSpan="9" style={{ textAlign: 'center', padding: '36px' }}>
+                      <div className="admin-loading-spinner" style={{ margin: '0 auto 10px' }} />
                       Loading legal courses...
                     </td>
                   </tr>
                 ) : filteredCourses.length === 0 ? (
                   <tr>
-                    <td colSpan="9" style={{ textAlign: 'center', padding: '40px', color: 'var(--admin-text-sub)' }}>
+                    <td colSpan="9" style={{ textAlign: 'center', padding: '36px', color: 'var(--admin-text-sub)' }}>
                       No courses found matching current search and filters.
                     </td>
                   </tr>
                 ) : (
                   filteredCourses.map((course, idx) => (
                     <tr key={course.id}>
-                      <td style={{ fontWeight: 800, color: 'var(--admin-gold)' }}>
+                      <td style={{ fontWeight: 800, color: 'var(--admin-gold)', textAlign: 'center' }}>
                         #{idx + 1}
                       </td>
                       <td style={{ fontWeight: 700, color: 'var(--admin-text-main)' }}>
-                        <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
                           <img 
                             src={course.image} 
                             alt={course.title}
-                            style={{ width: '38px', height: '38px', borderRadius: '8px', objectFit: 'cover' }} 
+                            style={{ width: '34px', height: '34px', borderRadius: '8px', objectFit: 'cover', flexShrink: 0 }} 
                           />
                           <div>
-                            <div>{course.title}</div>
-                            <div style={{ fontSize: '0.78rem', color: 'var(--admin-text-sub)', fontWeight: 400 }}>
+                            <div style={{ display: 'flex', alignItems: 'center', gap: '6px', flexWrap: 'wrap' }}>
+                              <span>{course.title}</span>
+                              {course.driveUrl && (
+                                <a 
+                                  href={course.driveUrl} 
+                                  target="_blank" 
+                                  rel="noopener noreferrer" 
+                                  className="badge" 
+                                  style={{ background: 'rgba(59, 130, 246, 0.1)', color: '#2563eb', border: '1px solid rgba(59, 130, 246, 0.25)', textDecoration: 'none', fontSize: '0.68rem', padding: '1px 6px' }}
+                                  title="Open Direct Google Drive Link"
+                                >
+                                  Drive Link ↗
+                                </a>
+                              )}
+                            </div>
+                            <div style={{ fontSize: '0.74rem', color: 'var(--admin-text-sub)', fontWeight: 400 }}>
                               ID: {course.id}
                             </div>
                           </div>
                         </div>
                       </td>
                       <td>
-                        <span className="badge" style={{ background: '#eff6ff', color: '#3b82f6', border: '1px solid rgba(59, 130, 246, 0.25)' }}>
+                        <span className="badge" style={{ background: '#eff6ff', color: '#3b82f6', border: '1px solid rgba(59, 130, 246, 0.25)', fontSize: '0.74rem' }}>
                           {course.category}
                         </span>
                       </td>
-                      <td style={{ color: 'var(--admin-text-sub)', whiteSpace: 'nowrap' }}>
+                      <td style={{ color: 'var(--admin-text-sub)', whiteSpace: 'nowrap', fontSize: '0.8rem' }}>
                         {course.date || 'Nov 2026'}
                       </td>
-                      <td><strong>{course.price}</strong></td>
-                      <td>{course.students} students</td>
-                      <td>★ {course.rating}</td>
+                      <td><strong style={{ fontSize: '0.84rem' }}>{course.price}</strong></td>
+                      <td style={{ fontSize: '0.82rem' }}>{course.students} students</td>
+                      <td style={{ fontSize: '0.82rem' }}>★ {course.rating}</td>
                       <td>
-                        <span className={`badge ${course.active ? 'badge-published' : 'badge-draft'}`}>
+                        <span className={`badge ${course.active ? 'badge-published' : 'badge-draft'}`} style={{ fontSize: '0.74rem' }}>
                           {course.active ? '● Active' : '○ Hidden'}
                         </span>
                       </td>
-                      <td>
-                        <div style={{ display: 'flex', gap: '8px' }}>
-                          <button onClick={() => openEditModal(course)} className="admin-btn admin-btn-primary" style={{ padding: '6px 12px', fontSize: '0.8rem' }}>
+                      <td style={{ textAlign: 'center' }}>
+                        <div style={{ display: 'inline-flex', gap: '6px' }}>
+                          <button onClick={() => openEditModal(course)} className="admin-btn admin-btn-primary" style={{ padding: '5px 10px', fontSize: '0.76rem' }}>
                             Edit
                           </button>
-                          <button onClick={() => handleDelete(course.id, course.title)} className="admin-btn admin-btn-danger" style={{ padding: '6px 12px', fontSize: '0.8rem' }}>
+                          <button onClick={() => handleDelete(course.id, course.title)} className="admin-btn admin-btn-danger" style={{ padding: '5px 10px', fontSize: '0.76rem' }}>
                             Delete
                           </button>
                         </div>
@@ -262,131 +368,203 @@ export default function AdminCoursesPage() {
           </div>
         </div>
 
-        {/* Modal Dialog for Add / Edit */}
+        {/* Modal Dialog for Add / Edit (Compact 2-Column Layout - ZERO SCROLL) */}
         {showModal && (
           <div 
-            style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.5)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 1000, padding: '20px' }}
+            style={{ 
+              position: 'fixed', 
+              inset: 0, 
+              background: 'rgba(0,0,0,0.55)', 
+              backdropFilter: 'blur(3px)',
+              display: 'flex', 
+              alignItems: 'center', 
+              justifyContent: 'center', 
+              zIndex: 1000, 
+              padding: '16px' 
+            }}
             onClick={() => setShowModal(false)}
           >
             <div 
               className="admin-card" 
-              style={{ width: '100%', maxWidth: '600px', padding: '32px', margin: 0, maxHeight: '90vh', overflowY: 'auto' }}
+              style={{ 
+                width: '100%', 
+                maxWidth: '780px', 
+                padding: '22px 28px', 
+                margin: 0, 
+                maxHeight: '92vh',
+                borderRadius: '12px',
+                boxShadow: '0 20px 40px rgba(0,0,0,0.3)'
+              }}
               onClick={(e) => e.stopPropagation()}
             >
-              <h2 className="admin-card-title" style={{ marginBottom: '20px' }}>
-                {editingCourse ? 'Edit Course Details' : 'Add New Course'}
-              </h2>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '14px', borderBottom: '1px solid var(--admin-border)', paddingBottom: '10px' }}>
+                <h2 className="admin-card-title" style={{ margin: 0, fontSize: '1.2rem' }}>
+                  {editingCourse ? 'Edit Course Details' : 'Add New Course'}
+                </h2>
+                <button
+                  type="button"
+                  onClick={() => setShowModal(false)}
+                  style={{ background: 'none', border: 'none', fontSize: '1.2rem', cursor: 'pointer', color: 'var(--admin-text-sub)', padding: '0 4px', lineHeight: 1 }}
+                >
+                  ✕
+                </button>
+              </div>
 
               <form onSubmit={handleSubmit}>
-                <div className="admin-form-group">
-                  <label className="admin-label">Course Title *</label>
-                  <input
-                    type="text"
-                    value={form.title}
-                    onChange={(e) => setForm({ ...form, title: e.target.value })}
-                    className="admin-input"
-                    required
-                  />
-                </div>
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px 20px' }}>
+                  {/* Left Column */}
+                  <div>
+                    <div className="admin-form-group" style={{ marginBottom: '10px' }}>
+                      <label className="admin-label" style={{ fontSize: '0.74rem', marginBottom: '3px' }}>Course Title *</label>
+                      <input
+                        type="text"
+                        value={form.title}
+                        onChange={(e) => setForm({ ...form, title: e.target.value })}
+                        className="admin-input"
+                        style={{ padding: '7px 11px', fontSize: '0.85rem', borderRadius: '8px' }}
+                        required
+                      />
+                    </div>
 
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
-                  <div className="admin-form-group">
-                    <label className="admin-label">Category</label>
-                    <select
-                      value={form.category}
-                      onChange={(e) => setForm({ ...form, category: e.target.value })}
-                      className="admin-select"
-                      style={{ width: '100%', borderRadius: '12px' }}
-                    >
-                      <option value="Course">Course</option>
-                      <option value="Book">Book</option>
-                      <option value="Masterclass">Masterclass</option>
-                    </select>
+                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px', marginBottom: '10px' }}>
+                      <div className="admin-form-group" style={{ margin: 0 }}>
+                        <label className="admin-label" style={{ fontSize: '0.74rem', marginBottom: '3px' }}>Category</label>
+                        <select
+                          value={form.category}
+                          onChange={(e) => setForm({ ...form, category: e.target.value })}
+                          className="admin-select"
+                          style={{ width: '100%', padding: '7px 11px', fontSize: '0.85rem', borderRadius: '8px' }}
+                        >
+                          <option value="Course">Course</option>
+                          <option value="Book">Book</option>
+                          <option value="Masterclass">Masterclass</option>
+                        </select>
+                      </div>
+
+                      <div className="admin-form-group" style={{ margin: 0 }}>
+                        <label className="admin-label" style={{ fontSize: '0.74rem', marginBottom: '3px' }}>Published Date</label>
+                        <input
+                          type="text"
+                          value={form.date}
+                          onChange={(e) => setForm({ ...form, date: e.target.value })}
+                          placeholder="e.g. Nov 2026"
+                          className="admin-input"
+                          style={{ padding: '7px 11px', fontSize: '0.85rem', borderRadius: '8px' }}
+                        />
+                      </div>
+                    </div>
+
+                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px', marginBottom: '10px' }}>
+                      <div className="admin-form-group" style={{ margin: 0 }}>
+                        <label className="admin-label" style={{ fontSize: '0.74rem', marginBottom: '3px' }}>Display Price (₹499)</label>
+                        <input
+                          type="text"
+                          value={form.price}
+                          onChange={(e) => setForm({ ...form, price: e.target.value })}
+                          className="admin-input"
+                          style={{ padding: '7px 11px', fontSize: '0.85rem', borderRadius: '8px' }}
+                          required
+                        />
+                      </div>
+
+                      <div className="admin-form-group" style={{ margin: 0 }}>
+                        <label className="admin-label" style={{ fontSize: '0.74rem', marginBottom: '3px' }}>Numeric Price</label>
+                        <input
+                          type="number"
+                          value={form.numericPrice}
+                          onChange={(e) => setForm({ ...form, numericPrice: parseFloat(e.target.value) })}
+                          className="admin-input"
+                          style={{ padding: '7px 11px', fontSize: '0.85rem', borderRadius: '8px' }}
+                          required
+                        />
+                      </div>
+                    </div>
+
+                    <div className="admin-form-group" style={{ marginBottom: '8px' }}>
+                      <label className="admin-label" style={{ fontSize: '0.74rem', marginBottom: '3px' }}>
+                        Direct Google Drive Link / Video URL
+                      </label>
+                      <input
+                        type="url"
+                        value={form.driveUrl || ''}
+                        onChange={(e) => setForm({ ...form, driveUrl: e.target.value })}
+                        placeholder="https://drive.google.com/file/d/... or https://..."
+                        className="admin-input"
+                        style={{ padding: '7px 11px', fontSize: '0.83rem', borderRadius: '8px' }}
+                      />
+                      <span style={{ fontSize: '0.7rem', color: 'var(--admin-text-sub)', marginTop: '2px', display: 'block' }}>
+                        Direct Drive download or student access link.
+                      </span>
+                    </div>
                   </div>
 
-                  <div className="admin-form-group">
-                    <label className="admin-label">Published Date</label>
-                    <input
-                      type="text"
-                      value={form.date}
-                      onChange={(e) => setForm({ ...form, date: e.target.value })}
-                      placeholder="e.g. Nov 2026"
-                      className="admin-input"
-                    />
+                  {/* Right Column */}
+                  <div>
+                    <div className="admin-form-group" style={{ marginBottom: '10px' }}>
+                      <label className="admin-label" style={{ fontSize: '0.74rem', marginBottom: '3px' }}>Cover Image URL</label>
+                      <input
+                        type="url"
+                        value={form.image}
+                        onChange={(e) => setForm({ ...form, image: e.target.value })}
+                        className="admin-input"
+                        style={{ padding: '7px 11px', fontSize: '0.85rem', borderRadius: '8px' }}
+                      />
+                    </div>
+
+                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px', marginBottom: '10px' }}>
+                      <div className="admin-form-group" style={{ margin: 0 }}>
+                        <label className="admin-label" style={{ fontSize: '0.74rem', marginBottom: '3px' }}>Rating (e.g. 4.9)</label>
+                        <input
+                          type="text"
+                          value={form.rating}
+                          onChange={(e) => setForm({ ...form, rating: e.target.value })}
+                          className="admin-input"
+                          style={{ padding: '7px 11px', fontSize: '0.85rem', borderRadius: '8px' }}
+                        />
+                      </div>
+
+                      <div className="admin-form-group" style={{ margin: 0 }}>
+                        <label className="admin-label" style={{ fontSize: '0.74rem', marginBottom: '3px' }}>Students Count</label>
+                        <input
+                          type="text"
+                          value={form.students}
+                          onChange={(e) => setForm({ ...form, students: e.target.value })}
+                          className="admin-input"
+                          style={{ padding: '7px 11px', fontSize: '0.85rem', borderRadius: '8px' }}
+                        />
+                      </div>
+                    </div>
+
+                    <div className="admin-form-group" style={{ marginBottom: '10px' }}>
+                      <label className="admin-label" style={{ fontSize: '0.74rem', marginBottom: '3px' }}>Course Description</label>
+                      <textarea
+                        value={form.description}
+                        onChange={(e) => setForm({ ...form, description: e.target.value })}
+                        className="admin-textarea"
+                        rows={3}
+                        style={{ padding: '7px 11px', fontSize: '0.83rem', borderRadius: '8px', minHeight: '68px', resize: 'vertical' }}
+                      />
+                    </div>
+
+                    <div className="admin-form-group" style={{ margin: 0, display: 'flex', alignItems: 'center', gap: '8px' }}>
+                      <label style={{ display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer', fontSize: '0.83rem', fontWeight: 600 }}>
+                        <input
+                          type="checkbox"
+                          checked={form.active}
+                          onChange={(e) => setForm({ ...form, active: e.target.checked })}
+                          style={{ accentColor: 'var(--admin-gold)', width: '16px', height: '16px' }}
+                        />
+                        Active & Published on Website
+                      </label>
+                    </div>
                   </div>
                 </div>
 
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
-                  <div className="admin-form-group">
-                    <label className="admin-label">Display Price (e.g. ₹499 or $49)</label>
-                    <input
-                      type="text"
-                      value={form.price}
-                      onChange={(e) => setForm({ ...form, price: e.target.value })}
-                      className="admin-input"
-                      required
-                    />
-                  </div>
-
-                  <div className="admin-form-group">
-                    <label className="admin-label">Numeric Price (for Gateway)</label>
-                    <input
-                      type="number"
-                      value={form.numericPrice}
-                      onChange={(e) => setForm({ ...form, numericPrice: parseFloat(e.target.value) })}
-                      className="admin-input"
-                      required
-                    />
-                  </div>
-                </div>
-
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
-                  <div className="admin-form-group">
-                    <label className="admin-label">Rating (e.g. 4.9)</label>
-                    <input
-                      type="text"
-                      value={form.rating}
-                      onChange={(e) => setForm({ ...form, rating: e.target.value })}
-                      className="admin-input"
-                    />
-                  </div>
-
-                  <div className="admin-form-group">
-                    <label className="admin-label">Enrolled Students Count</label>
-                    <input
-                      type="text"
-                      value={form.students}
-                      onChange={(e) => setForm({ ...form, students: e.target.value })}
-                      className="admin-input"
-                    />
-                  </div>
-                </div>
-
-                <div className="admin-form-group">
-                  <label className="admin-label">Cover Image URL</label>
-                  <input
-                    type="url"
-                    value={form.image}
-                    onChange={(e) => setForm({ ...form, image: e.target.value })}
-                    className="admin-input"
-                  />
-                </div>
-
-                <div className="admin-form-group">
-                  <label className="admin-label">Course Description</label>
-                  <textarea
-                    value={form.description}
-                    onChange={(e) => setForm({ ...form, description: e.target.value })}
-                    className="admin-textarea"
-                    style={{ minHeight: '90px' }}
-                  />
-                </div>
-
-                <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '12px', marginTop: '24px' }}>
-                  <button type="button" onClick={() => setShowModal(false)} className="admin-btn admin-btn-secondary">
+                <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '10px', marginTop: '14px', borderTop: '1px solid var(--admin-border)', paddingTop: '12px' }}>
+                  <button type="button" onClick={() => setShowModal(false)} className="admin-btn admin-btn-secondary" style={{ padding: '6px 16px', fontSize: '0.82rem' }}>
                     Cancel
                   </button>
-                  <button type="submit" className="admin-btn admin-btn-primary">
+                  <button type="submit" className="admin-btn admin-btn-primary" style={{ padding: '6px 18px', fontSize: '0.82rem' }}>
                     {editingCourse ? 'Save Changes' : 'Create Course'}
                   </button>
                 </div>

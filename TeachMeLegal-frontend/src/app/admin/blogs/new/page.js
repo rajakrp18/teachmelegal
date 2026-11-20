@@ -30,6 +30,22 @@ export default function NewBlogPage() {
     }));
   };
 
+  const handleCategoryChange = (e) => {
+    const category = e.target.value;
+    const categoryDefaults = {
+      'Banking Law': '#cfa856',
+      'Constitutional Law': '#3b82f6',
+      'Criminal Law': '#ef4444',
+      'Corporate Law': '#10b981',
+      'Teachmelegal': '#8b5cf6'
+    };
+    setForm(prev => ({
+      ...prev,
+      category,
+      categoryColor: categoryDefaults[category] || prev.categoryColor
+    }));
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!form.title.trim() || !form.content.trim()) {
@@ -105,12 +121,18 @@ export default function NewBlogPage() {
               </div>
 
               <div className="admin-form-group">
-                <label className="admin-label">Category</label>
-                <div style={{ display: 'flex', gap: '10px' }}>
+                <label className="admin-label" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                  <span>Category</span>
+                  <span style={{ fontSize: '0.72rem', color: 'var(--admin-text-sub)', textTransform: 'none', fontWeight: 500 }}>
+                    Badge Color: <strong style={{ color: form.categoryColor }}>{form.categoryColor}</strong>
+                  </span>
+                </label>
+                <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
                   <select
                     value={form.category}
-                    onChange={(e) => setForm({ ...form, category: e.target.value })}
+                    onChange={handleCategoryChange}
                     className="admin-select"
+                    style={{ flex: 1, minWidth: 0, borderRadius: '8px' }}
                   >
                     <option value="Banking Law">Banking Law</option>
                     <option value="Constitutional Law">Constitutional Law</option>
@@ -118,13 +140,66 @@ export default function NewBlogPage() {
                     <option value="Corporate Law">Corporate Law</option>
                     <option value="Teachmelegal">Teachmelegal</option>
                   </select>
-                  <input
-                    type="color"
-                    value={form.categoryColor}
-                    onChange={(e) => setForm({ ...form, categoryColor: e.target.value })}
-                    style={{ width: '48px', height: '48px', border: 'none', borderRadius: '8px', cursor: 'pointer' }}
-                    title="Category Badge Color"
-                  />
+
+                  {/* Elegant Modern Color Card */}
+                  <label 
+                    className="admin-color-card"
+                    title="Click to customize category badge color"
+                  >
+                    <span 
+                      className="admin-color-swatch-dot" 
+                      style={{ backgroundColor: form.categoryColor }} 
+                    />
+                    <span className="admin-color-hex">
+                      {form.categoryColor.toUpperCase()}
+                    </span>
+                    <input
+                      type="color"
+                      value={form.categoryColor}
+                      onChange={(e) => setForm({ ...form, categoryColor: e.target.value })}
+                      style={{
+                        position: 'absolute',
+                        opacity: 0,
+                        width: '100%',
+                        height: '100%',
+                        top: 0,
+                        left: 0,
+                        cursor: 'pointer'
+                      }}
+                      title="Choose custom badge color"
+                    />
+                  </label>
+                </div>
+
+                {/* Quick Palette Swatches */}
+                <div style={{ display: 'flex', alignItems: 'center', gap: '6px', marginTop: '6px' }}>
+                  <span style={{ fontSize: '0.7rem', color: 'var(--admin-text-sub)', fontWeight: 600 }}>Palette:</span>
+                  {[
+                    { name: 'Luxury Gold', color: '#cfa856' },
+                    { name: 'Supreme Blue', color: '#3b82f6' },
+                    { name: 'Criminal Red', color: '#ef4444' },
+                    { name: 'Corporate Emerald', color: '#10b981' },
+                    { name: 'Judicial Purple', color: '#8b5cf6' },
+                    { name: 'Slate Gray', color: '#64748b' }
+                  ].map((swatch) => (
+                    <button
+                      key={swatch.color}
+                      type="button"
+                      onClick={() => setForm({ ...form, categoryColor: swatch.color })}
+                      title={`${swatch.name} (${swatch.color})`}
+                      style={{
+                        width: '15px',
+                        height: '15px',
+                        borderRadius: '50%',
+                        backgroundColor: swatch.color,
+                        border: form.categoryColor.toLowerCase() === swatch.color.toLowerCase() ? '2px solid var(--admin-text-main)' : '1px solid rgba(0,0,0,0.2)',
+                        transform: form.categoryColor.toLowerCase() === swatch.color.toLowerCase() ? 'scale(1.25)' : 'none',
+                        cursor: 'pointer',
+                        padding: 0,
+                        transition: 'all 0.15s ease'
+                      }}
+                    />
+                  ))}
                 </div>
               </div>
             </div>

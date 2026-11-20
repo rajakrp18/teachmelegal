@@ -266,28 +266,28 @@ export default function AdminUsersPage() {
             <table className="admin-table">
               <thead>
                 <tr>
-                  <th style={{ width: '70px' }}>SL No.</th>
-                  <th>Scholar Profile</th>
-                  <th>Contact Info</th>
-                  <th>Target Judicial Exam / Role</th>
-                  <th>University & State</th>
-                  <th>Joined Date</th>
-                  <th>Enrolled Items</th>
-                  <th>Total Orders</th>
-                  <th>Outreach Actions</th>
+                  <th style={{ width: '55px', textAlign: 'center' }}>SL No.</th>
+                  <th style={{ minWidth: '140px' }}>Scholar Profile</th>
+                  <th style={{ minWidth: '160px' }}>Contact Info</th>
+                  <th style={{ minWidth: '150px' }}>Target Judicial Exam / Role</th>
+                  <th style={{ minWidth: '140px' }}>University & State</th>
+                  <th style={{ minWidth: '95px' }}>Joined Date</th>
+                  <th style={{ minWidth: '85px', textAlign: 'center' }}>Enrolled Items</th>
+                  <th style={{ minWidth: '75px', textAlign: 'center' }}>Total Orders</th>
+                  <th style={{ minWidth: '95px', textAlign: 'center' }}>Outreach Actions</th>
                 </tr>
               </thead>
               <tbody>
                 {loading ? (
                   <tr>
-                    <td colSpan="9" style={{ textAlign: 'center', padding: '40px' }}>
-                      <div className="admin-loading-spinner" style={{ margin: '0 auto 12px' }} />
+                    <td colSpan="9" style={{ textAlign: 'center', padding: '36px' }}>
+                      <div className="admin-loading-spinner" style={{ margin: '0 auto 10px' }} />
                       Loading legal scholar profiles...
                     </td>
                   </tr>
                 ) : filteredUsers.length === 0 ? (
                   <tr>
-                    <td colSpan="9" style={{ textAlign: 'center', padding: '40px', color: 'var(--admin-text-sub)' }}>
+                    <td colSpan="9" style={{ textAlign: 'center', padding: '36px', color: 'var(--admin-text-sub)' }}>
                       No scholars found matching current search and filters.
                     </td>
                   </tr>
@@ -296,62 +296,60 @@ export default function AdminUsersPage() {
                     const avatarLetter = (u.name || u.email || 'S').charAt(0).toUpperCase();
                     return (
                       <tr key={u.id}>
-                        <td style={{ fontWeight: 800, color: 'var(--admin-gold)' }}>
+                        <td style={{ fontWeight: 800, color: 'var(--admin-gold)', textAlign: 'center' }}>
                           #{idx + 1}
                         </td>
 
                         <td>
-                          <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-                            <div className="admin-scholar-avatar">
+                          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                            <div className="admin-scholar-avatar" style={{ width: '32px', height: '32px', fontSize: '0.8rem', flexShrink: 0 }}>
                               {avatarLetter}
                             </div>
                             <div>
-                              <div style={{ fontWeight: 700, color: 'var(--admin-text-main)' }}>{u.name}</div>
-                              <div style={{ fontSize: '0.75rem', color: 'var(--admin-text-sub)' }}>ID: {u.id}</div>
+                              <div style={{ fontWeight: 700, color: 'var(--admin-text-main)', fontSize: '0.83rem' }}>{u.name}</div>
+                              <div style={{ fontSize: '0.72rem', color: 'var(--admin-text-sub)' }}>ID: {u.id}</div>
                             </div>
                           </div>
                         </td>
 
                         <td>
-                          <div style={{ fontSize: '0.88rem', fontWeight: 600 }}>{u.email}</div>
-                          <div style={{ fontSize: '0.8rem', color: 'var(--admin-gold)' }}>{u.phone || 'No phone'}</div>
+                          <div style={{ fontSize: '0.8rem', fontWeight: 600, wordBreak: 'break-all' }}>{u.email}</div>
+                          <div style={{ fontSize: '0.74rem', color: 'var(--admin-gold)' }}>{u.phone || 'No phone'}</div>
                         </td>
 
                         <td>
-                          <span className="badge badge-exam">{u.targetExam || 'Judiciary Aspirant'}</span>
-                          <div style={{ fontSize: '0.78rem', color: 'var(--admin-text-sub)', marginTop: '4px' }}>
+                          <span className="badge badge-exam" style={{ fontSize: '0.73rem', padding: '2px 7px' }}>{u.targetExam || 'Judiciary Aspirant'}</span>
+                          <div style={{ fontSize: '0.73rem', color: 'var(--admin-text-sub)', marginTop: '2px' }}>
                             {u.profession || 'Law Student'}
                           </div>
                         </td>
 
                         <td>
-                          <div style={{ fontSize: '0.88rem', fontWeight: 500 }}>{u.university || 'Not specified'}</div>
-                          <div style={{ fontSize: '0.78rem', color: 'var(--admin-text-sub)' }}>{u.state || 'India'}</div>
+                          <div style={{ fontSize: '0.81rem', fontWeight: 500 }}>{u.university || 'Not specified'}</div>
+                          <div style={{ fontSize: '0.73rem', color: 'var(--admin-text-sub)' }}>{u.state || 'India'}</div>
                         </td>
 
-                        <td>
-                          <div style={{ fontSize: '0.85rem', color: 'var(--admin-text-sub)', whiteSpace: 'nowrap' }}>
-                            {u.memberSince || 'Sep 2026'}
-                          </div>
+                        <td style={{ whiteSpace: 'nowrap', fontSize: '0.78rem', color: 'var(--admin-text-sub)' }}>
+                          {u.memberSince || 'Sep 2026'}
                         </td>
 
-                        <td>
-                          <span className="badge badge-published">
+                        <td style={{ textAlign: 'center' }}>
+                          <span className="badge badge-published" style={{ fontSize: '0.73rem', padding: '2px 7px' }}>
                             {u.enrolledCourses?.length || 0} active notes
                           </span>
                         </td>
 
-                        <td>
-                          <span className="badge badge-orders">
+                        <td style={{ textAlign: 'center' }}>
+                          <span className="badge badge-orders" style={{ fontSize: '0.73rem', padding: '2px 7px' }}>
                             {u.orderHistory?.length || 0} orders
                           </span>
                         </td>
 
-                        <td>
+                        <td style={{ textAlign: 'center' }}>
                           <button
                             onClick={() => setSelectedUser(u)}
                             className="admin-btn admin-btn-primary"
-                            style={{ padding: '6px 14px', fontSize: '0.82rem' }}
+                            style={{ padding: '5px 10px', fontSize: '0.76rem' }}
                           >
                             Target / Inspect
                           </button>
