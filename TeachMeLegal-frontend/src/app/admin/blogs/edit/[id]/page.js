@@ -2,7 +2,7 @@
 import { useEffect, useState, use } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import WordPressEditor from '../../../../../../components/WordPressEditor';
+import WordPressEditor from '@/components/WordPressEditor';
 
 export default function EditBlogPage({ params }) {
   const unwrappedParams = use(params);
