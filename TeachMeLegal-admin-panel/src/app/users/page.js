@@ -17,7 +17,8 @@ export default function AdminUsersPage() {
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState('');
   const [examFilter, setExamFilter] = useState('ALL');
-  const [dateFilter, setDateFilter] = useState('ALL');
+  const [startDate, setStartDate] = useState('');
+  const [endDate, setEndDate] = useState('');
   const [selectedUser, setSelectedUser] = useState(null);
   const [copiedPhone, setCopiedPhone] = useState(false);
 
@@ -38,6 +39,36 @@ export default function AdminUsersPage() {
     fetchUsers();
   }, []);
 
+  const parseUserDate = (dateStr) => {
+    if (!dateStr) return null;
+    const months = {
+      january: 0, jan: 0,
+      february: 1, feb: 1,
+      march: 2, mar: 2,
+      april: 3, apr: 3,
+      may: 4,
+      june: 5, jun: 5,
+      july: 6, jul: 6,
+      august: 7, aug: 7,
+      september: 8, sep: 8,
+      october: 9, oct: 9,
+      november: 10, nov: 10,
+      december: 11, dec: 11
+    };
+    const parts = dateStr.toLowerCase().split(/[\s,]+/);
+    if (parts.length >= 2) {
+      let month = -1, year = -1, day = 1;
+      for (const p of parts) {
+        if (months[p] !== undefined) month = months[p];
+        else if (/^\d{4}$/.test(p)) year = parseInt(p, 10);
+        else if (/^\d{1,2}$/.test(p)) day = parseInt(p, 10);
+      }
+      if (month !== -1 && year !== -1) return new Date(year, month, day);
+    }
+    const d = new Date(dateStr);
+    return isNaN(d.getTime()) ? null : d;
+  };
+
   const filteredUsers = users.filter((u) => {
     const q = search.toLowerCase();
     const matchesSearch =
@@ -55,12 +86,31 @@ export default function AdminUsersPage() {
       examFilter === 'ALL' || 
       (u.targetExam && u.targetExam.toLowerCase().includes(examFilter.toLowerCase()));
 
-    const matchesDate = 
-      dateFilter === 'ALL' || 
-      (u.memberSince && u.memberSince.toLowerCase().includes(dateFilter.toLowerCase()));
+    let matchesDate = true;
+    const userDate = parseUserDate(u.memberSince);
+
+    if (userDate) {
+      if (startDate) {
+        const start = new Date(`${startDate}T00:00:00`);
+        if (userDate < start) matchesDate = false;
+      }
+      if (endDate) {
+        const end = new Date(`${endDate}T23:59:59`);
+        if (userDate > end) matchesDate = false;
+      }
+    }
 
     return matchesSearch && matchesExam && matchesDate;
   });
+
+  const hasActiveFilters = Boolean(search || examFilter !== 'ALL' || startDate || endDate);
+
+  const handleResetFilters = () => {
+    setSearch('');
+    setExamFilter('ALL');
+    setStartDate('');
+    setEndDate('');
+  };
 
   const totalEnrollments = users.reduce((acc, u) => acc + (u.enrolledCourses?.length || 0), 0);
   const totalOrders = users.reduce((acc, u) => acc + (u.orderHistory?.length || 0), 0);
@@ -79,41 +129,6 @@ export default function AdminUsersPage() {
           <p className="admin-header-subtitle">
             Inspect legal profiles, target judicial services exams, study note enrollments, and outreach details.
           </p>
-        </div>
-        <div className="admin-header-actions">
-          <div className="admin-filter-bar">
-            <div className="admin-search-wrapper">
-              <span className="search-icon"><IconSearch size={16} /></span>
-              <input
-                type="text"
-                placeholder="Search scholars by name, phone, state..."
-                value={search}
-                onChange={(e) => setSearch(e.target.value)}
-                className="admin-search-input"
-              />
-            </div>
-            <select
-              value={examFilter}
-              onChange={(e) => setExamFilter(e.target.value)}
-              className="admin-select"
-            >
-              <option value="ALL">All Judicial Exams</option>
-              <option value="PCS-J">State Judicial (PCS-J)</option>
-              <option value="DJS">Delhi Judicial (DJS)</option>
-              <option value="UP HJS">UP Higher Judicial (UP HJS)</option>
-              <option value="Aspirant">Judiciary Aspirants</option>
-            </select>
-            <select
-              value={dateFilter}
-              onChange={(e) => setDateFilter(e.target.value)}
-              className="admin-select"
-            >
-              <option value="ALL">All Joining Dates</option>
-              <option value="September 2026">September 2026</option>
-              <option value="October 2026">October 2026</option>
-              <option value="November 2026">November 2026</option>
-            </select>
-          </div>
         </div>
       </header>
 
@@ -167,12 +182,83 @@ export default function AdminUsersPage() {
 
         {/* Scholars Table Card */}
         <div className="admin-card">
-          <div className="admin-card-header">
+          <div className="admin-card-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '16px', borderBottom: '1px solid var(--admin-border)', paddingBottom: '18px' }}>
             <div>
-              <h2 className="admin-card-title">Enrolled Scholars Directory ({filteredUsers.length})</h2>
-              <span style={{ fontSize: '0.82rem', color: 'var(--admin-text-sub)' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                <h2 className="admin-card-title" style={{ margin: 0 }}>Enrolled Scholars Directory</h2>
+                <span className="badge badge-exam" style={{ fontSize: '0.8rem' }}>
+                  {filteredUsers.length} {filteredUsers.length === 1 ? 'scholar' : 'scholars'}
+                </span>
+              </div>
+              <p style={{ margin: '4px 0 0', fontSize: '0.82rem', color: 'var(--admin-text-sub)' }}>
                 Target individual law students and practitioners based on their judiciary goals.
-              </span>
+              </p>
+            </div>
+
+            {hasActiveFilters && (
+              <button 
+                type="button" 
+                onClick={handleResetFilters} 
+                className="admin-btn-reset"
+                title="Reset search and date filters"
+              >
+                Clear Filters
+              </button>
+            )}
+          </div>
+
+          {/* Dedicated Search & Date Filter Bar positioned right above the table */}
+          <div style={{ padding: '16px 24px', background: 'rgba(0, 0, 0, 0.015)', borderBottom: '1px solid var(--admin-border)', display: 'flex', alignItems: 'center', gap: '12px', flexWrap: 'wrap' }}>
+            {/* Search Input */}
+            <div className="admin-search-wrapper" style={{ flex: '1 1 260px', minWidth: '220px' }}>
+              <span className="search-icon"><IconSearch size={16} /></span>
+              <input
+                type="text"
+                placeholder="Search scholars by name, phone, email, university, state..."
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+                className="admin-search-input"
+                style={{ width: '100%' }}
+              />
+            </div>
+
+            {/* Target Judicial Exam Select */}
+            <select
+              value={examFilter}
+              onChange={(e) => setExamFilter(e.target.value)}
+              className="admin-select"
+              style={{ minWidth: '180px' }}
+            >
+              <option value="ALL">All Judicial Exams</option>
+              <option value="PCS-J">State Judicial (PCS-J)</option>
+              <option value="DJS">Delhi Judicial (DJS)</option>
+              <option value="UP HJS">UP Higher Judicial (UP HJS)</option>
+              <option value="Aspirant">Judiciary Aspirants</option>
+            </select>
+
+            {/* Proper Date Filter: From Date to That Date */}
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flexWrap: 'wrap' }}>
+              <div className="admin-date-picker-wrap">
+                <label>From:</label>
+                <input
+                  type="date"
+                  value={startDate}
+                  onChange={(e) => setStartDate(e.target.value)}
+                  className="admin-date-input"
+                  title="Filter scholars joined on or after this date"
+                />
+              </div>
+
+              <div className="admin-date-picker-wrap">
+                <label>To:</label>
+                <input
+                  type="date"
+                  value={endDate}
+                  onChange={(e) => setEndDate(e.target.value)}
+                  className="admin-date-input"
+                  title="Filter scholars joined on or before this date"
+                />
+              </div>
             </div>
           </div>
 
