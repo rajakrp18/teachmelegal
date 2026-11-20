@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { getPostBySlug, getAllPosts } from '../../../lib/blogsStore';
 import { IconUser, IconCalendar, IconClock, IconEye, IconScales, IconBookOpen, IconDocument } from '../../../components/Icons';
 import BlogComments from '@/components/BlogComments';
+import ViewTracker from '@/components/ViewTracker';
 import './post.css';
 
 export const dynamic = 'force-dynamic';
@@ -52,6 +53,7 @@ export default async function BlogPost({ params }) {
   return (
     <main>
       <Navbar />
+      <ViewTracker slug={post.slug} />
 
       <section className="post-hero" style={{ background: `linear-gradient(135deg, ${post.categoryColor || '#3b82f6'}22 0%, var(--primary-navy) 100%)` }}>
         <div className="container">

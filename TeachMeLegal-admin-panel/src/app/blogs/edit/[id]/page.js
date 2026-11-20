@@ -252,6 +252,23 @@ export default function EditBlogPage({ params }) {
                   className="admin-input"
                 />
               </div>
+
+              <div className="admin-form-group">
+                <label className="admin-label">
+                  Article Views
+                  <span style={{ fontSize: '0.75rem', color: 'var(--admin-text-sub)', fontWeight: 400, marginLeft: '6px' }}>
+                    (Live reader count)
+                  </span>
+                </label>
+                <input
+                  type="number"
+                  min="0"
+                  value={form.views !== undefined ? form.views : 0}
+                  onChange={(e) => setForm({ ...form, views: parseInt(e.target.value, 10) || 0 })}
+                  className="admin-input"
+                  title="Article reader views. Automatically increments when students read the article on the website, or edit manually here."
+                />
+              </div>
             </div>
 
             <div className="admin-form-group" style={{ marginBottom: 0 }}>

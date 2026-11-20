@@ -240,6 +240,24 @@ export default function NewBlogPage() {
                   className="admin-input"
                 />
               </div>
+
+              <div className="admin-form-group">
+                <label className="admin-label">
+                  Initial Views
+                  <span style={{ fontSize: '0.75rem', color: 'var(--admin-text-sub)', fontWeight: 400, marginLeft: '6px' }}>
+                    (Optional baseline)
+                  </span>
+                </label>
+                <input
+                  type="number"
+                  min="0"
+                  value={form.views || 0}
+                  onChange={(e) => setForm({ ...form, views: parseInt(e.target.value, 10) || 0 })}
+                  placeholder="0"
+                  className="admin-input"
+                  title="Initial views count. Automatically increments as readers view the article."
+                />
+              </div>
             </div>
 
             {/* Short Excerpt */}

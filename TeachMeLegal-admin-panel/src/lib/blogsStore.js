@@ -108,10 +108,21 @@ export function getPostBySlug(slug) {
       post = posts.find(p => p.id === 'post-6' || p.slug.includes('why-teachmelegal'));
     }
   }
-  if (post) {
-    post.views = (post.views || 0) + 1;
-  }
   return post;
+}
+
+export function incrementPostViews(slugOrId) {
+  const posts = initStore();
+  let post = posts.find(p => p.slug === slugOrId || p.id === slugOrId);
+  if (!post && (slugOrId === 'why-teachmelegal-journey-making-law-simple' || slugOrId === 'why-teachmelegal-the-journey-of-making-law-simple')) {
+    post = posts.find(p => p.id === 'post-6' || p.slug.includes('why-teachmelegal'));
+  }
+  if (post) {
+    post.views = (Number(post.views) || 0) + 1;
+    saveToDisk();
+    return post;
+  }
+  return null;
 }
 
 export function getPostById(id) {
@@ -131,7 +142,7 @@ export function createPost(data) {
     date: new Date().toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }),
     readTime: data.readTime || '8 min read',
     comments: 0,
-    views: 0,
+    views: data.views !== undefined ? (parseInt(data.views, 10) || 0) : 0,
     published: data.published !== false,
     excerpt: data.excerpt || (data.content ? data.content.replace(/<[^>]+>/g, '').slice(0, 140) + '...' : ''),
     content: data.content
@@ -146,9 +157,13 @@ export function updatePost(id, data) {
   const index = global.__blogsStore.findIndex(p => p.id === id);
   if (index === -1) return null;
   
+  const currentPost = global.__blogsStore[index];
+  const updatedViews = data.views !== undefined ? (parseInt(data.views, 10) || 0) : (currentPost.views || 0);
+
   global.__blogsStore[index] = {
-    ...global.__blogsStore[index],
+    ...currentPost,
     ...data,
+    views: updatedViews,
     updatedAt: new Date().toISOString()
   };
   saveToDisk();
@@ -166,7 +181,7 @@ export function deletePost(id) {
 
 export function getAnalyticsStats() {
   const posts = initStore();
-  const totalViews = posts.reduce((acc, p) => acc + (p.views || 0), 0) + 1250;
+  const totalViews = posts.reduce((acc, p) => acc + (Number(p.views) || 0), 0);
   const totalBlogs = posts.length;
   const publishedBlogs = posts.filter(p => p.published).length;
   const draftBlogs = posts.filter(p => !p.published).length;
