@@ -2,12 +2,42 @@
 import React, { useState, useRef, useEffect } from 'react';
 import './WordPressEditor.css';
 
+const FONTS_LIST = [
+  { name: 'Inter', family: 'Inter, sans-serif', category: 'Modern Clean Sans', preview: 'Statutory provisions and courtroom ratio' },
+  { name: 'Roboto', family: 'Roboto, sans-serif', category: 'Most Popular Web Sans', preview: 'High-legibility legal case brief text' },
+  { name: 'Poppins', family: 'Poppins, sans-serif', category: 'Premium Geometric Sans', preview: 'Authoritative analysis of landmark statutes' },
+  { name: 'Merriweather', family: 'Merriweather, serif', category: 'Judicial & Editorial Serif', preview: 'Supreme Court ratio decidendi & precedents' },
+  { name: 'Playfair Display', family: "'Playfair Display', serif", category: 'Luxury Courtroom Serif', preview: 'Constitution Bench Judgment Summary' },
+  { name: 'Georgia', family: 'Georgia, serif', category: 'Classic Editorial Serif', preview: 'Jurisprudence & statutory interpretations' },
+  { name: 'Montserrat', family: 'Montserrat, sans-serif', category: 'Authoritative Heading Sans', preview: 'Procedural rules and judicial guidelines' },
+  { name: 'Times New Roman', family: "'Times New Roman', serif", category: 'Formal Court & Statutory', preview: 'High Court filing and affidavit standard' },
+  { name: 'Open Sans', family: "'Open Sans', sans-serif", category: 'Clear & Balanced Sans', preview: 'Universal readable text for exam notes' },
+  { name: 'Lato', family: 'Lato, sans-serif', category: 'Warm & Contemporary Sans', preview: 'Practical student learning materials' },
+  { name: 'Garamond', family: 'Garamond, serif', category: 'Traditional Supreme Court Serif', preview: 'Historic legal doctrines and maxims' },
+  { name: 'Courier New', family: "'Courier New', monospace", category: 'Bare Act Code & Monospace', preview: 'Section 138 (b) Proviso: Within 15 days' }
+];
+
+const SIZES_LIST = [
+  { label: '13px', px: '13px', desc: 'Footnote / Statutory Proviso' },
+  { label: '14px', px: '14px', desc: 'Metadata / Annotation' },
+  { label: '16px', px: '16px', desc: 'Standard Article Body' },
+  { label: '18px', px: '18px', desc: 'Medium Lead Paragraph' },
+  { label: '20px', px: '20px', desc: 'Sub-heading / Section Note' },
+  { label: '24px', px: '24px', desc: 'H3 Subsection Title' },
+  { label: '28px', px: '28px', desc: 'H2 Main Section Title' },
+  { label: '32px', px: '32px', desc: 'H1 Chapter Header' }
+];
+
 export default function WordPressEditor({ value = '', onChange }) {
   // 'split' | 'visual' | 'code' | 'preview'
   const [activeTab, setActiveTab] = useState('split');
   const [content, setContent] = useState(value);
 
   // Popover menus state
+  const [showFontMenu, setShowFontMenu] = useState(false);
+  const [showSizeMenu, setShowSizeMenu] = useState(false);
+  const [currentFontLabel, setCurrentFontLabel] = useState('Select Font');
+  const [currentSizeLabel, setCurrentSizeLabel] = useState('Font Size');
   const [showTableModal, setShowTableModal] = useState(false);
   const [showBulletMenu, setShowBulletMenu] = useState(false);
   const [showNumberMenu, setShowNumberMenu] = useState(false);
@@ -151,36 +181,94 @@ export default function WordPressEditor({ value = '', onChange }) {
     updateContent(newText);
   };
 
-  // ── Font Family Application ──
-  const handleFontChange = (fontFamily) => {
-    if (!fontFamily) return;
-    if (activeTab === 'visual' || activeTab === 'split') {
-      restoreRange();
-      document.execCommand('fontName', false, fontFamily);
-      handleVisualInput();
-    } else {
-      const selected = textareaRef.current ? textareaRef.current.value.substring(textareaRef.current.selectionStart, textareaRef.current.selectionEnd) : 'Text';
-      insertHtmlAtCursor(`<span style="font-family: ${fontFamily};">${selected}</span>`);
-    }
-  };
-
-  // ── Font Size Application ──
-  const handleFontSizeChange = (sizePx) => {
-    if (!sizePx) return;
+  // ── Font Family Application (12 Most Used Fonts) ──
+  const applyFontFamily = (font) => {
+    setCurrentFontLabel(font.name);
     if (activeTab === 'visual' || activeTab === 'split') {
       restoreRange();
       const sel = window.getSelection();
       if (sel && sel.rangeCount > 0 && !sel.isCollapsed) {
         const range = sel.getRangeAt(0);
         const span = document.createElement('span');
-        span.style.fontSize = sizePx;
+        span.style.fontFamily = font.family;
         span.appendChild(range.extractContents());
         range.insertNode(span);
+
+        const newRange = document.createRange();
+        newRange.selectNodeContents(span);
+        sel.removeAllRanges();
+        sel.addRange(newRange);
+        savedRange.current = newRange.cloneRange();
         handleVisualInput();
-      } else {
-        insertHtmlAtCursor(`<span style="font-size: ${sizePx};">Text</span>`);
+      } else if (sel && sel.rangeCount > 0) {
+        const anchor = sel.anchorNode;
+        let block = anchor;
+        while (block && block !== visualRef.current && !['P', 'DIV', 'H1', 'H2', 'H3', 'H4', 'LI', 'TD', 'TH', 'BLOCKQUOTE'].includes(block.nodeName)) {
+          block = block.parentNode;
+        }
+        if (block && block !== visualRef.current) {
+          block.style.fontFamily = font.family;
+          handleVisualInput();
+        } else {
+          insertHtmlAtCursor(`<span style="font-family: ${font.family};">&#8203;</span>`);
+        }
+      }
+    } else {
+      const textarea = textareaRef.current;
+      if (textarea) {
+        const start = textarea.selectionStart;
+        const end = textarea.selectionEnd;
+        const selected = textarea.value.substring(start, end) || 'Sample Text';
+        const replacement = `<span style="font-family: ${font.family};">${selected}</span>`;
+        const newText = textarea.value.substring(0, start) + replacement + textarea.value.substring(end);
+        updateContent(newText);
       }
     }
+    setShowFontMenu(false);
+  };
+
+  // ── Font Size Application ──
+  const applyFontSize = (size) => {
+    setCurrentSizeLabel(size.label);
+    if (activeTab === 'visual' || activeTab === 'split') {
+      restoreRange();
+      const sel = window.getSelection();
+      if (sel && sel.rangeCount > 0 && !sel.isCollapsed) {
+        const range = sel.getRangeAt(0);
+        const span = document.createElement('span');
+        span.style.fontSize = size.px;
+        span.appendChild(range.extractContents());
+        range.insertNode(span);
+
+        const newRange = document.createRange();
+        newRange.selectNodeContents(span);
+        sel.removeAllRanges();
+        sel.addRange(newRange);
+        savedRange.current = newRange.cloneRange();
+        handleVisualInput();
+      } else if (sel && sel.rangeCount > 0) {
+        const anchor = sel.anchorNode;
+        let block = anchor;
+        while (block && block !== visualRef.current && !['P', 'DIV', 'H1', 'H2', 'H3', 'H4', 'LI', 'TD', 'TH', 'BLOCKQUOTE'].includes(block.nodeName)) {
+          block = block.parentNode;
+        }
+        if (block && block !== visualRef.current) {
+          block.style.fontSize = size.px;
+          handleVisualInput();
+        }
+      }
+    } else {
+      const textarea = textareaRef.current;
+      if (textarea) {
+        const start = textarea.selectionStart;
+        const end = textarea.selectionEnd;
+        const selected = textarea.value.substring(start, end) || 'Sample Text';
+        const replacement = `<span style="font-size: ${size.px};">${selected}</span>`;
+        const newText = textarea.value.substring(0, start) + replacement + textarea.value.substring(end);
+        updateContent(newText);
+      }
+    }
+    setShowSizeMenu(false);
   };
 
   // ── Text Color & Highlighter ──
@@ -399,6 +487,8 @@ export default function WordPressEditor({ value = '', onChange }) {
     }
     setActiveTab(tab);
     // Close popovers
+    setShowFontMenu(false);
+    setShowSizeMenu(false);
     setShowTableModal(false);
     setShowBulletMenu(false);
     setShowNumberMenu(false);
@@ -408,6 +498,8 @@ export default function WordPressEditor({ value = '', onChange }) {
 
   // Close all popovers on outside click
   const closeAllPopovers = () => {
+    setShowFontMenu(false);
+    setShowSizeMenu(false);
     setShowTableModal(false);
     setShowBulletMenu(false);
     setShowNumberMenu(false);
@@ -493,54 +585,109 @@ export default function WordPressEditor({ value = '', onChange }) {
             </select>
           </div>
 
-          {/* Font Family Selector */}
+          {/* ── Font Family & Size Popover Pickers ── */}
           <div className="wp-toolbar-group">
-            <select
-              className="wp-select"
-              style={{ width: '130px' }}
-              onMouseDown={(e) => updateSavedRange()}
-              onChange={(e) => {
-                if (e.target.value) {
-                  handleFontChange(e.target.value);
-                  e.target.value = '';
-                }
-              }}
-              defaultValue=""
-              title="Choose Legal Font Style"
-            >
-              <option value="" disabled>Font Style...</option>
-              <option value="Inter, sans-serif">Inter (Modern Clean)</option>
-              <option value="Georgia, serif">Georgia (Editorial Serif)</option>
-              <option value="Merriweather, serif">Merriweather (Judicial)</option>
-              <option value="'Times New Roman', serif">Times New Roman (Court)</option>
-              <option value="Garamond, serif">Garamond (Classic Law)</option>
-              <option value="'Playfair Display', serif">Playfair (Luxury Serif)</option>
-              <option value="Arial, sans-serif">Arial (Standard)</option>
-              <option value="'Courier New', monospace">Courier (Bare Act Code)</option>
-            </select>
+            {/* Font Family Popover Trigger */}
+            <div style={{ position: 'relative' }}>
+              <button
+                type="button"
+                className="wp-tool-btn wp-btn-font"
+                title="Choose from 12 Most Used Typography Fonts"
+                onMouseDown={(e) => {
+                  e.preventDefault();
+                  updateSavedRange();
+                }}
+                onClick={() => {
+                  setShowFontMenu(!showFontMenu);
+                  setShowSizeMenu(false);
+                  setShowBulletMenu(false);
+                  setShowNumberMenu(false);
+                  setShowTableModal(false);
+                  setShowColorPicker(false);
+                  setShowHighlightPicker(false);
+                }}
+              >
+                <span>🔤 {currentFontLabel}</span>
+                <span style={{ fontSize: '0.65rem' }}>▼</span>
+              </button>
 
-            <select
-              className="wp-select"
-              style={{ width: '90px' }}
-              onMouseDown={(e) => updateSavedRange()}
-              onChange={(e) => {
-                if (e.target.value) {
-                  handleFontSizeChange(e.target.value);
-                  e.target.value = '';
-                }
-              }}
-              defaultValue=""
-              title="Font Size"
-            >
-              <option value="" disabled>Size...</option>
-              <option value="13px">13px (Footnote)</option>
-              <option value="15px">15px (Compact)</option>
-              <option value="16px">16px (Normal Body)</option>
-              <option value="18px">18px (Medium Text)</option>
-              <option value="20px">20px (Subhead)</option>
-              <option value="24px">24px (H3 Section)</option>
-              <option value="28px">28px (H2 Title)</option>
-            </select>
+              {showFontMenu && (
+                <div className="wp-popover-menu wp-popover-fonts">
+                  <div className="wp-popover-header">
+                    <strong>12 Most Popular & Used Fonts:</strong>
+                    <button type="button" onClick={() => setShowFontMenu(false)} className="wp-popover-close">✕</button>
+                  </div>
+                  <div className="wp-font-scroll-list">
+                    {FONTS_LIST.map((font) => (
+                      <button
+                        key={font.name}
+                        type="button"
+                        className="wp-font-card"
+                        onClick={() => applyFontFamily(font)}
+                      >
+                        <div className="wp-font-card-left">
+                          <span className="wp-font-badge" style={{ fontFamily: font.family }}>Aa</span>
+                          <div>
+                            <div className="wp-font-name" style={{ fontFamily: font.family }}>{font.name}</div>
+                            <div className="wp-font-cat">{font.category}</div>
+                          </div>
+                        </div>
+                        <div className="wp-font-preview" style={{ fontFamily: font.family }}>
+                          {font.preview}
+                        </div>
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
+
+            {/* Font Size Popover Trigger */}
+            <div style={{ position: 'relative' }}>
+              <button
+                type="button"
+                className="wp-tool-btn wp-btn-size"
+                title="Choose Font Size"
+                onMouseDown={(e) => {
+                  e.preventDefault();
+                  updateSavedRange();
+                }}
+                onClick={() => {
+                  setShowSizeMenu(!showSizeMenu);
+                  setShowFontMenu(false);
+                  setShowBulletMenu(false);
+                  setShowNumberMenu(false);
+                  setShowTableModal(false);
+                  setShowColorPicker(false);
+                  setShowHighlightPicker(false);
+                }}
+              >
+                <span>📏 {currentSizeLabel}</span>
+                <span style={{ fontSize: '0.65rem' }}>▼</span>
+              </button>
+
+              {showSizeMenu && (
+                <div className="wp-popover-menu wp-popover-sizes">
+                  <div className="wp-popover-header">
+                    <strong>Select Font Size:</strong>
+                    <button type="button" onClick={() => setShowSizeMenu(false)} className="wp-popover-close">✕</button>
+                  </div>
+                  <div className="wp-size-list">
+                    {SIZES_LIST.map((size) => (
+                      <button
+                        key={size.label}
+                        type="button"
+                        className="wp-size-card"
+                        onClick={() => applyFontSize(size)}
+                      >
+                        <span className="wp-size-val" style={{ fontSize: size.px }}>{size.label}</span>
+                        <span className="wp-size-desc">{size.desc}</span>
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
           </div>
 
           {/* Typography Styles */}
