@@ -64,25 +64,48 @@ export default function RootLayout({ children }) {
         <div className={`admin-layout ${isSidebarExpanded ? '' : 'sidebar-collapsed'}`}>
           {/* Sidebar Navigation */}
           <aside className="admin-sidebar">
-            <div className="admin-brand-wrapper">
-              <Link href="/" className="admin-brand">
+            <div 
+              className="admin-brand-wrapper"
+              onClick={() => {
+                if (!isSidebarExpanded) toggleSidebar();
+              }}
+              title={!isSidebarExpanded ? "Click to expand sidebar" : ""}
+              style={{ cursor: !isSidebarExpanded ? "pointer" : "default" }}
+            >
+              <Link 
+                href="/" 
+                className="admin-brand"
+                onClick={(e) => {
+                  if (!isSidebarExpanded) {
+                    e.preventDefault();
+                    toggleSidebar();
+                  }
+                }}
+              >
                 {isSidebarExpanded ? (
                   <>
                     <img src="/logo.png" alt="Teach Me Legal Logo" className="admin-brand-img" />
                     <div className="admin-brand-title">Teach<span>Me</span>Legal</div>
                   </>
                 ) : (
-                  <img src="/logo.png" alt="Teach Me Legal" style={{ height: '32px', width: 'auto' }} />
+                  <img src="/logo.png" alt="Teach Me Legal" className="admin-brand-img-collapsed" />
                 )}
               </Link>
-              <button 
-                type="button"
-                className="admin-sidebar-toggle" 
-                onClick={toggleSidebar} 
-                title={isSidebarExpanded ? "Collapse Sidebar" : "Expand Sidebar"}
-              >
-                {isSidebarExpanded ? '◀' : '▶'}
-              </button>
+
+              {/* Only show collapse arrow button when sidebar is expanded */}
+              {isSidebarExpanded && (
+                <button 
+                  type="button"
+                  className="admin-sidebar-toggle" 
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    toggleSidebar();
+                  }} 
+                  title="Collapse Sidebar"
+                >
+                  ◀
+                </button>
+              )}
             </div>
 
             <nav className="admin-nav">
@@ -107,17 +130,17 @@ export default function RootLayout({ children }) {
                 type="button" 
                 className="admin-theme-toggle" 
                 onClick={toggleTheme} 
-                title="Toggle Theme"
+                title={isDark ? "Switch to Light Mode" : "Switch to Dark Mode"}
               >
                 <span className="theme-icon">
-                  {isDark ? <IconSun size={17} /> : <IconMoon size={17} />}
+                  {isDark ? <IconSun size={18} /> : <IconMoon size={18} />}
                 </span>
                 {isSidebarExpanded && (
                   <span className="theme-label">{isDark ? 'Switch to Light' : 'Switch to Dark'}</span>
                 )}
               </button>
 
-              <div className="admin-user-card">
+              <div className="admin-user-card" title="Adv. Prashant Jha (Administrator)">
                 <div className="admin-user-avatar">PJ</div>
                 {isSidebarExpanded && (
                   <div className="admin-user-info">
