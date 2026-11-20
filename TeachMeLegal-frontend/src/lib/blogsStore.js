@@ -9,9 +9,6 @@ const DATA_DIR = path.join(process.cwd(), 'src', 'data');
 const DATA_FILE = path.join(DATA_DIR, 'blogs.json');
 
 function initStore() {
-  if (global.__blogsStore && global.__blogsStore.length > 0) {
-    return global.__blogsStore;
-  }
   try {
     if (fs.existsSync(DATA_FILE)) {
       const raw = fs.readFileSync(DATA_FILE, 'utf-8');
@@ -24,8 +21,10 @@ function initStore() {
   } catch (e) {
     console.error('Error reading blogs.json, falling back to initial posts:', e);
   }
-  global.__blogsStore = [...INITIAL_POSTS];
-  saveToDisk();
+  if (!global.__blogsStore || global.__blogsStore.length === 0) {
+    global.__blogsStore = Array.isArray(INITIAL_POSTS) ? [...INITIAL_POSTS] : [];
+    saveToDisk();
+  }
   return global.__blogsStore;
 }
 
@@ -59,7 +58,13 @@ export function getAllPosts(includeDrafts = false) {
 
 export function getPostBySlug(slug) {
   const posts = initStore();
-  const post = posts.find(p => p.slug === slug);
+  let post = posts.find(p => p.slug === slug);
+  if (!post) {
+    // Fallback for slug variations of why-teachmelegal
+    if (slug === 'why-teachmelegal-journey-making-law-simple' || slug === 'why-teachmelegal-the-journey-of-making-law-simple') {
+      post = posts.find(p => p.id === 'post-6' || p.slug.includes('why-teachmelegal'));
+    }
+  }
   if (post) {
     post.views = (post.views || 0) + 1;
   }

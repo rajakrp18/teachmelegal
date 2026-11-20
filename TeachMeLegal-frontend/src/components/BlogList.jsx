@@ -62,11 +62,11 @@ const DEFAULT_POSTS = [
     readTime: "9 min read"
   },
   {
-    slug: "why-teachmelegal-journey-making-law-simple",
-    category: "Legal Education",
+    slug: "why-teachmelegal-the-journey-of-making-law-simple",
+    category: "Teachmelegal",
     categoryColor: "rgba(207, 168, 86, 0.15)",
-    title: "Why Teachmelegal? – The Journey of Making Law Accessible",
-    author: "Adv. Prashant Jha",
+    title: "Why Teachmelegal? – The Journey Of Making Law Simple",
+    author: "Prashant Jha",
     date: "September 21, 2025",
     comments: 0,
     excerpt: "Advocate Prashant Jha shares the story behind TeachMeLegal — bridging courtroom practice and student education with simplified visual guides.",
@@ -76,8 +76,8 @@ const DEFAULT_POSTS = [
 
 const POPULAR_TAGS = ['Banking Law', 'Judicial Services', 'Section 138', 'Constitutional Writs', 'Supreme Court'];
 
-const BlogList = () => {
-  const [posts, setPosts] = useState(DEFAULT_POSTS);
+const BlogList = ({ initialPosts = [] }) => {
+  const [posts, setPosts] = useState(initialPosts && initialPosts.length > 0 ? initialPosts : DEFAULT_POSTS);
   const [activeCategory, setActiveCategory] = useState('All');
   const [selectedTag, setSelectedTag] = useState(null);
   const [searchQuery, setSearchQuery] = useState('');
@@ -85,13 +85,13 @@ const BlogList = () => {
   useEffect(() => {
     async function loadBlogs() {
       try {
-        const res = await fetch('http://localhost:5000/api/blogs');
+        const res = await fetch('/api/blogs');
         const data = await res.json();
         if (data.success && data.posts && data.posts.length > 0) {
-          setPosts(data.posts.filter(p => p.published));
+          setPosts(data.posts.filter(p => p.published !== false));
         }
       } catch (err) {
-        console.error('Failed to load published posts:', err);
+        // Fallback to loaded posts
       }
     }
     loadBlogs();

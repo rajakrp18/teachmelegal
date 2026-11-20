@@ -8,7 +8,23 @@ import './post.css';
 
 export async function generateStaticParams() {
   const posts = getAllPosts(true);
-  return posts.map(post => ({ slug: post.slug }));
+  const params = [];
+  const added = new Set();
+
+  for (const post of posts) {
+    if (post.slug && !added.has(post.slug)) {
+      params.push({ slug: post.slug });
+      added.add(post.slug);
+    }
+    if (post.id === 'post-6' || post.slug.includes('why-teachmelegal')) {
+      const alias1 = 'why-teachmelegal-the-journey-of-making-law-simple';
+      const alias2 = 'why-teachmelegal-journey-making-law-simple';
+      if (!added.has(alias1)) { params.push({ slug: alias1 }); added.add(alias1); }
+      if (!added.has(alias2)) { params.push({ slug: alias2 }); added.add(alias2); }
+    }
+  }
+
+  return params;
 }
 
 export default async function BlogPost({ params }) {

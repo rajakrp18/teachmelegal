@@ -2,6 +2,7 @@ import Navbar from '../../components/Navbar';
 import Footer from '../../components/Footer';
 import BlogList from '../../components/BlogList';
 import { IconScales } from '../../components/Icons';
+import { getAllPosts } from '../../lib/blogsStore';
 import './blog.css';
 
 export const metadata = {
@@ -10,6 +11,8 @@ export const metadata = {
 };
 
 export default function BlogPage() {
+  const posts = getAllPosts(false);
+
   return (
     <main className="blog-page-wrapper">
       <Navbar />
@@ -27,7 +30,7 @@ export default function BlogPage() {
           </p>
         </div>
       </section>
-      <BlogList />
+      <BlogList initialPosts={posts} />
       <Footer />
     </main>
   );

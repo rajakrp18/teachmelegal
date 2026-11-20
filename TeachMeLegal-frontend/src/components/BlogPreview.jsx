@@ -19,10 +19,10 @@ const INITIAL_PREVIEW_POSTS = [
     author: 'Advocate Prashant Jha',
   },
   {
-    slug: 'why-teachmelegal-journey-making-law-simple',
-    category: 'LEGAL EDUCATION',
-    title: 'Why Teachmelegal? – The Journey of Making Law Accessible',
-    date: 'DEC 2020',
+    slug: 'why-teachmelegal-the-journey-of-making-law-simple',
+    category: 'TEACHMELEGAL',
+    title: 'Why Teachmelegal? – The Journey Of Making Law Simple',
+    date: 'SEP 2025',
     author: 'Advocate Prashant Jha',
   },
 ];
@@ -33,14 +33,14 @@ const BlogPreview = () => {
   useEffect(() => {
     async function loadLatestPosts() {
       try {
-        const res = await fetch('http://localhost:5000/api/blogs');
+        const res = await fetch('/api/blogs');
         const data = await res.json();
         if (data.success && data.posts && data.posts.length > 0) {
           const mapped = data.posts.slice(0, 4).map(p => ({
             slug: p.slug,
             category: (p.category || 'LEGAL ARTICLE').toUpperCase(),
             title: p.title,
-            date: p.date || 'NOV 2021',
+            date: p.date || 'SEP 2025',
             author: p.author || 'Advocate Prashant Jha'
           }));
           setPosts(mapped);
