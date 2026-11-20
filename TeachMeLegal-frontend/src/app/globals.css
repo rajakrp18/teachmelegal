@@ -268,17 +268,28 @@ a:hover { color: var(--accent-gold-hover); }
 
 /* Signature Gold Arrow Button */
 .btn-gold {
-  background: linear-gradient(135deg, #cfa856 0%, #e0bc68 100%);
-  color: #09131e;
+  background: linear-gradient(135deg, #d4af37 0%, #f3d789 50%, #c59b27 100%);
+  color: #08111d !important;
   font-weight: 700;
-  box-shadow: 0 6px 20px rgba(207, 168, 86, 0.3);
+  box-shadow: 0 4px 18px rgba(197, 155, 39, 0.3);
+}
+
+.btn-gold,
+.btn-gold span,
+.btn-gold strong {
+  color: #08111d !important;
 }
 
 .btn-gold:hover {
-  background: linear-gradient(135deg, #e0bc68 0%, #ebd082 100%);
-  color: #050c14;
+  background: linear-gradient(135deg, #e5c158 0%, #fae8a8 50%, #d4af37 100%);
+  color: #050c14 !important;
   transform: translateY(-2px);
-  box-shadow: 0 10px 28px rgba(207, 168, 86, 0.45);
+  box-shadow: 0 8px 26px rgba(212, 175, 55, 0.45);
+}
+
+.btn-gold:hover span,
+.btn-gold:hover strong {
+  color: #050c14 !important;
 }
 
 .btn-arrow-icon {
@@ -287,7 +298,7 @@ a:hover { color: var(--accent-gold-hover); }
   justify-content: center;
   width: 26px;
   height: 26px;
-  background: rgba(9, 19, 30, 0.15);
+  background: rgba(8, 17, 29, 0.15);
   border-radius: 50%;
   color: inherit;
   transition: transform 0.25s ease;
@@ -295,7 +306,21 @@ a:hover { color: var(--accent-gold-hover); }
 
 .btn-gold:hover .btn-arrow-icon {
   transform: translate(2px, -2px);
-  background: rgba(9, 19, 30, 0.25);
+  background: rgba(8, 17, 29, 0.25);
+}
+
+.light .btn-gold,
+[data-theme='light'] .btn-gold {
+  background: linear-gradient(135deg, #c59b27 0%, #e2be58 100%);
+  color: #08111d !important;
+  box-shadow: 0 4px 18px rgba(197, 155, 39, 0.32);
+}
+
+.light .btn-gold:hover,
+[data-theme='light'] .btn-gold:hover {
+  background: linear-gradient(135deg, #b38722 0%, #d4af37 100%);
+  color: #08111d !important;
+  box-shadow: 0 8px 24px rgba(197, 155, 39, 0.42);
 }
 
 .btn-primary {

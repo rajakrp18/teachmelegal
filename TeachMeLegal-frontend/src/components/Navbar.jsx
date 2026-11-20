@@ -5,14 +5,14 @@ import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { useCart } from '../context/CartContext';
 import ThemeToggle from './ThemeToggle';
-import { 
-  IconShoppingBag, 
-  IconUser, 
-  IconChevronDown, 
-  IconArrowUpRight, 
-  IconLogout, 
-  IconKey, 
-  IconSparkles 
+import {
+  IconShoppingBag,
+  IconUser,
+  IconChevronDown,
+  IconArrowUpRight,
+  IconLogout,
+  IconKey,
+  IconSparkles
 } from './Icons';
 import './Navbar.css';
 
@@ -46,14 +46,11 @@ const Navbar = () => {
                 priority
               />
             </div>
-            <div className="logo-text-group">
-              <span className="logo-text">
-                Teach<span className="highlight">Me</span>Legal
-              </span>
-              <span className="logo-subline">SUPREME COURT ADVOCACY & ACADEMY</span>
-            </div>
+            <span className="logo-text">
+              Teach<span className="highlight">Me</span>Legal
+            </span>
           </Link>
-          
+
           {/* Desktop Nav Links Pill Bar */}
           <div className="nav-links desktop-only">
             {navLinks.map((link) => {
@@ -89,7 +86,7 @@ const Navbar = () => {
             <ThemeToggle />
 
             {/* Account Symbol Dropdown */}
-            <div 
+            <div
               className="account-dropdown-wrapper"
               onMouseLeave={() => setAccountDropdownOpen(false)}
             >
@@ -121,8 +118,8 @@ const Navbar = () => {
                       <Link href="/account" className="dropdown-item" onClick={() => setAccountDropdownOpen(false)}>
                         <span className="dropdown-icon"><IconUser size={15} /></span> My Account
                       </Link>
-                      <button 
-                        onClick={() => { logoutUser(); setAccountDropdownOpen(false); }} 
+                      <button
+                        onClick={() => { logoutUser(); setAccountDropdownOpen(false); }}
                         className="dropdown-item logout-item"
                       >
                         <span className="dropdown-icon"><IconLogout size={15} /></span> Log Out

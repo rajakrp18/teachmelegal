@@ -120,7 +120,8 @@ const Courses = () => {
           <div className="courses-header-row">
             <div>
               <span className="capsule-badge-gold">
-                <IconBookOpen size={14} /> FEATURED COURSES & STUDY MATERIALS
+                <span className="badge-icon"><IconBookOpen size={13} /></span>
+                <span>CURATED ACADEMIC CURRICULUM</span>
               </span>
               <h2 className="dark-section-title">Master Indian Law</h2>
             </div>
@@ -159,7 +160,8 @@ const Courses = () => {
                         setSelectedBookForPreview(item);
                       }}
                     >
-                      <IconEye size={13} /> Sample PDF
+                      <span className="sample-icon-wrap"><IconEye size={12} /></span>
+                      <span>Sample PDF</span>
                     </button>
                   </div>
 

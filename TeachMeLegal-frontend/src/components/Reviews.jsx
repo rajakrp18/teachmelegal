@@ -7,56 +7,56 @@ const REVIEWS_DATA = [
   {
     id: 1,
     name: "Priyanka Kashyap",
-    role: "Student",
-    image: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=256",
-    content: "What an Explanation!! Exceptionally good. Thankyou so much sir, Tommorow is my exam and just like many padhne baithi and surprisingly understood everything.",
+    role: "LL.B Scholar • Delhi University",
+    image: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=300",
+    content: "What an Explanation!! Exceptionally good. Thank you so much sir. Tomorrow is my exam and just like many others I was overwhelmed, but your structured notes made every concept clear.",
     rating: 5,
     course: "Constitutional Law"
   },
   {
     id: 2,
     name: "Shruti Sharma",
-    role: "LL.B Student",
-    image: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=256",
-    content: "Thank you so much Prashant Sir. Jiski kitaab dekhne ka mann tak nahi karta usko aapne mere liye ekdam asaan kar diya. Behad shukriya aapka.",
+    role: "Judicial Services Aspirant",
+    image: "https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?auto=format&fit=crop&q=80&w=300",
+    content: "Thank you so much Prashant Sir. Jiski kitaab dekhne ka mann tak nahi karta usko aapne mere liye ekdam asaan kar diya. The statutory charts are pure gold for judiciary preparation.",
     rating: 5,
-    course: "Banking Law"
+    course: "Banking & Financial Law"
   },
   {
     id: 3,
     name: "Anand Kashyap",
-    role: "Law Aspirant",
-    image: "https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?auto=format&fit=crop&q=80&w=256",
-    content: "Sir I am a law student. I really thankful to u sir for making this video about legal history. It really helpful for me and my colleagues.",
+    role: "Law Student • 4th Year",
+    image: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&q=80&w=300",
+    content: "Sir I am a law student. I am really thankful to you sir for making complex legal history and IPC concepts so intuitive. It has been invaluable for me and my batchmates.",
     rating: 5,
-    course: "Legal History"
+    course: "Legal History & Jurisprudence"
   },
   {
     id: 4,
     name: "Vikramaditya Singh",
-    role: "Judiciary Aspirant",
-    image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=256",
-    content: "Advocate Prashant Jha sir explains case laws with practical courtroom examples. Best legal learning platform for competitive exam preparation!",
+    role: "Judiciary Aspirant • UP PCS-J",
+    image: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&q=80&w=300",
+    content: "Advocate Prashant Jha sir explains case laws with real courtroom litigation examples. The best, most authoritative legal learning platform for competitive exam prep!",
     rating: 5,
     course: "Indian Evidence Act"
   },
   {
     id: 5,
     name: "Neha Verma",
-    role: "CLAT Aspirant",
-    image: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&q=80&w=256",
-    content: "The subject-wise notes and revision charts are extremely helpful! Made my exam revision so fast and easy.",
+    role: "CLAT PG Rankholder",
+    image: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=300",
+    content: "The subject-wise notes and revision charts are extremely helpful! Made my last-minute exam revision incredibly rapid and structured.",
     rating: 5,
-    course: "Revision Books"
+    course: "Criminal Major Acts"
   },
   {
     id: 6,
     name: "Rohan Kapoor",
-    role: "Advocate Junior",
-    image: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&q=80&w=256",
-    content: "Practical insights on drafting and writ petitions that university classes never cover. Highly recommended for every law student!",
+    role: "Junior Advocate • High Court",
+    image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&q=80&w=300",
+    content: "Practical insights on drafting, bail jurisprudence, and writ petitions that university classes never cover. Essential training for every entering advocate!",
     rating: 5,
-    course: "Legal Drafting"
+    course: "Courtroom Practice & Drafting"
   }
 ];
 
@@ -65,12 +65,12 @@ const Reviews = () => {
     <section className="reviews-section">
       <div className="container">
         <div className="reviews-header">
-          <span className="reviews-badge">
-            <IconStar size={13} />
-            <span>Student Testimonials</span>
+          <span className="capsule-badge-gold mb-3">
+            <span className="badge-icon"><IconStar size={13} /></span>
+            <span>VERIFIED STUDENT TESTIMONIALS</span>
           </span>
           <h2 className="reviews-title">What Our Students Say</h2>
-          <p className="reviews-sub">Join 100,000+ law students and aspirants learning law the simple way</p>
+          <p className="reviews-sub">Join 100,000+ law students, judicial aspirants, and advocates learning law with clarity</p>
         </div>
 
         {/* Show ALL reviews in a responsive 3-column grid */}

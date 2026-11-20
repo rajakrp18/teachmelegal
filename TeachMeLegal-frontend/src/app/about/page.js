@@ -2,7 +2,16 @@ import Image from 'next/image';
 import Link from 'next/link';
 import Navbar from '../../components/Navbar';
 import Footer from '../../components/Footer';
-import { IconScales, IconDocument, IconTarget, IconCompass, IconFlame, IconArrowUpRight } from '../../components/Icons';
+import { 
+  IconScales, 
+  IconDocument, 
+  IconTarget, 
+  IconCompass, 
+  IconFlame, 
+  IconArrowUpRight,
+  IconCheck,
+  IconX
+} from '../../components/Icons';
 import './about.css';
 
 export const metadata = {
@@ -92,20 +101,44 @@ export default function AboutPage() {
             <div className="method-card traditional">
               <div className="method-badge text-muted">Traditional Legal Education</div>
               <ul className="method-list">
-                <li>❌ Dense 800-page textbooks filled with archaic legalese</li>
-                <li>❌ Pure academic theory disconnected from real courts</li>
-                <li>❌ Unstructured notes leaving students overwhelmed</li>
-                <li>❌ Rote memorization without understanding statutory intent</li>
+                <li className="method-item">
+                  <span className="method-icon-bad"><IconX size={12} /></span>
+                  <span>Dense 800-page textbooks filled with archaic legalese</span>
+                </li>
+                <li className="method-item">
+                  <span className="method-icon-bad"><IconX size={12} /></span>
+                  <span>Pure academic theory disconnected from real courts</span>
+                </li>
+                <li className="method-item">
+                  <span className="method-icon-bad"><IconX size={12} /></span>
+                  <span>Unstructured notes leaving students overwhelmed</span>
+                </li>
+                <li className="method-item">
+                  <span className="method-icon-bad"><IconX size={12} /></span>
+                  <span>Rote memorization without understanding statutory intent</span>
+                </li>
               </ul>
             </div>
 
             <div className="method-card teachmelegal">
               <div className="method-badge text-gold">The TeachMeLegal Method</div>
               <ul className="method-list">
-                <li>✨ Visual Article-by-Article revision charts & summaries</li>
-                <li>✨ Real Supreme Court & High Court landmark case illustrations</li>
-                <li>✨ Exam-tested answer writing frameworks for Judiciary & LL.B.</li>
-                <li>✨ Direct practical insights from active courtroom litigation</li>
+                <li className="method-item">
+                  <span className="method-icon-good"><IconCheck size={12} /></span>
+                  <span>Visual Article-by-Article revision charts & summaries</span>
+                </li>
+                <li className="method-item">
+                  <span className="method-icon-good"><IconCheck size={12} /></span>
+                  <span>Real Supreme Court & High Court landmark case illustrations</span>
+                </li>
+                <li className="method-item">
+                  <span className="method-icon-good"><IconCheck size={12} /></span>
+                  <span>Exam-tested answer writing frameworks for Judiciary & LL.B.</span>
+                </li>
+                <li className="method-item">
+                  <span className="method-icon-good"><IconCheck size={12} /></span>
+                  <span>Direct practical insights from active courtroom litigation</span>
+                </li>
               </ul>
             </div>
           </div>
@@ -117,8 +150,9 @@ export default function AboutPage() {
         <div className="container">
           <div className="story-wrapper">
             <div className="story-header">
-              <span className="story-icon">
-                <IconDocument size={28} />
+              <span className="capsule-badge-gold mb-3">
+                <span className="badge-icon"><IconScales size={13} /></span>
+                <span>CHAMBERS ADVOCACY & HERITAGE</span>
               </span>
               <h2 className="about-heading center">Our Journey & Core Values</h2>
             </div>

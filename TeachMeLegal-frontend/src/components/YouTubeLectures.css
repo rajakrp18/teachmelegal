@@ -22,59 +22,82 @@
   justify-content: space-between;
   align-items: flex-end;
   margin-bottom: 50px;
-  gap: 20px;
+  gap: 24px;
   flex-wrap: wrap;
 }
 
-.yt-label {
-  display: inline-block;
-  background: rgba(255, 0, 0, 0.2);
-  color: #ff6b6b;
-  padding: 5px 14px;
-  border-radius: 20px;
-  font-size: 0.8rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  margin-bottom: 12px;
-}
-
 .yt-title {
-  font-size: 2.2rem;
+  font-size: clamp(2rem, 3.8vw, 3rem);
+  font-family: var(--font-heading);
+  font-weight: 800;
   color: var(--text-heading);
+  letter-spacing: -0.02em;
+  margin-top: 12px;
   margin-bottom: 12px;
 }
 
 .yt-subtitle {
   color: var(--text-muted);
-  max-width: 550px;
+  max-width: 580px;
   line-height: 1.7;
+  font-size: 1rem;
 }
 
-.yt-channel-btn {
-  display: flex;
+.yt-cinema-btn {
+  display: inline-flex;
   align-items: center;
-  gap: 10px;
-  background: #ff0000;
-  color: white;
-  padding: 14px 28px;
-  border-radius: 30px;
+  gap: 12px;
+  background: var(--bg-card);
+  color: var(--text-heading);
+  padding: 12px 24px;
+  border-radius: var(--radius-pill);
   font-weight: 700;
-  font-size: 0.95rem;
+  font-size: 0.92rem;
   text-decoration: none;
-  transition: var(--transition);
+  border: 1.5px solid var(--border-light);
+  transition: all 0.25s ease;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.15);
   flex-shrink: 0;
 }
 
-.yt-channel-btn:hover {
-  background: #cc0000;
-  color: white;
-  transform: translateY(-2px);
-  box-shadow: 0 8px 20px rgba(255,0,0,0.3);
+.yt-play-bubble {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: #ff0000;
+  color: #ffffff;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 8px rgba(255, 0, 0, 0.4);
+  transition: transform 0.25s ease;
 }
 
-.yt-icon {
-  font-size: 1.1rem;
+.yt-cinema-btn:hover {
+  border-color: var(--accent-gold);
+  color: var(--accent-gold);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(212, 175, 55, 0.2);
+}
+
+.yt-cinema-btn:hover .yt-play-bubble {
+  transform: scale(1.12);
+}
+
+.light .yt-cinema-btn,
+[data-theme='light'] .yt-cinema-btn {
+  background: #ffffff;
+  border-color: rgba(8, 17, 29, 0.14);
+  color: #08111d;
+  box-shadow: 0 4px 14px rgba(8, 17, 29, 0.05);
+}
+
+.light .yt-cinema-btn:hover,
+[data-theme='light'] .yt-cinema-btn:hover {
+  background: #ffffff;
+  border-color: #c59b27;
+  color: #c59b27;
+  box-shadow: 0 8px 24px rgba(197, 155, 39, 0.15);
 }
 
 /* Video Player */

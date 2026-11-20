@@ -57,16 +57,20 @@ const InstructorProfile = () => {
             {/* Specialization Badges */}
             <div className="specialization-pills">
               <span className="spec-pill">
-                <IconScales size={14} /> Constitutional Law
+                <span className="spec-pill-icon"><IconScales size={13} /></span>
+                <span>Constitutional Law</span>
               </span>
               <span className="spec-pill">
-                <IconLandmark size={14} /> Banking Statutes
+                <span className="spec-pill-icon"><IconLandmark size={13} /></span>
+                <span>Banking Statutes</span>
               </span>
               <span className="spec-pill">
-                <IconDocument size={14} /> Criminal Procedure
+                <span className="spec-pill-icon"><IconDocument size={13} /></span>
+                <span>Criminal Procedure</span>
               </span>
               <span className="spec-pill">
-                <IconGavel size={14} /> Supreme Court Practice
+                <span className="spec-pill-icon"><IconGavel size={13} /></span>
+                <span>Supreme Court Practice</span>
               </span>
             </div>
 

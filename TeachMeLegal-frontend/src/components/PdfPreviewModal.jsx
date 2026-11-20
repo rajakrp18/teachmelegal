@@ -9,7 +9,7 @@ const SAMPLE_PAGES = [
   {
     page: 1,
     title: "Cover & Overview",
-    content: "📘 TEACH ME LEGAL — REVISION & EXAM GUIDE\n\nAuthor: Adv. Prashant Jha\nTarget: JAIIB / CAIIB & Law Competitive Exams\n\nKey Highlights:\n• Simplified Section Breakdown\n• Landmark Supreme Court Rulings (2020 - 2026)\n• Exam-oriented Flowcharts & Memory Hacks"
+    content: "TEACH ME LEGAL — STATUTORY REVISION & EXAM GUIDE\n\nAuthor: Adv. Prashant Jha\nTarget: JAIIB / CAIIB & Law Competitive Exams\n\nKey Highlights:\n• Simplified Section Breakdown\n• Landmark Supreme Court Rulings (2020 - 2026)\n• Exam-oriented Flowcharts & Memory Hacks"
   },
   {
     page: 2,

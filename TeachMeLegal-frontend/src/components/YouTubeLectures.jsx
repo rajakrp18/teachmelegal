@@ -58,22 +58,25 @@ const YouTubeLectures = () => {
       <div className="container">
         <div className="yt-header">
           <div>
-            <span className="yt-label">Free on YouTube</span>
-            <h2 className="yt-title">Watch Free Legal Lectures</h2>
+            <span className="capsule-badge-gold mb-3">
+              <span className="badge-icon"><IconPlay size={11} /></span>
+              <span>SUPREME COURT MASTERCLASSES</span>
+            </span>
+            <h2 className="yt-title">Watch Free Legal Masterclasses</h2>
             <p className="yt-subtitle">
-              Learn law with Adv. Prashant Jha — simple explanations, structured notes, and practical courtroom insights.
+              Learn jurisprudence with Adv. Prashant Jha — structured statutory explanations, exam-oriented frameworks, and practical courtroom insights.
             </p>
           </div>
           <a
             href={`https://www.youtube.com/playlist?list=${PLAYLIST_ID}`}
             target="_blank"
             rel="noopener noreferrer"
-            className="yt-channel-btn"
+            className="yt-cinema-btn"
           >
-            <span className="yt-icon" style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center' }}>
-              <IconPlay size={12} />
+            <span className="yt-play-bubble">
+              <IconPlay size={13} />
             </span>
-            <span>View Full Playlist</span>
+            <span>Access Complete Playlist</span>
           </a>
         </div>
 

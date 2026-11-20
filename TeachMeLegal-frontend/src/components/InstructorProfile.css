@@ -105,7 +105,7 @@
 .specialization-pills {
   display: flex;
   flex-wrap: wrap;
-  gap: 10px;
+  gap: 12px;
   margin-bottom: 34px;
 }
 
@@ -113,40 +113,72 @@
   background: var(--bg-card);
   border: 1px solid var(--border-light);
   color: var(--text-heading);
-  padding: 6px 14px;
+  padding: 6px 16px 6px 8px;
   border-radius: 100px;
-  font-size: 0.8rem;
+  font-size: 0.84rem;
   font-weight: 600;
-  transition: all 0.25s ease;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
   display: inline-flex;
   align-items: center;
-  gap: 8px;
+  gap: 10px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
 }
 
-.spec-pill svg {
+.spec-pill-icon {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(212, 175, 55, 0.14);
   color: var(--accent-gold);
+  border: 1px solid rgba(212, 175, 55, 0.3);
   flex-shrink: 0;
-}
-
-.light .spec-pill,
-[data-theme='light'] .spec-pill {
-  background: rgba(255, 255, 255, 0.95);
-  border-color: rgba(9, 19, 30, 0.12);
-  color: #09131e;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
-}
-
-.light .spec-pill:hover,
-[data-theme='light'] .spec-pill:hover {
-  background: rgba(207, 168, 86, 0.12);
-  border-color: var(--accent-gold);
-  color: #966f1e;
+  transition: transform 0.25s ease, background 0.25s ease;
 }
 
 .spec-pill:hover {
   border-color: var(--accent-gold);
   color: var(--accent-gold);
-  background: rgba(207, 168, 86, 0.1);
+  background: rgba(212, 175, 55, 0.08);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(212, 175, 55, 0.15);
+}
+
+.spec-pill:hover .spec-pill-icon {
+  background: var(--accent-gold);
+  color: #08111d;
+  transform: scale(1.08);
+}
+
+.light .spec-pill,
+[data-theme='light'] .spec-pill {
+  background: #ffffff;
+  border-color: rgba(8, 17, 29, 0.12);
+  color: #08111d;
+  box-shadow: 0 2px 8px rgba(8, 17, 29, 0.04);
+}
+
+.light .spec-pill-icon,
+[data-theme='light'] .spec-pill-icon {
+  background: rgba(197, 155, 39, 0.12);
+  border-color: rgba(197, 155, 39, 0.3);
+  color: #c59b27;
+}
+
+.light .spec-pill:hover,
+[data-theme='light'] .spec-pill:hover {
+  background: #ffffff;
+  border-color: #c59b27;
+  color: #c59b27;
+  box-shadow: 0 6px 16px rgba(197, 155, 39, 0.15);
+}
+
+.light .spec-pill:hover .spec-pill-icon,
+[data-theme='light'] .spec-pill:hover .spec-pill-icon {
+  background: #c59b27;
+  color: #ffffff;
 }
 
 .instructor-cta-row {

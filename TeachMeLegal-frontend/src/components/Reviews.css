@@ -61,35 +61,39 @@
 
 .review-card {
   background: var(--bg-card);
-  border-radius: 18px;
-  padding: 30px;
+  border-radius: 20px;
+  padding: 32px;
   border: 1px solid var(--border-light);
   box-shadow: var(--shadow-sm);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease, border-color 0.3s ease;
+  position: relative;
 }
 
 .review-card:hover {
   transform: translateY(-6px);
-  box-shadow: var(--shadow-hover);
+  border-color: rgba(212, 175, 55, 0.4);
+  box-shadow: 
+    0 20px 40px rgba(0, 0, 0, 0.3),
+    0 0 20px rgba(212, 175, 55, 0.1);
 }
 
 .review-card-top {
   display: flex;
   align-items: center;
-  gap: 14px;
-  margin-bottom: 20px;
+  gap: 16px;
+  margin-bottom: 22px;
 }
 
 .review-avatar {
-  width: 50px;
-  height: 50px;
+  width: 52px;
+  height: 52px;
   border-radius: 50%;
   overflow: hidden;
-  border: 2px solid var(--accent-gold-border);
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.2);
+  border: 2px solid var(--accent-gold);
+  box-shadow: 0 4px 14px rgba(212, 175, 55, 0.25);
   flex-shrink: 0;
   display: flex;
   align-items: center;
@@ -110,6 +114,7 @@
   font-weight: 700;
   color: var(--text-heading);
   margin-bottom: 2px;
+  font-family: var(--font-heading);
 }
 
 .review-role {
@@ -122,16 +127,17 @@
   display: flex;
   align-items: center;
   gap: 3px;
+  color: var(--accent-gold);
 }
 
 .review-star-icon {
-  filter: drop-shadow(0 1px 4px rgba(207, 168, 86, 0.35));
+  filter: drop-shadow(0 1px 4px rgba(212, 175, 55, 0.5));
 }
 
 .review-text {
   font-size: 0.98rem;
   color: var(--text-body);
-  line-height: 1.7;
+  line-height: 1.75;
   margin-bottom: 24px;
   font-style: italic;
   flex: 1;
@@ -147,7 +153,7 @@
 }
 
 .review-course-badge {
-  color: #3b82f6;
+  color: var(--accent-gold);
   font-weight: 600;
   display: inline-flex;
   align-items: center;
@@ -160,4 +166,34 @@
   display: inline-flex;
   align-items: center;
   gap: 5px;
+}
+
+/* Light Mode Overrides for Reviews */
+.light .review-card,
+[data-theme='light'] .review-card {
+  background: #ffffff;
+  border-color: rgba(8, 17, 29, 0.08);
+  box-shadow: 0 4px 20px rgba(8, 17, 29, 0.04);
+}
+
+.light .review-card:hover,
+[data-theme='light'] .review-card:hover {
+  border-color: #c59b27;
+  box-shadow: 0 16px 36px rgba(197, 155, 39, 0.12);
+}
+
+.light .review-avatar,
+[data-theme='light'] .review-avatar {
+  border-color: #c59b27;
+  box-shadow: 0 4px 14px rgba(197, 155, 39, 0.2);
+}
+
+.light .review-author,
+[data-theme='light'] .review-author {
+  color: #08111d;
+}
+
+.light .review-course-badge,
+[data-theme='light'] .review-course-badge {
+  color: #c59b27;
 }

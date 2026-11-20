@@ -264,13 +264,60 @@
   list-style: none;
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 18px;
+  padding: 0;
+  margin: 0;
 }
 
-.method-list li {
-  font-size: 0.98rem;
-  line-height: 1.65;
+.method-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  font-size: 0.96rem;
+  line-height: 1.6;
   color: var(--text-body);
+}
+
+.method-icon-bad {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(239, 68, 68, 0.12);
+  color: #ef4444;
+  border: 1px solid rgba(239, 68, 68, 0.28);
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.method-icon-good {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(212, 175, 55, 0.14);
+  color: var(--accent-gold);
+  border: 1px solid rgba(212, 175, 55, 0.35);
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.light .method-icon-bad,
+[data-theme='light'] .method-icon-bad {
+  background: rgba(239, 68, 68, 0.08);
+  border-color: rgba(239, 68, 68, 0.25);
+  color: #dc2626;
+}
+
+.light .method-icon-good,
+[data-theme='light'] .method-icon-good {
+  background: rgba(197, 155, 39, 0.12);
+  border-color: rgba(197, 155, 39, 0.35);
+  color: #c59b27;
 }
 
 /* Story & Mission Section */
@@ -292,28 +339,6 @@
   text-align: center;
   margin-bottom: 30px;
   width: 100%;
-}
-
-.story-icon {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 60px;
-  height: 60px;
-  border-radius: 18px;
-  background: rgba(207, 168, 86, 0.12);
-  border: 1px solid rgba(207, 168, 86, 0.3);
-  color: var(--accent-gold);
-  margin-bottom: 16px;
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.05);
-}
-
-.light .story-icon,
-[data-theme='light'] .story-icon {
-  background: rgba(179, 135, 40, 0.1);
-  border-color: rgba(179, 135, 40, 0.35);
-  color: #966f1e;
-  box-shadow: 0 4px 14px rgba(179, 135, 40, 0.1);
 }
 
 .mv-icon {

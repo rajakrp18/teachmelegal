@@ -37,16 +37,17 @@
 
 .light .theme-toggle-btn,
 [data-theme='light'] .theme-toggle-btn {
-  background: rgba(0, 0, 0, 0.05);
-  border-color: rgba(0, 0, 0, 0.12);
-  color: #0f172a;
+  background: #ffffff;
+  border: 1.5px solid rgba(8, 17, 29, 0.12);
+  color: #08111d;
+  box-shadow: 0 2px 8px rgba(8, 17, 29, 0.04);
 }
 
 .light .theme-toggle-btn:hover,
 [data-theme='light'] .theme-toggle-btn:hover {
-  background: rgba(207, 168, 86, 0.12);
-  border-color: var(--accent-gold);
-  color: var(--accent-gold);
+  background: rgba(212, 175, 55, 0.1);
+  border-color: #c59b27;
+  color: #c59b27;
 }
 
 @media (max-width: 600px) {
@@ -54,6 +55,7 @@
     width: 34px;
     height: 34px;
   }
+
   .theme-toggle-placeholder {
     width: 34px;
     height: 34px;

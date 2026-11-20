@@ -41,7 +41,7 @@ const Hero = () => {
             <span className="badge-icon">
               <IconScales size={15} />
             </span>
-            <span>SUPREME COURT ADVOCATE & LEGAL EDUCATOR</span>
+            <span>SUPREME COURT OF INDIA • ADVOCATE PRASHANT JHA</span>
           </motion.div>
 
           {/* Headline */}
@@ -51,9 +51,8 @@ const Hero = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2, duration: 0.6 }}
           >
-            Your Ultimate<br/>
-            Legal Learning<br/>
-            <span className="gold-highlight">Partner</span>
+            Master Indian Law With<br/>
+            <span className="gold-highlight">Courtroom Precision</span>
           </motion.h1>
 
           <motion.p 
@@ -62,7 +61,7 @@ const Hero = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3, duration: 0.5 }}
           >
-            Simplifying complex Indian laws through structured video lectures, battle-tested exam charts, and real courtroom insights by Advocate Prashant Jha.
+            Simplifying complex Indian jurisprudence through structured video masterclasses, battle-tested statutory exam charts, and real courtroom insights by Advocate Prashant Jha.
           </motion.p>
 
           <motion.div 
@@ -87,12 +86,29 @@ const Hero = () => {
               <span className="btn-play-icon">
                 <IconPlay size={13} />
               </span>
-              <span>Watch Free Lectures</span>
+              <span>Watch Free Masterclass</span>
             </a>
+          </motion.div>
+
+          {/* Trust strip */}
+          <motion.div 
+            className="hero-trust-strip"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.5, duration: 0.5 }}
+          >
+            <div className="hero-trust-item">
+              <span className="trust-check-icon"><IconShieldCheck size={16} /></span>
+              <span>Supreme Court & High Court Bar Standards</span>
+            </div>
+            <div className="hero-trust-item">
+              <span className="trust-check-icon"><IconGraduationCap size={16} /></span>
+              <span>Judiciary, CLAT & LL.B. Syllabus Aligned</span>
+            </div>
           </motion.div>
         </motion.div>
 
-        {/* Right Column: Visual Portrait & Floating Rating Card */}
+        {/* Right Column: Visual Portrait & Dual Floating Credential Badges */}
         <motion.div 
           className="hero-visual"
           initial={{ opacity: 0, scale: 0.95 }}
@@ -103,14 +119,14 @@ const Hero = () => {
             <div className="portrait-glow-halo" />
             <Image
               src="/prashant-jha.jpg"
-              alt="Advocate Prashant Jha — Teach Me Legal"
+              alt="Advocate Prashant Jha at Supreme Court of India"
               width={420}
               height={520}
               className="hero-photo"
               priority
             />
 
-            {/* Compact Floating Rating Badge */}
+            {/* Top-Right Floating Rating Badge */}
             <motion.div 
               className="floating-rating-badge dark-glass"
               initial={{ opacity: 0, scale: 0.8 }}
@@ -118,11 +134,27 @@ const Hero = () => {
               transition={{ delay: 0.5, duration: 0.6 }}
             >
               <div className="badge-icon-star">
-                <IconStar size={24} />
+                <IconStar size={22} />
               </div>
               <div className="badge-text-group">
                 <strong>4.9 Rating</strong>
                 <span>100k+ Students</span>
+              </div>
+            </motion.div>
+
+            {/* Bottom-Left Floating Chamber Badge */}
+            <motion.div 
+              className="floating-chamber-badge dark-glass"
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: 0.6, duration: 0.6 }}
+            >
+              <div className="badge-icon-scales">
+                <IconScales size={18} />
+              </div>
+              <div className="badge-text-group">
+                <strong>Adv. Prashant Jha</strong>
+                <span>Supreme Court of India & Delhi HC</span>
               </div>
             </motion.div>
           </div>

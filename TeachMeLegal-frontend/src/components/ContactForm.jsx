@@ -6,7 +6,7 @@ import {
   IconMail, 
   IconClock, 
   IconMessageCircle, 
-  IconZap, 
+  IconShieldCheck, 
   IconCheckCircle, 
   IconArrowUpRight 
 } from './Icons';
@@ -32,7 +32,8 @@ const ContactForm = () => {
         {/* Left Info Column */}
         <div className="contact-info-col">
           <span className="capsule-badge-gold mb-3">
-            <IconMessageCircle size={14} /> WE'RE HERE TO HELP
+            <span className="badge-icon"><IconMessageCircle size={13} /></span>
+            <span>LEGAL CHAMBERS CONSULTATION</span>
           </span>
           <h2 className="contact-info-title">Keep In Touch With Us</h2>
           <div className="contact-info-divider" />
@@ -82,9 +83,14 @@ const ContactForm = () => {
             </div>
           </div>
 
-          <div className="guarantee-badge">
-            <IconZap size={15} style={{ color: 'var(--accent-gold)', flexShrink: 0 }} />
-            <span>Guaranteed response within 24 business hours.</span>
+          <div className="guarantee-trust-card">
+            <div className="guarantee-icon-wrap">
+              <IconShieldCheck size={20} />
+            </div>
+            <div className="guarantee-text">
+              <strong>Chamber Response Guarantee</strong>
+              <span>Direct response from Advocate Prashant Jha&apos;s chambers within 24 business hours.</span>
+            </div>
           </div>
         </div>
 
