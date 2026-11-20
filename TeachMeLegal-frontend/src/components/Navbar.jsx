@@ -1,5 +1,5 @@
 "use client";
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
@@ -20,7 +20,30 @@ const Navbar = () => {
   const { totalCount, setIsCartOpen, user, logoutUser } = useCart();
   const [mobileOpen, setMobileOpen] = useState(false);
   const [accountDropdownOpen, setAccountDropdownOpen] = useState(false);
+  const accountDropdownRef = useRef(null);
   const pathname = usePathname();
+
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    function handleClickOutside(event) {
+      if (accountDropdownRef.current && !accountDropdownRef.current.contains(event.target)) {
+        setAccountDropdownOpen(false);
+      }
+    }
+    if (accountDropdownOpen) {
+      document.addEventListener('mousedown', handleClickOutside);
+      document.addEventListener('touchstart', handleClickOutside);
+    }
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener('touchstart', handleClickOutside);
+    };
+  }, [accountDropdownOpen]);
+
+  // Close dropdown on navigation
+  useEffect(() => {
+    setAccountDropdownOpen(false);
+  }, [pathname]);
 
   const navLinks = [
     { name: 'Home', href: '/' },
@@ -88,13 +111,14 @@ const Navbar = () => {
             {/* Account Symbol Dropdown */}
             <div
               className="account-dropdown-wrapper"
-              onMouseLeave={() => setAccountDropdownOpen(false)}
+              ref={accountDropdownRef}
             >
               <button
-                onClick={() => setAccountDropdownOpen(!accountDropdownOpen)}
-                onMouseEnter={() => setAccountDropdownOpen(true)}
+                type="button"
+                onClick={() => setAccountDropdownOpen((prev) => !prev)}
                 className={`btn-account-trigger ${accountDropdownOpen ? 'active' : ''}`}
                 aria-label="Account options"
+                aria-expanded={accountDropdownOpen}
                 title="My Account Options"
               >
                 <span className="account-icon-symbol">
