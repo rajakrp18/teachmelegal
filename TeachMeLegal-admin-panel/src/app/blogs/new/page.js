@@ -2,6 +2,7 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
+import WordPressEditor from '@/components/WordPressEditor';
 
 export default function NewBlogPage() {
   const router = useRouter();
@@ -40,7 +41,7 @@ export default function NewBlogPage() {
     setError('');
 
     try {
-      const res = await fetch('http://localhost:5000/api/admin/blogs', {
+      const res = await fetch('/api/admin/blogs', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(form)
@@ -163,13 +164,10 @@ export default function NewBlogPage() {
             </div>
 
             <div className="admin-form-group">
-              <label className="admin-label">Article Content (HTML / Rich Text) *</label>
-              <textarea
+              <label className="admin-label">Article Content (WordPress Visual Editor) *</label>
+              <WordPressEditor
                 value={form.content}
-                onChange={(e) => setForm({ ...form, content: e.target.value })}
-                placeholder="<p>Enter your detailed legal article content here...</p> <h2>Section Heading</h2> <p>Detailed explanation...</p>"
-                className="admin-textarea"
-                required
+                onChange={(html) => setForm(prev => ({ ...prev, content: html }))}
               />
             </div>
 

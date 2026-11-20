@@ -2,6 +2,7 @@
 import { useEffect, useState, use } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
+import WordPressEditor from '@/components/WordPressEditor';
 
 export default function EditBlogPage({ params }) {
   const unwrappedParams = use(params);
@@ -26,7 +27,7 @@ export default function EditBlogPage({ params }) {
   useEffect(() => {
     async function fetchPost() {
       try {
-        const res = await fetch(`http://localhost:5000/api/admin/blogs/${id}`);
+        const res = await fetch(`/api/admin/blogs/${id}`);
         const data = await res.json();
         if (data.success && data.post) {
           setForm(data.post);
@@ -48,7 +49,7 @@ export default function EditBlogPage({ params }) {
     setError('');
 
     try {
-      const res = await fetch(`http://localhost:5000/api/admin/blogs/${id}`, {
+      const res = await fetch(`/api/admin/blogs/${id}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(form)
@@ -174,12 +175,10 @@ export default function EditBlogPage({ params }) {
             </div>
 
             <div className="admin-form-group">
-              <label className="admin-label">Article Content (HTML / Rich Text) *</label>
-              <textarea
+              <label className="admin-label">Article Content (WordPress Visual Editor) *</label>
+              <WordPressEditor
                 value={form.content}
-                onChange={(e) => setForm({ ...form, content: e.target.value })}
-                className="admin-textarea"
-                required
+                onChange={(html) => setForm(prev => ({ ...prev, content: html }))}
               />
             </div>
 

@@ -8,7 +8,7 @@ export default function AdminBlogsPage() {
   const [categoryFilter, setCategoryFilter] = useState('ALL');
   const [loading, setLoading] = useState(true);
 
-  const API_URL = 'http://localhost:5000/api/admin';
+  const API_URL = '/api/admin';
 
   const fetchBlogs = async () => {
     setLoading(true);
