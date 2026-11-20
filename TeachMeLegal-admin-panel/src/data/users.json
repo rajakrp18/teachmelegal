@@ -1,0 +1,129 @@
+[
+  {
+    "id": "usr-1",
+    "name": "Raj Poddar",
+    "email": "rajpoddar8907@gmail.com",
+    "phone": "+91 90730 66073",
+    "targetExam": "State Judicial Services (PCS-J)",
+    "profession": "Judicial Services Aspirant",
+    "university": "Faculty of Law, Delhi University",
+    "yearOfStudy": "Final Year",
+    "state": "Delhi NCR",
+    "bio": "Dedicated judicial aspirant focusing on Banking Law, Criminal Procedure, and Constitutional Writs.",
+    "memberSince": "September 2026",
+    "role": "ENROLLED SCHOLAR",
+    "passwordHash": "b3af4a237970e913d955cc54ef692c02:707cd849bfbf546442b110b143aff56931559d6754a5d9f5c74451043e4780cb",
+    "enrolledCourses": [
+      {
+        "id": "pmla-2002",
+        "title": "Prevention of Money Laundering Act, 2002",
+        "category": "Exam Notes",
+        "pdfUrl": "/books/sample.pdf",
+        "enrolledDate": "20 Sep 2026"
+      },
+      {
+        "id": "jurisprudence-notes",
+        "title": "Jurisprudence & Legal Theory Notes",
+        "category": "Judiciary Revision",
+        "pdfUrl": "/books/sample.pdf",
+        "enrolledDate": "14 Sep 2026"
+      },
+      {
+        "id": "banking-law-notes",
+        "title": "Banking Law & Case Studies Guide",
+        "category": "Video Course & Handbook",
+        "pdfUrl": "/books/sample.pdf",
+        "enrolledDate": "14 Sep 2026"
+      }
+    ],
+    "orderHistory": [
+      {
+        "id": "TML-ORD-9842",
+        "date": "20 Sep 2026",
+        "items": "Prevention of Money Laundering Act, 2002",
+        "amount": "₹99.00",
+        "status": "COMPLETED"
+      },
+      {
+        "id": "TML-ORD-8711",
+        "date": "14 Sep 2026",
+        "items": "Jurisprudence Notes + Banking Law",
+        "amount": "₹144.00",
+        "status": "COMPLETED"
+      }
+    ]
+  },
+  {
+    "id": "usr-2",
+    "name": "Priyanka Kashyap",
+    "email": "priyanka.kashyap@law.du.ac.in",
+    "phone": "+91 98112 34567",
+    "targetExam": "Delhi Judicial Services (DJS)",
+    "profession": "LL.B. Scholar (3-Yr)",
+    "university": "Campus Law Centre, University of Delhi",
+    "yearOfStudy": "3rd Year",
+    "state": "Delhi NCR",
+    "bio": "Preparing for DJS preliminary and mains examination with core emphasis on Constitutional Law and Specific Relief Act.",
+    "memberSince": "October 2026",
+    "role": "ENROLLED SCHOLAR",
+    "passwordHash": "b3af4a237970e913d955cc54ef692c02:707cd849bfbf546442b110b143aff56931559d6754a5d9f5c74451043e4780cb",
+    "enrolledCourses": [
+      {
+        "id": "sbi-act-1955",
+        "title": "State Bank of India Act, 1955 Comprehensive Notes",
+        "category": "Banking Law",
+        "pdfUrl": "/books/sample.pdf",
+        "enrolledDate": "02 Oct 2026"
+      }
+    ],
+    "orderHistory": [
+      {
+        "id": "TML-ORD-1044",
+        "date": "02 Oct 2026",
+        "items": "SBI Act 1955 Notes",
+        "amount": "₹99.00",
+        "status": "COMPLETED"
+      }
+    ]
+  },
+  {
+    "id": "usr-3",
+    "name": "Vikramaditya Singh",
+    "email": "adv.vikram@allahabadhc.in",
+    "phone": "+91 94500 12890",
+    "targetExam": "UP Higher Judicial Services (UP HJS)",
+    "profession": "Practicing Advocate (High Court)",
+    "university": "Allahabad University / Bar Council of UP",
+    "yearOfStudy": "5+ Years Litigation Practice",
+    "state": "Uttar Pradesh",
+    "bio": "Practicing criminal and writ defense advocate targeting upcoming HJS exams. Regular reader of TeachMeLegal bare act briefs.",
+    "memberSince": "October 2026",
+    "role": "ENROLLED SCHOLAR",
+    "passwordHash": "b3af4a237970e913d955cc54ef692c02:707cd849bfbf546442b110b143aff56931559d6754a5d9f5c74451043e4780cb",
+    "enrolledCourses": [
+      {
+        "id": "garnishee-order",
+        "title": "Garnishee Orders in Banking Law Guide",
+        "category": "Banking Law",
+        "pdfUrl": "/books/sample.pdf",
+        "enrolledDate": "22 Oct 2026"
+      },
+      {
+        "id": "mareva-injunction",
+        "title": "Mareva Injunction & Commercial Freezing Orders",
+        "category": "Civil Procedure & Injunctions",
+        "pdfUrl": "/books/sample.pdf",
+        "enrolledDate": "15 Oct 2026"
+      }
+    ],
+    "orderHistory": [
+      {
+        "id": "TML-ORD-2091",
+        "date": "15 Oct 2026",
+        "items": "Mareva Injunction + Garnishee Orders",
+        "amount": "₹178.00",
+        "status": "COMPLETED"
+      }
+    ]
+  }
+]

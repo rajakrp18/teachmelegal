@@ -3,6 +3,17 @@ import './globals.css';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useState, useEffect } from 'react';
+import {
+  IconDashboard,
+  IconUsers,
+  IconBlog,
+  IconEdit,
+  IconGraduationCap,
+  IconBookOpen,
+  IconAnalytics,
+  IconSun,
+  IconMoon
+} from '../components/Icons';
 
 export default function RootLayout({ children }) {
   const pathname = usePathname();
@@ -38,12 +49,13 @@ export default function RootLayout({ children }) {
   };
 
   const navItems = [
-    { label: 'Dashboard Overview', href: '/', icon: '📊' },
-    { label: 'Manage Blogs', href: '/blogs', icon: '📝' },
-    { label: 'Write New Blog', href: '/blogs/new', icon: '✍️' },
-    { label: 'Manage Courses', href: '/courses', icon: '🎓' },
-    { label: 'Manage Books & Notes', href: '/books', icon: '📖' },
-    { label: 'Analytics & Traffic', href: '/analytics', icon: '📈' }
+    { label: 'Dashboard Overview', href: '/', icon: <IconDashboard size={19} /> },
+    { label: 'Users & Scholars', href: '/users', icon: <IconUsers size={19} /> },
+    { label: 'Manage Blogs', href: '/blogs', icon: <IconBlog size={19} /> },
+    { label: 'Write New Blog', href: '/blogs/new', icon: <IconEdit size={19} /> },
+    { label: 'Manage Courses', href: '/courses', icon: <IconGraduationCap size={19} /> },
+    { label: 'Manage Books & Notes', href: '/books', icon: <IconBookOpen size={19} /> },
+    { label: 'Analytics & Traffic', href: '/analytics', icon: <IconAnalytics size={19} /> }
   ];
 
   return (
@@ -53,16 +65,23 @@ export default function RootLayout({ children }) {
           {/* Sidebar Navigation */}
           <aside className="admin-sidebar">
             <div className="admin-brand-wrapper">
-              <Link href="/" className="admin-brand" style={{ paddingLeft: '16px' }}>
+              <Link href="/" className="admin-brand">
                 {isSidebarExpanded ? (
                   <>
-                    <img src="/logo.png" alt="Teach Me Legal Logo" style={{ height: '36px', width: 'auto', objectFit: 'contain' }} />
+                    <img src="/logo.png" alt="Teach Me Legal Logo" className="admin-brand-img" />
                     <div className="admin-brand-title">Teach<span>Me</span>Legal</div>
                   </>
-                ) : null}
+                ) : (
+                  <img src="/logo.png" alt="Teach Me Legal" style={{ height: '32px', width: 'auto' }} />
+                )}
               </Link>
-              <button className="admin-sidebar-toggle" onClick={toggleSidebar} title={isSidebarExpanded ? "Collapse Sidebar" : "Expand Sidebar"}>
-                ☰
+              <button 
+                type="button"
+                className="admin-sidebar-toggle" 
+                onClick={toggleSidebar} 
+                title={isSidebarExpanded ? "Collapse Sidebar" : "Expand Sidebar"}
+              >
+                {isSidebarExpanded ? '◀' : '▶'}
               </button>
             </div>
 
@@ -84,11 +103,21 @@ export default function RootLayout({ children }) {
             </nav>
 
             <div className="admin-sidebar-footer">
-              <div className="admin-theme-toggle" onClick={toggleTheme} title="Toggle Theme">
-                <span className="theme-icon">{isDark ? '☀️' : '🌙'}</span>
-                {isSidebarExpanded && <span className="theme-label">{isDark ? 'Light Mode' : 'Dark Mode'}</span>}
-              </div>
-              <div className="admin-user-card" style={{ marginTop: '16px' }}>
+              <button 
+                type="button" 
+                className="admin-theme-toggle" 
+                onClick={toggleTheme} 
+                title="Toggle Theme"
+              >
+                <span className="theme-icon">
+                  {isDark ? <IconSun size={17} /> : <IconMoon size={17} />}
+                </span>
+                {isSidebarExpanded && (
+                  <span className="theme-label">{isDark ? 'Switch to Light' : 'Switch to Dark'}</span>
+                )}
+              </button>
+
+              <div className="admin-user-card">
                 <div className="admin-user-avatar">PJ</div>
                 {isSidebarExpanded && (
                   <div className="admin-user-info">
@@ -101,12 +130,7 @@ export default function RootLayout({ children }) {
           </aside>
 
           {/* Main Content Area */}
-          <div 
-            className="admin-main"
-            onClick={() => {
-              if (isSidebarExpanded) toggleSidebar();
-            }}
-          >
+          <div className="admin-main">
             {children}
           </div>
         </div>
