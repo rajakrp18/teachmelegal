@@ -5,6 +5,9 @@ import { IconScales } from '../../components/Icons';
 import { getAllPosts } from '../../lib/blogsStore';
 import './blog.css';
 
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
+
 export const metadata = {
   title: 'Legal Blog & Articles | Teach Me Legal',
   description: 'Read legal insights, landmark case analyses, and statutory guides by Advocate Prashant Jha.',

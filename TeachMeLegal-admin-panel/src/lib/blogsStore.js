@@ -1,26 +1,58 @@
 import fs from 'fs';
 import path from 'path';
-import initialBlogs from '../data/blogs.json';
 
-// In-memory + File store for Blog Posts and Analytics fallback
-const INITIAL_POSTS = initialBlogs;
+let INITIAL_POSTS = [];
+try {
+  const defaultPath = path.join(process.cwd(), 'src', 'data', 'blogs.json');
+  if (fs.existsSync(defaultPath)) {
+    INITIAL_POSTS = JSON.parse(fs.readFileSync(defaultPath, 'utf-8'));
+  }
+} catch (e) {}
 
-const DATA_DIR = path.join(process.cwd(), 'src', 'data');
-const DATA_FILE = path.join(DATA_DIR, 'blogs.json');
+function getBlogFilePaths() {
+  const currentDir = process.cwd();
+  const paths = [
+    path.join(currentDir, 'src', 'data', 'blogs.json'),
+    path.resolve(currentDir, '..', 'TeachMeLegal-frontend', 'src', 'data', 'blogs.json'),
+    path.resolve(currentDir, '..', 'TeachMeLegal-admin-panel', 'src', 'data', 'blogs.json'),
+    path.resolve('c:/teachmelegal/TeachMeLegal-frontend/src/data/blogs.json'),
+    path.resolve('c:/teachmelegal/TeachMeLegal-admin-panel/src/data/blogs.json')
+  ];
+  return [...new Set(paths)];
+}
 
 function initStore() {
   try {
-    if (fs.existsSync(DATA_FILE)) {
-      const raw = fs.readFileSync(DATA_FILE, 'utf-8');
-      const parsed = JSON.parse(raw);
-      if (Array.isArray(parsed) && parsed.length > 0) {
-        global.__blogsStore = parsed;
-        return global.__blogsStore;
+    const filePaths = getBlogFilePaths();
+    let bestData = null;
+    let latestMtime = -1;
+
+    for (const fp of filePaths) {
+      if (fs.existsSync(fp)) {
+        try {
+          const stats = fs.statSync(fp);
+          const raw = fs.readFileSync(fp, 'utf-8');
+          const parsed = JSON.parse(raw);
+          if (Array.isArray(parsed) && parsed.length > 0) {
+            if (!bestData || stats.mtimeMs > latestMtime || (parsed.length > bestData.length && Math.abs(stats.mtimeMs - latestMtime) < 10000)) {
+              bestData = parsed;
+              latestMtime = stats.mtimeMs;
+            }
+          }
+        } catch (e) {
+          // ignore
+        }
       }
+    }
+
+    if (bestData && Array.isArray(bestData) && bestData.length > 0) {
+      global.__blogsStore = bestData;
+      return global.__blogsStore;
     }
   } catch (e) {
     console.error('Error reading blogs.json, falling back to initial posts:', e);
   }
+
   if (!global.__blogsStore || global.__blogsStore.length === 0) {
     global.__blogsStore = Array.isArray(INITIAL_POSTS) ? [...INITIAL_POSTS] : [];
     saveToDisk();
@@ -30,10 +62,19 @@ function initStore() {
 
 function saveToDisk() {
   try {
-    if (!fs.existsSync(DATA_DIR)) {
-      fs.mkdirSync(DATA_DIR, { recursive: true });
+    const filePaths = getBlogFilePaths();
+    const dataStr = JSON.stringify(global.__blogsStore, null, 2);
+    for (const fp of filePaths) {
+      try {
+        const dir = path.dirname(fp);
+        if (!fs.existsSync(dir)) {
+          fs.mkdirSync(dir, { recursive: true });
+        }
+        fs.writeFileSync(fp, dataStr, 'utf-8');
+      } catch (e) {
+        // ignore write error for individual non-existent dir
+      }
     }
-    fs.writeFileSync(DATA_FILE, JSON.stringify(global.__blogsStore, null, 2), 'utf-8');
   } catch (e) {
     console.error('Error writing blogs.json:', e);
   }
@@ -90,7 +131,7 @@ export function createPost(data) {
     comments: 0,
     views: 0,
     published: data.published !== false,
-    excerpt: data.excerpt || data.content.replace(/<[^>]+>/g, '').slice(0, 140) + '...',
+    excerpt: data.excerpt || (data.content ? data.content.replace(/<[^>]+>/g, '').slice(0, 140) + '...' : ''),
     content: data.content
   };
   global.__blogsStore.unshift(newPost);

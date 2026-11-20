@@ -6,6 +6,10 @@ import { IconUser, IconCalendar, IconClock, IconEye, IconScales, IconBookOpen, I
 import BlogComments from '@/components/BlogComments';
 import './post.css';
 
+export const dynamic = 'force-dynamic';
+export const dynamicParams = true;
+export const revalidate = 0;
+
 export async function generateStaticParams() {
   const posts = getAllPosts(true);
   const params = [];

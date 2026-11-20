@@ -1,10 +1,26 @@
 import fs from 'fs';
 import path from 'path';
 import crypto from 'crypto';
-import initialUsers from '../data/users.json';
 
-const DATA_DIR = path.join(process.cwd(), 'src', 'data');
-const DATA_FILE = path.join(DATA_DIR, 'users.json');
+let initialUsers = [];
+try {
+  const defaultUsersPath = path.join(process.cwd(), 'src', 'data', 'users.json');
+  if (fs.existsSync(defaultUsersPath)) {
+    initialUsers = JSON.parse(fs.readFileSync(defaultUsersPath, 'utf-8'));
+  }
+} catch (e) {}
+
+function getUserFilePaths() {
+  const currentDir = process.cwd();
+  const paths = [
+    path.join(currentDir, 'src', 'data', 'users.json'),
+    path.resolve(currentDir, '..', 'TeachMeLegal-frontend', 'src', 'data', 'users.json'),
+    path.resolve(currentDir, '..', 'TeachMeLegal-admin-panel', 'src', 'data', 'users.json'),
+    path.resolve('c:/teachmelegal/TeachMeLegal-frontend/src/data/users.json'),
+    path.resolve('c:/teachmelegal/TeachMeLegal-admin-panel/src/data/users.json')
+  ];
+  return [...new Set(paths)];
+}
 
 export function hashPassword(password) {
   const salt = crypto.randomBytes(16).toString('hex');
@@ -32,17 +48,36 @@ export function sanitizeUser(user) {
 
 function initUsersStore() {
   try {
-    if (fs.existsSync(DATA_FILE)) {
-      const raw = fs.readFileSync(DATA_FILE, 'utf-8');
-      const parsed = JSON.parse(raw);
-      if (Array.isArray(parsed) && parsed.length > 0) {
-        global.__usersStore = parsed;
-        return global.__usersStore;
+    const filePaths = getUserFilePaths();
+    let bestData = null;
+    let latestMtime = -1;
+
+    for (const fp of filePaths) {
+      if (fs.existsSync(fp)) {
+        try {
+          const stats = fs.statSync(fp);
+          const raw = fs.readFileSync(fp, 'utf-8');
+          const parsed = JSON.parse(raw);
+          if (Array.isArray(parsed) && parsed.length > 0) {
+            if (!bestData || stats.mtimeMs > latestMtime || (parsed.length > bestData.length && Math.abs(stats.mtimeMs - latestMtime) < 10000)) {
+              bestData = parsed;
+              latestMtime = stats.mtimeMs;
+            }
+          }
+        } catch (e) {
+          // ignore
+        }
       }
+    }
+
+    if (bestData && Array.isArray(bestData) && bestData.length > 0) {
+      global.__usersStore = bestData;
+      return global.__usersStore;
     }
   } catch (e) {
     console.error('Error reading users.json, falling back to initialUsers:', e);
   }
+
   if (!global.__usersStore || global.__usersStore.length === 0) {
     global.__usersStore = Array.isArray(initialUsers) ? [...initialUsers] : [];
     saveUsersToDisk();
@@ -52,10 +87,19 @@ function initUsersStore() {
 
 function saveUsersToDisk() {
   try {
-    if (!fs.existsSync(DATA_DIR)) {
-      fs.mkdirSync(DATA_DIR, { recursive: true });
+    const filePaths = getUserFilePaths();
+    const dataStr = JSON.stringify(global.__usersStore, null, 2);
+    for (const fp of filePaths) {
+      try {
+        const dir = path.dirname(fp);
+        if (!fs.existsSync(dir)) {
+          fs.mkdirSync(dir, { recursive: true });
+        }
+        fs.writeFileSync(fp, dataStr, 'utf-8');
+      } catch (e) {
+        // ignore
+      }
     }
-    fs.writeFileSync(DATA_FILE, JSON.stringify(global.__usersStore, null, 2), 'utf-8');
   } catch (e) {
     console.error('Error writing users.json:', e);
   }

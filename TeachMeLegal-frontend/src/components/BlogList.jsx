@@ -113,7 +113,7 @@ const BlogList = ({ initialPosts = [] }) => {
       (post.excerpt && post.excerpt.toLowerCase().includes(selectedTag.toLowerCase()));
     const matchesSearch = !searchQuery ||
       post.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      (post.excerpt && post.excerpt.toLowerCase().includes(selectedTag.toLowerCase()));
+      (post.excerpt && post.excerpt.toLowerCase().includes(searchQuery.toLowerCase()));
     return matchesCategory && matchesTag && matchesSearch;
   });
 

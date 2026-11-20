@@ -6,7 +6,15 @@ export default function WordPressEditor({ value = '', onChange }) {
   // 'split' | 'visual' | 'code' | 'preview'
   const [activeTab, setActiveTab] = useState('split');
   const [content, setContent] = useState(value);
+
+  // Popover menus state
   const [showTableModal, setShowTableModal] = useState(false);
+  const [showBulletMenu, setShowBulletMenu] = useState(false);
+  const [showNumberMenu, setShowNumberMenu] = useState(false);
+  const [showColorPicker, setShowColorPicker] = useState(false);
+  const [showHighlightPicker, setShowHighlightPicker] = useState(false);
+
+  // Table generator state
   const [tableCols, setTableCols] = useState(3);
   const [tableRows, setTableRows] = useState(3);
   const [tableHeader, setTableHeader] = useState(true);
@@ -43,7 +51,6 @@ export default function WordPressEditor({ value = '', onChange }) {
     }
   };
 
-  // Restore selection before executing an action
   const restoreRange = () => {
     if (visualRef.current) {
       visualRef.current.focus();
@@ -81,7 +88,6 @@ export default function WordPressEditor({ value = '', onChange }) {
         const success = document.execCommand('insertHTML', false, htmlToInsert);
         if (!success) throw new Error('execCommand returned false');
       } catch (e) {
-        // Fallback manual DOM insertion
         const sel = window.getSelection();
         if (sel && sel.rangeCount > 0) {
           const range = sel.getRangeAt(0);
@@ -137,24 +143,6 @@ export default function WordPressEditor({ value = '', onChange }) {
       case 'formatBlock':
         replacement = `<${val}>${selected || 'Heading'}</${val}>`;
         break;
-      case 'insertUnorderedList':
-        replacement = `\n<ul>\n  <li>${selected || 'First key legal point...'}</li>\n  <li>Second key legal point...</li>\n</ul>\n<p><br></p>\n`;
-        break;
-      case 'insertOrderedList':
-        replacement = `\n<ol>\n  <li>${selected || 'First procedural step...'}</li>\n  <li>Second procedural step...</li>\n</ol>\n<p><br></p>\n`;
-        break;
-      case 'insertClauseList':
-        replacement = `\n<ol type="a" style="list-style-type: lower-alpha;">\n  <li>${selected || 'Whether the jurisdiction was properly invoked;'}</li>\n  <li>Whether the statutory notice was duly served;</li>\n</ol>\n<p><br></p>\n`;
-        break;
-      case 'blockquote':
-        replacement = `\n<blockquote>${selected || 'Enter Supreme Court or High Court quote...'}</blockquote>\n<p><br></p>\n`;
-        break;
-      case 'callout':
-        replacement = `\n<div class="statutory-callout">\n  <strong>📌 STATUTORY NOTE:</strong> ${selected || 'Key ratio decidendi or legal analysis...'}\n</div>\n<p><br></p>\n`;
-        break;
-      case 'hr':
-        replacement = `\n<hr class="section-divider" />\n<p><br></p>\n`;
-        break;
       default:
         replacement = selected;
     }
@@ -163,10 +151,122 @@ export default function WordPressEditor({ value = '', onChange }) {
     updateContent(newText);
   };
 
-  // Custom Table Generator
+  // ── Font Family Application ──
+  const handleFontChange = (fontFamily) => {
+    if (!fontFamily) return;
+    if (activeTab === 'visual' || activeTab === 'split') {
+      restoreRange();
+      document.execCommand('fontName', false, fontFamily);
+      handleVisualInput();
+    } else {
+      const selected = textareaRef.current ? textareaRef.current.value.substring(textareaRef.current.selectionStart, textareaRef.current.selectionEnd) : 'Text';
+      insertHtmlAtCursor(`<span style="font-family: ${fontFamily};">${selected}</span>`);
+    }
+  };
+
+  // ── Font Size Application ──
+  const handleFontSizeChange = (sizePx) => {
+    if (!sizePx) return;
+    if (activeTab === 'visual' || activeTab === 'split') {
+      restoreRange();
+      const sel = window.getSelection();
+      if (sel && sel.rangeCount > 0 && !sel.isCollapsed) {
+        const range = sel.getRangeAt(0);
+        const span = document.createElement('span');
+        span.style.fontSize = sizePx;
+        span.appendChild(range.extractContents());
+        range.insertNode(span);
+        handleVisualInput();
+      } else {
+        insertHtmlAtCursor(`<span style="font-size: ${sizePx};">Text</span>`);
+      }
+    }
+  };
+
+  // ── Text Color & Highlighter ──
+  const handleTextColor = (color) => {
+    if (activeTab === 'visual' || activeTab === 'split') {
+      restoreRange();
+      document.execCommand('foreColor', false, color);
+      handleVisualInput();
+    }
+    setShowColorPicker(false);
+  };
+
+  const handleHighlightColor = (color) => {
+    if (activeTab === 'visual' || activeTab === 'split') {
+      restoreRange();
+      try {
+        document.execCommand('hiliteColor', false, color);
+      } catch (e) {
+        document.execCommand('backColor', false, color);
+      }
+      handleVisualInput();
+    }
+    setShowHighlightPicker(false);
+  };
+
+  // ── All Bullet List Types ──
+  const insertBulletList = (styleType) => {
+    let listHtml = '';
+    switch (styleType) {
+      case 'disc':
+        listHtml = `<ul style="list-style-type: disc; margin: 16px 0 20px 28px;">\n  <li>First statutory principle...</li>\n  <li>Second key judicial point...</li>\n  <li>Third courtroom consideration...</li>\n</ul><p><br></p>`;
+        break;
+      case 'circle':
+        listHtml = `<ul style="list-style-type: circle; margin: 16px 0 20px 28px;">\n  <li>General statutory condition...</li>\n  <li>Ancillary provision...</li>\n  <li>Procedural formality...</li>\n</ul><p><br></p>`;
+        break;
+      case 'square':
+        listHtml = `<ul style="list-style-type: square; margin: 16px 0 20px 28px;">\n  <li>Mandatory compliance requirement...</li>\n  <li>Regulatory disclosure obligation...</li>\n  <li>Statutory authority oversight...</li>\n</ul><p><br></p>`;
+        break;
+      case 'arrow':
+        listHtml = `<ul class="legal-list-arrow">\n  <li>Core legal argument & statutory basis...</li>\n  <li>Appellate court ratio decidendi...</li>\n  <li>Binding precedent under Article 141...</li>\n</ul><p><br></p>`;
+        break;
+      case 'check':
+        listHtml = `<ul class="legal-list-check">\n  <li>Requisite locus standi established;</li>\n  <li>Pre-institution notice duly served and acknowledged;</li>\n  <li>Cause of action within statutory limitation period.</li>\n</ul><p><br></p>`;
+        break;
+      case 'cross':
+        listHtml = `<ul class="legal-list-cross">\n  <li>Barred under Section 9 of the Code of Civil Procedure;</li>\n  <li>Expressly excluded by special statutory enactment;</li>\n  <li>Relief disallowed due to suppression of material facts.</li>\n</ul><p><br></p>`;
+        break;
+      case 'star':
+        listHtml = `<ul class="legal-list-star">\n  <li>Landmark Constitution Bench judgment ratio;</li>\n  <li>Doctrine of severability successfully applied;</li>\n  <li>Prospective overruling of previous authority.</li>\n</ul><p><br></p>`;
+        break;
+      default:
+        listHtml = `<ul>\n  <li>Point 1</li>\n  <li>Point 2</li>\n</ul><p><br></p>`;
+    }
+    insertHtmlAtCursor(listHtml);
+    setShowBulletMenu(false);
+  };
+
+  // ── All Numbered List & Statutory Clause Types ──
+  const insertNumberedList = (styleType) => {
+    let listHtml = '';
+    switch (styleType) {
+      case 'decimal':
+        listHtml = `<ol style="list-style-type: decimal; margin: 16px 0 20px 28px;">\n  <li>Filing of original plaint with requisite court fee;</li>\n  <li>Issuance of summons to the contesting defendant;</li>\n  <li>Filing of written statement within thirty days.</li>\n</ol><p><br></p>`;
+        break;
+      case 'alpha-lower':
+        listHtml = `<ol style="list-style-type: lower-alpha; margin: 16px 0 20px 28px;">\n  <li>Whether the civil court possesses subject-matter jurisdiction;</li>\n  <li>Whether the suit is hit by the principles of res judicata;</li>\n  <li>Whether the plaintiff is entitled to injunctive relief.</li>\n</ol><p><br></p>`;
+        break;
+      case 'alpha-upper':
+        listHtml = `<ol style="list-style-type: upper-alpha; margin: 16px 0 20px 28px;">\n  <li>Primary statutory grounds of appeal;</li>\n  <li>Substantial questions of law formulated;</li>\n  <li>Interim protection pending final hearing.</li>\n</ol><p><br></p>`;
+        break;
+      case 'roman-lower':
+        listHtml = `<ol style="list-style-type: lower-roman; margin: 16px 0 20px 28px;">\n  <li>Prima facie case in favor of applicant;</li>\n  <li>Balance of convenience tilting towards plaintiff;</li>\n  <li>Irreparable injury if ad-interim injunction refused.</li>\n</ol><p><br></p>`;
+        break;
+      case 'roman-upper':
+        listHtml = `<ol style="list-style-type: upper-roman; margin: 16px 0 20px 28px;">\n  <li>Preliminary Objections as to Maintainability;</li>\n  <li>Merits of the Substantive Claims;</li>\n  <li>Directions & Consequential Relief Granted.</li>\n</ol><p><br></p>`;
+        break;
+      default:
+        listHtml = `<ol>\n  <li>Step 1</li>\n  <li>Step 2</li>\n</ol><p><br></p>`;
+    }
+    insertHtmlAtCursor(listHtml);
+    setShowNumberMenu(false);
+  };
+
+  // ── Table Templates ──
   const insertCustomTable = () => {
     let tableHtml = '\n<div class="table-responsive">\n  <table class="blog-table">\n';
-    
     if (tableHeader) {
       tableHtml += '    <thead>\n      <tr>\n';
       for (let c = 1; c <= tableCols; c++) {
@@ -174,7 +274,6 @@ export default function WordPressEditor({ value = '', onChange }) {
       }
       tableHtml += '      </tr>\n    </thead>\n';
     }
-
     tableHtml += '    <tbody>\n';
     for (let r = 1; r <= tableRows; r++) {
       tableHtml += '      <tr>\n';
@@ -189,7 +288,6 @@ export default function WordPressEditor({ value = '', onChange }) {
     setShowTableModal(false);
   };
 
-  // Statutory 3-Column Section Table
   const insertSectionTable = () => {
     const tableHtml = `
 <div class="table-responsive">
@@ -210,7 +308,7 @@ export default function WordPressEditor({ value = '', onChange }) {
       <tr>
         <td><strong>Sec. 2</strong></td>
         <td>Statutory Definitions</td>
-        <td>Key operational definitions and regulatory references.</td>
+        <td>Key operational definitions, terms, and regulatory references.</td>
       </tr>
       <tr>
         <td><strong>Sec. 3</strong></td>
@@ -226,7 +324,6 @@ export default function WordPressEditor({ value = '', onChange }) {
     setShowTableModal(false);
   };
 
-  // Case Law Table
   const insertCaseLawTable = () => {
     const tableHtml = `
 <div class="table-responsive">
@@ -242,12 +339,12 @@ export default function WordPressEditor({ value = '', onChange }) {
       <tr>
         <td><strong>State Bank of India v. Radhey Shyam (2025)</strong></td>
         <td>Hon'ble Supreme Court of India</td>
-        <td>Held that statutory right of set-off cannot be exercised arbitrarily without due notice to account holder.</td>
+        <td>Statutory right of banker set-off cannot be exercised arbitrarily without due notice to account holder.</td>
       </tr>
       <tr>
         <td><strong>Standard Chartered Bank v. Directorate of Enforcement</strong></td>
         <td>Constitution Bench (5 Judges)</td>
-        <td>Corporate criminal liability applies even where statutory penal sanction specifies imprisonment.</td>
+        <td>Corporate criminal liability applies even where statutory penal sanction specifies mandatory imprisonment.</td>
       </tr>
     </tbody>
   </table>
@@ -258,7 +355,6 @@ export default function WordPressEditor({ value = '', onChange }) {
     setShowTableModal(false);
   };
 
-  // Difference / Comparison Table
   const insertComparisonTable = () => {
     const tableHtml = `
 <div class="table-responsive">
@@ -295,35 +391,6 @@ export default function WordPressEditor({ value = '', onChange }) {
     setShowTableModal(false);
   };
 
-  // Bullet insertion helpers
-  const insertBulletsAtCursor = () => {
-    if (activeTab === 'visual' || activeTab === 'split') {
-      executeCommand('insertUnorderedList');
-    } else {
-      insertIntoTextarea('insertUnorderedList');
-    }
-  };
-
-  const insertNumberedAtCursor = () => {
-    if (activeTab === 'visual' || activeTab === 'split') {
-      executeCommand('insertOrderedList');
-    } else {
-      insertIntoTextarea('insertOrderedList');
-    }
-  };
-
-  const insertLegalClauseList = () => {
-    const clauseHtml = `
-<ol type="a" style="list-style-type: lower-alpha; margin: 16px 0 16px 28px; line-height: 1.8;">
-  <li>Whether the trial court had competent subject-matter jurisdiction to adjudicate the dispute;</li>
-  <li>Whether the pre-institution statutory conciliation notice was duly delivered;</li>
-  <li>Whether the petition is barred by the statutory period of limitation prescribed under Article 54.</li>
-</ol>
-<p><br></p>
-`;
-    insertHtmlAtCursor(clauseHtml);
-  };
-
   const handleTabSwitch = (tab) => {
     if ((tab === 'visual' || tab === 'split') && activeTab === 'code') {
       if (visualRef.current) {
@@ -331,9 +398,23 @@ export default function WordPressEditor({ value = '', onChange }) {
       }
     }
     setActiveTab(tab);
+    // Close popovers
+    setShowTableModal(false);
+    setShowBulletMenu(false);
+    setShowNumberMenu(false);
+    setShowColorPicker(false);
+    setShowHighlightPicker(false);
   };
 
-  // Calculate stats
+  // Close all popovers on outside click
+  const closeAllPopovers = () => {
+    setShowTableModal(false);
+    setShowBulletMenu(false);
+    setShowNumberMenu(false);
+    setShowColorPicker(false);
+    setShowHighlightPicker(false);
+  };
+
   const cleanText = content.replace(/<[^>]+>/g, ' ').trim();
   const wordCount = cleanText ? cleanText.split(/\s+/).filter(Boolean).length : 0;
   const readTimeEst = Math.max(1, Math.ceil(wordCount / 200));
@@ -341,13 +422,13 @@ export default function WordPressEditor({ value = '', onChange }) {
   const listCount = (content.match(/<(ul|ol)/g) || []).length;
 
   return (
-    <div className="wp-editor-wrapper">
+    <div className="wp-editor-wrapper" onClick={closeAllPopovers}>
       {/* WordPress Editor Header & Mode Tabs */}
-      <div className="wp-editor-header">
+      <div className="wp-editor-header" onClick={(e) => e.stopPropagation()}>
         <div className="wp-editor-title-row">
           <span className="wp-badge">WORDPRESS ARTICLE BUILDER</span>
           <span className="wp-hint">
-            Insert tables, bullet lists & statutory notes directly in the middle of your paragraphs.
+            Full-width canvas • Insert legal fonts, statutory bullets, and interactive tables anywhere in paragraphs.
           </span>
         </div>
 
@@ -356,7 +437,7 @@ export default function WordPressEditor({ value = '', onChange }) {
             type="button"
             className={`wp-tab-btn ${activeTab === 'split' ? 'active' : ''}`}
             onClick={() => handleTabSwitch('split')}
-            title="Side-by-side editing and live student reader preview (Recommended for widescreen)"
+            title="Side-by-side editing and real-time live student reader preview"
           >
             ⚡ Split View (Editor + Live Preview)
           </button>
@@ -364,7 +445,7 @@ export default function WordPressEditor({ value = '', onChange }) {
             type="button"
             className={`wp-tab-btn ${activeTab === 'visual' ? 'active' : ''}`}
             onClick={() => handleTabSwitch('visual')}
-            title="Full-width WYSIWYG rich text editor"
+            title="Full-width visual WYSIWYG rich text editor"
           >
             ✏️ Visual Editor
           </button>
@@ -389,8 +470,8 @@ export default function WordPressEditor({ value = '', onChange }) {
 
       {/* WordPress Toolbar */}
       {activeTab !== 'preview' && (
-        <div className="wp-toolbar">
-          {/* Text Format Dropdown */}
+        <div className="wp-toolbar" onClick={(e) => e.stopPropagation()}>
+          {/* Format (H2, H3, P) */}
           <div className="wp-toolbar-group">
             <select
               className="wp-select"
@@ -402,12 +483,63 @@ export default function WordPressEditor({ value = '', onChange }) {
                 }
               }}
               defaultValue=""
+              title="Heading & Paragraph Formatting"
             >
               <option value="" disabled>Format...</option>
               <option value="p">Paragraph Text</option>
               <option value="h2">Section Heading (H2)</option>
               <option value="h3">Sub-Heading (H3)</option>
               <option value="h4">Minor Clause (H4)</option>
+            </select>
+          </div>
+
+          {/* Font Family Selector */}
+          <div className="wp-toolbar-group">
+            <select
+              className="wp-select"
+              style={{ width: '130px' }}
+              onMouseDown={(e) => updateSavedRange()}
+              onChange={(e) => {
+                if (e.target.value) {
+                  handleFontChange(e.target.value);
+                  e.target.value = '';
+                }
+              }}
+              defaultValue=""
+              title="Choose Legal Font Style"
+            >
+              <option value="" disabled>Font Style...</option>
+              <option value="Inter, sans-serif">Inter (Modern Clean)</option>
+              <option value="Georgia, serif">Georgia (Editorial Serif)</option>
+              <option value="Merriweather, serif">Merriweather (Judicial)</option>
+              <option value="'Times New Roman', serif">Times New Roman (Court)</option>
+              <option value="Garamond, serif">Garamond (Classic Law)</option>
+              <option value="'Playfair Display', serif">Playfair (Luxury Serif)</option>
+              <option value="Arial, sans-serif">Arial (Standard)</option>
+              <option value="'Courier New', monospace">Courier (Bare Act Code)</option>
+            </select>
+
+            <select
+              className="wp-select"
+              style={{ width: '90px' }}
+              onMouseDown={(e) => updateSavedRange()}
+              onChange={(e) => {
+                if (e.target.value) {
+                  handleFontSizeChange(e.target.value);
+                  e.target.value = '';
+                }
+              }}
+              defaultValue=""
+              title="Font Size"
+            >
+              <option value="" disabled>Size...</option>
+              <option value="13px">13px (Footnote)</option>
+              <option value="15px">15px (Compact)</option>
+              <option value="16px">16px (Normal Body)</option>
+              <option value="18px">18px (Medium Text)</option>
+              <option value="20px">20px (Subhead)</option>
+              <option value="24px">24px (H3 Section)</option>
+              <option value="28px">28px (H2 Title)</option>
             </select>
           </div>
 
@@ -449,40 +581,251 @@ export default function WordPressEditor({ value = '', onChange }) {
             >
               <s>S</s>
             </button>
+
+            {/* Text Color Picker */}
+            <div style={{ position: 'relative' }}>
+              <button
+                type="button"
+                className="wp-tool-btn"
+                title="Text Color"
+                onMouseDown={(e) => e.preventDefault()}
+                onClick={() => {
+                  setShowColorPicker(!showColorPicker);
+                  setShowHighlightPicker(false);
+                }}
+              >
+                <span style={{ borderBottom: '3px solid #cfa856', paddingBottom: '1px', fontWeight: 800 }}>A</span>
+                <span style={{ fontSize: '0.65rem' }}>▼</span>
+              </button>
+
+              {showColorPicker && (
+                <div className="wp-popover-palette">
+                  <div className="wp-popover-title">Text Color:</div>
+                  <div className="wp-color-grid">
+                    <button type="button" style={{ background: '#09131e' }} title="Navy / Charcoal" onClick={() => handleTextColor('#09131e')} />
+                    <button type="button" style={{ background: '#cfa856' }} title="Luxury Gold" onClick={() => handleTextColor('#cfa856')} />
+                    <button type="button" style={{ background: '#2563eb' }} title="Royal Blue" onClick={() => handleTextColor('#2563eb')} />
+                    <button type="button" style={{ background: '#059669' }} title="Emerald Green" onClick={() => handleTextColor('#059669')} />
+                    <button type="button" style={{ background: '#dc2626' }} title="Crimson Red" onClick={() => handleTextColor('#dc2626')} />
+                    <button type="button" style={{ background: '#64748b' }} title="Slate Gray" onClick={() => handleTextColor('#64748b')} />
+                    <button type="button" style={{ background: '#ffffff', border: '1px solid #ccc' }} title="White" onClick={() => handleTextColor('#ffffff')} />
+                  </div>
+                </div>
+              )}
+            </div>
+
+            {/* Highlighter Marker */}
+            <div style={{ position: 'relative' }}>
+              <button
+                type="button"
+                className="wp-tool-btn"
+                title="Statutory Text Highlighter"
+                onMouseDown={(e) => e.preventDefault()}
+                onClick={() => {
+                  setShowHighlightPicker(!showHighlightPicker);
+                  setShowColorPicker(false);
+                }}
+              >
+                <span>🖍️</span>
+                <span style={{ fontSize: '0.65rem' }}>▼</span>
+              </button>
+
+              {showHighlightPicker && (
+                <div className="wp-popover-palette">
+                  <div className="wp-popover-title">Highlighter Marker:</div>
+                  <div className="wp-color-grid">
+                    <button type="button" style={{ background: 'rgba(207, 168, 86, 0.4)' }} title="Gold Marker" onClick={() => handleHighlightColor('rgba(207, 168, 86, 0.4)')} />
+                    <button type="button" style={{ background: '#fef08a' }} title="Pastel Yellow" onClick={() => handleHighlightColor('#fef08a')} />
+                    <button type="button" style={{ background: '#bbf7d0' }} title="Mint Green" onClick={() => handleHighlightColor('#bbf7d0')} />
+                    <button type="button" style={{ background: '#bae6fd' }} title="Sky Blue" onClick={() => handleHighlightColor('#bae6fd')} />
+                    <button type="button" style={{ background: '#fecdd3' }} title="Rose Pink" onClick={() => handleHighlightColor('#fecdd3')} />
+                    <button type="button" className="btn-clear-highlight" title="Clear Marker" onClick={() => handleHighlightColor('transparent')}>✕</button>
+                  </div>
+                </div>
+              )}
+            </div>
           </div>
 
-          {/* Bullets & Lists in middle of paragraph */}
+          {/* ── ALL BULLETS POPUP & QUICK BUTTONS ── */}
           <div className="wp-toolbar-group">
+            {/* All Bullets Dropdown */}
+            <div style={{ position: 'relative' }}>
+              <button
+                type="button"
+                className="wp-tool-btn wp-btn-list"
+                title="Choose from all types of bullet lists"
+                onMouseDown={(e) => {
+                  e.preventDefault();
+                  updateSavedRange();
+                }}
+                onClick={() => {
+                  setShowBulletMenu(!showBulletMenu);
+                  setShowNumberMenu(false);
+                  setShowTableModal(false);
+                }}
+              >
+                • All Bullets ▾
+              </button>
+
+              {showBulletMenu && (
+                <div className="wp-popover-menu wp-popover-wide">
+                  <div className="wp-popover-header">
+                    <strong>Select Bullet List Style:</strong>
+                    <button type="button" onClick={() => setShowBulletMenu(false)} className="wp-popover-close">✕</button>
+                  </div>
+                  <div className="wp-popover-grid">
+                    <button type="button" className="wp-menu-item" onClick={() => insertBulletList('disc')}>
+                      <span className="wp-bullet-sample">•</span>
+                      <div>
+                        <div className="wp-bullet-title">Standard Disc Bullet</div>
+                        <div className="wp-bullet-sub">Default solid black dot</div>
+                      </div>
+                    </button>
+
+                    <button type="button" className="wp-menu-item" onClick={() => insertBulletList('circle')}>
+                      <span className="wp-bullet-sample">○</span>
+                      <div>
+                        <div className="wp-bullet-title">Circle Ring Bullet</div>
+                        <div className="wp-bullet-sub">Hollow round outline</div>
+                      </div>
+                    </button>
+
+                    <button type="button" className="wp-menu-item" onClick={() => insertBulletList('square')}>
+                      <span className="wp-bullet-sample">■</span>
+                      <div>
+                        <div className="wp-bullet-title">Solid Square Bullet</div>
+                        <div className="wp-bullet-sub">Sharp regulatory square</div>
+                      </div>
+                    </button>
+
+                    <button type="button" className="wp-menu-item" onClick={() => insertBulletList('arrow')}>
+                      <span className="wp-bullet-sample" style={{ color: 'var(--admin-gold)' }}>➔</span>
+                      <div>
+                        <div className="wp-bullet-title">Legal Arrow Pointer</div>
+                        <div className="wp-bullet-sub">Directional legal takeaways</div>
+                      </div>
+                    </button>
+
+                    <button type="button" className="wp-menu-item" onClick={() => insertBulletList('check')}>
+                      <span className="wp-bullet-sample" style={{ color: '#10b981' }}>✓</span>
+                      <div>
+                        <div className="wp-bullet-title">Verified Checklist</div>
+                        <div className="wp-bullet-sub">Essential statutory conditions</div>
+                      </div>
+                    </button>
+
+                    <button type="button" className="wp-menu-item" onClick={() => insertBulletList('cross')}>
+                      <span className="wp-bullet-sample" style={{ color: '#ef4444' }}>✗</span>
+                      <div>
+                        <div className="wp-bullet-title">Barred / Prohibitions</div>
+                        <div className="wp-bullet-sub">Negative statutory covenants</div>
+                      </div>
+                    </button>
+
+                    <button type="button" className="wp-menu-item" onClick={() => insertBulletList('star')}>
+                      <span className="wp-bullet-sample" style={{ color: 'var(--admin-gold)' }}>★</span>
+                      <div>
+                        <div className="wp-bullet-title">Landmark Star Ratio</div>
+                        <div className="wp-bullet-sub">Precedent & pivotal ratios</div>
+                      </div>
+                    </button>
+                  </div>
+                </div>
+              )}
+            </div>
+
+            {/* All Numbers & Clauses Dropdown */}
+            <div style={{ position: 'relative' }}>
+              <button
+                type="button"
+                className="wp-tool-btn wp-btn-list"
+                title="Choose from all numbered & clause styles"
+                onMouseDown={(e) => {
+                  e.preventDefault();
+                  updateSavedRange();
+                }}
+                onClick={() => {
+                  setShowNumberMenu(!showNumberMenu);
+                  setShowBulletMenu(false);
+                  setShowTableModal(false);
+                }}
+              >
+                1. Numbers & Clauses ▾
+              </button>
+
+              {showNumberMenu && (
+                <div className="wp-popover-menu wp-popover-wide">
+                  <div className="wp-popover-header">
+                    <strong>Select Numbering / Clause Style:</strong>
+                    <button type="button" onClick={() => setShowNumberMenu(false)} className="wp-popover-close">✕</button>
+                  </div>
+                  <div className="wp-popover-grid">
+                    <button type="button" className="wp-menu-item" onClick={() => insertNumberedList('decimal')}>
+                      <span className="wp-bullet-sample">1.</span>
+                      <div>
+                        <div className="wp-bullet-title">1., 2., 3. Decimal Numbers</div>
+                        <div className="wp-bullet-sub">Procedural steps & sequence</div>
+                      </div>
+                    </button>
+
+                    <button type="button" className="wp-menu-item" onClick={() => insertNumberedList('alpha-lower')}>
+                      <span className="wp-bullet-sample">(a)</span>
+                      <div>
+                        <div className="wp-bullet-title">(a), (b), (c) Statutory Clauses</div>
+                        <div className="wp-bullet-sub">Sections & legislative subsections</div>
+                      </div>
+                    </button>
+
+                    <button type="button" className="wp-menu-item" onClick={() => insertNumberedList('alpha-upper')}>
+                      <span className="wp-bullet-sample">(A)</span>
+                      <div>
+                        <div className="wp-bullet-title">(A), (B), (C) Capital Schedules</div>
+                        <div className="wp-bullet-sub">Statutory appendixes & divisions</div>
+                      </div>
+                    </button>
+
+                    <button type="button" className="wp-menu-item" onClick={() => insertNumberedList('roman-lower')}>
+                      <span className="wp-bullet-sample">(i)</span>
+                      <div>
+                        <div className="wp-bullet-title">(i), (ii), (iii) Judicial Sub-clauses</div>
+                        <div className="wp-bullet-sub">Court judgment ingredients</div>
+                      </div>
+                    </button>
+
+                    <button type="button" className="wp-menu-item" onClick={() => insertNumberedList('roman-upper')}>
+                      <span className="wp-bullet-sample">I.</span>
+                      <div>
+                        <div className="wp-bullet-title">I., II., III. Major Parts / Acts</div>
+                        <div className="wp-bullet-sub">Chapters & overarching parts</div>
+                      </div>
+                    </button>
+                  </div>
+                </div>
+              )}
+            </div>
+
+            {/* Quick 1-Click Bullets */}
             <button
               type="button"
-              className="wp-tool-btn wp-btn-list"
-              title="Insert Bullet List in Paragraph"
+              className="wp-tool-btn"
+              title="Quick Checkmark Conditions"
               onMouseDown={(e) => e.preventDefault()}
-              onClick={insertBulletsAtCursor}
+              onClick={() => insertBulletList('check')}
             >
-              • Bullet List
+              ✓ Conditions
             </button>
             <button
               type="button"
-              className="wp-tool-btn wp-btn-list"
-              title="Insert Numbered List in Paragraph"
+              className="wp-tool-btn"
+              title="Quick Legal Arrow Pointer"
               onMouseDown={(e) => e.preventDefault()}
-              onClick={insertNumberedAtCursor}
+              onClick={() => insertBulletList('arrow')}
             >
-              1. Numbered List
-            </button>
-            <button
-              type="button"
-              className="wp-tool-btn wp-btn-list"
-              title="Insert (a), (b), (c) Statutory Clauses"
-              onMouseDown={(e) => e.preventDefault()}
-              onClick={insertLegalClauseList}
-            >
-              (a) Legal Clauses
+              ➔ Takeaways
             </button>
           </div>
 
-          {/* Tables Insertion in middle of paragraph */}
+          {/* ── TABLES INSERTION ── */}
           <div className="wp-toolbar-group">
             <button
               type="button"
@@ -492,9 +835,13 @@ export default function WordPressEditor({ value = '', onChange }) {
                 e.preventDefault();
                 updateSavedRange();
               }}
-              onClick={() => setShowTableModal(!showTableModal)}
+              onClick={() => {
+                setShowTableModal(!showTableModal);
+                setShowBulletMenu(false);
+                setShowNumberMenu(false);
+              }}
             >
-              ⊞ Insert Table ▾
+              ⊞ Tables ▾
             </button>
             <button
               type="button"
@@ -512,20 +859,20 @@ export default function WordPressEditor({ value = '', onChange }) {
               onMouseDown={(e) => e.preventDefault()}
               onClick={insertCaseLawTable}
             >
-              📜 Case Law Table
+              📜 Case Table
             </button>
             <button
               type="button"
               className="wp-tool-btn wp-btn-legal"
-              title="One-click Difference / Comparison Table"
+              title="One-click Legal Comparison Table"
               onMouseDown={(e) => e.preventDefault()}
               onClick={insertComparisonTable}
             >
-              📊 Comparison Table
+              📊 Compare
             </button>
           </div>
 
-          {/* Quotes, Callouts & Dividers */}
+          {/* ── QUOTES, CALLOUTS & DIVIDERS ── */}
           <div className="wp-toolbar-group">
             <button
               type="button"
@@ -533,7 +880,7 @@ export default function WordPressEditor({ value = '', onChange }) {
               title="Insert Judicial Quote Block"
               onMouseDown={(e) => e.preventDefault()}
               onClick={() => {
-                const quoteHtml = `<blockquote>"The rule of law permeates the entire fabric of our Constitution. Any arbitrary executive action is inherently vulnerable to judicial review."</blockquote><p><br></p>`;
+                const quoteHtml = `<blockquote>"The rule of law permeates the entire fabric of our Constitution. Any arbitrary executive action is inherently vulnerable to judicial review under Article 226."</blockquote><p><br></p>`;
                 insertHtmlAtCursor(quoteHtml);
               }}
             >
@@ -567,7 +914,7 @@ export default function WordPressEditor({ value = '', onChange }) {
         </div>
       )}
 
-      {/* Table Dropdown Customizer & Template Picker */}
+      {/* Table Generator Modal */}
       {showTableModal && (
         <div className="wp-table-modal" onClick={(e) => e.stopPropagation()}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '14px' }}>
@@ -575,16 +922,16 @@ export default function WordPressEditor({ value = '', onChange }) {
             <button 
               type="button" 
               onClick={() => setShowTableModal(false)}
-              style={{ background: 'transparent', border: 'none', cursor: 'pointer', fontSize: '1.1rem', color: 'var(--text-muted)' }}
+              className="wp-popover-close"
             >
               ✕
             </button>
           </div>
 
           <div className="wp-table-templates-bar">
-            <span style={{ fontSize: '0.8rem', fontWeight: 700, color: 'var(--admin-gold)' }}>Quick Templates:</span>
+            <span style={{ fontSize: '0.8rem', fontWeight: 700, color: 'var(--admin-gold)' }}>One-Click Presets:</span>
             <button type="button" className="btn-preset-pill" onClick={insertSectionTable}>
-              ⚖️ Statutory Section Table (3 Cols)
+              ⚖️ Section Table (3 Cols)
             </button>
             <button type="button" className="btn-preset-pill" onClick={insertCaseLawTable}>
               📜 Case Law Summary Table
@@ -594,8 +941,8 @@ export default function WordPressEditor({ value = '', onChange }) {
             </button>
           </div>
 
-          <div style={{ borderTop: '1px solid var(--border-light)', paddingTop: '14px', marginTop: '12px' }}>
-            <span style={{ fontSize: '0.8rem', fontWeight: 700, display: 'block', marginBottom: '8px' }}>
+          <div style={{ borderTop: '1px solid var(--admin-border, #e2e8f0)', paddingTop: '14px', marginTop: '12px' }}>
+            <span style={{ fontSize: '0.82rem', fontWeight: 700, display: 'block', marginBottom: '8px' }}>
               Or Create Custom Grid Table:
             </span>
             <div className="wp-table-inputs">
@@ -648,7 +995,7 @@ export default function WordPressEditor({ value = '', onChange }) {
           <div className="wp-pane wp-pane-editor">
             {activeTab === 'split' && (
               <div className="wp-pane-label">
-                <span>✏️ VISUAL WYSIWYG CANVAS (Edit paragraphs, tables & lists here)</span>
+                <span>✏️ VISUAL WYSIWYG CANVAS (Edit paragraphs, legal fonts, tables & bullets here)</span>
               </div>
             )}
             <div
