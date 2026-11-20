@@ -165,16 +165,6 @@ export default function AccountPage() {
               </Link>
             </div>
 
-            <div 
-              className="gate-demo-box"
-              onClick={handleQuickDemoLogin}
-              title="Click to sign in instantly with test credentials"
-            >
-              <span>
-                {demoLoading ? 'Signing in demo scholar...' : '✨ Click here to Sign In with Demo Account (rajpoddar8907@gmail.com)'}
-              </span>
-            </div>
-
             <div style={{ marginTop: '24px' }}>
               <Link href="/courses" style={{ color: 'var(--accent-gold)', fontSize: '0.88rem', textDecoration: 'underline' }}>
                 ← Browse Legal Courses & Bare Act Notes

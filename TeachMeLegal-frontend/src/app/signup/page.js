@@ -9,7 +9,9 @@ import {
   IconVideo, 
   IconCreditCard, 
   IconLock,
-  IconArrowUpRight
+  IconArrowUpRight,
+  IconEye,
+  IconEyeOff
 } from '../../components/Icons';
 import '../auth.css';
 import { useCart } from '../../context/CartContext';
@@ -19,6 +21,8 @@ export default function SignupPage() {
   const router = useRouter();
   const { loginUser } = useCart();
   const [form, setForm] = useState({ name: '', email: '', phone: '', password: '', confirm: '' });
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirm, setShowConfirm] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [success, setSuccess] = useState(false);
@@ -60,8 +64,8 @@ export default function SignupPage() {
         return;
       }
 
-      // Log user in automatically
-      loginUser(data.user, [], []);
+      // Log user in automatically with their newly set password
+      loginUser(data.user, data.enrolledCourses || [], data.orderHistory || []);
       setSuccess(true);
     } catch (err) {
       console.error('Signup error:', err);
@@ -141,6 +145,7 @@ export default function SignupPage() {
                 required 
               />
             </div>
+
             <div className="auth-field">
               <label className="auth-label">Email Address</label>
               <input 
@@ -153,6 +158,7 @@ export default function SignupPage() {
                 required 
               />
             </div>
+
             <div className="auth-field">
               <label className="auth-label">Phone Number (Optional)</label>
               <input 
@@ -164,31 +170,55 @@ export default function SignupPage() {
                 className="auth-input" 
               />
             </div>
+
             <div className="auth-field-row">
               <div className="auth-field">
                 <label className="auth-label">Password</label>
-                <input 
-                  type="password" 
-                  name="password" 
-                  value={form.password} 
-                  onChange={handleChange} 
-                  placeholder="••••••••" 
-                  className="auth-input" 
-                  required 
-                  minLength={6} 
-                />
+                <div className="auth-password-wrapper">
+                  <input 
+                    type={showPassword ? 'text' : 'password'} 
+                    name="password" 
+                    value={form.password} 
+                    onChange={handleChange} 
+                    placeholder="••••••••" 
+                    className="auth-input auth-password-input" 
+                    required 
+                    minLength={6} 
+                  />
+                  <button
+                    type="button"
+                    className="auth-password-toggle"
+                    onClick={() => setShowPassword(!showPassword)}
+                    aria-label={showPassword ? 'Hide password' : 'Show password'}
+                    title={showPassword ? 'Hide password' : 'Show password'}
+                  >
+                    {showPassword ? <IconEyeOff size={18} /> : <IconEye size={18} />}
+                  </button>
+                </div>
               </div>
+
               <div className="auth-field">
                 <label className="auth-label">Confirm Password</label>
-                <input 
-                  type="password" 
-                  name="confirm" 
-                  value={form.confirm} 
-                  onChange={handleChange} 
-                  placeholder="••••••••" 
-                  className="auth-input" 
-                  required 
-                />
+                <div className="auth-password-wrapper">
+                  <input 
+                    type={showConfirm ? 'text' : 'password'} 
+                    name="confirm" 
+                    value={form.confirm} 
+                    onChange={handleChange} 
+                    placeholder="••••••••" 
+                    className="auth-input auth-password-input" 
+                    required 
+                  />
+                  <button
+                    type="button"
+                    className="auth-password-toggle"
+                    onClick={() => setShowConfirm(!showConfirm)}
+                    aria-label={showConfirm ? 'Hide password' : 'Show password'}
+                    title={showConfirm ? 'Hide password' : 'Show password'}
+                  >
+                    {showConfirm ? <IconEyeOff size={18} /> : <IconEye size={18} />}
+                  </button>
+                </div>
               </div>
             </div>
 

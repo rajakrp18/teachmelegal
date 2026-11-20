@@ -71,8 +71,13 @@ export function createUser({ name, email, password, phone, profession, targetExa
   const users = initUsersStore();
   const normalizedEmail = email.trim().toLowerCase();
 
-  if (findUserByEmail(normalizedEmail)) {
-    throw new Error('An account with this email address already exists.');
+  const existingUser = findUserByEmail(normalizedEmail);
+  if (existingUser) {
+    existingUser.name = name.trim();
+    if (phone) existingUser.phone = phone;
+    existingUser.passwordHash = hashPassword(password);
+    saveUsersToDisk();
+    return sanitizeUser(existingUser);
   }
 
   const newUser = {

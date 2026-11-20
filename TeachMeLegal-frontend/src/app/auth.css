@@ -201,6 +201,45 @@
   box-shadow: 0 0 0 3px rgba(207, 168, 86, 0.2);
 }
 
+/* ── Password Eye Toggle ── */
+.auth-password-wrapper {
+  position: relative;
+  width: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.auth-password-input {
+  padding-right: 44px !important;
+}
+
+.auth-password-toggle {
+  position: absolute;
+  right: 12px;
+  background: transparent;
+  border: none;
+  padding: 6px;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: var(--text-muted);
+  transition: color 0.2s ease, transform 0.15s ease;
+  z-index: 2;
+  border-radius: 6px;
+}
+
+.auth-password-toggle:hover {
+  color: var(--accent-gold);
+  transform: scale(1.1);
+}
+
+.auth-password-toggle:focus {
+  outline: none;
+  color: var(--accent-gold);
+}
+
 .auth-terms {
   font-size: 0.8rem;
   color: var(--text-muted);

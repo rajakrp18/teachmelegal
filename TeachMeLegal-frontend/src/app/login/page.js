@@ -2,7 +2,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { useState } from 'react';
-import { IconGoogle, IconCheckCircle, IconLock } from '../../components/Icons';
+import { IconGoogle, IconCheckCircle, IconLock, IconEye, IconEyeOff } from '../../components/Icons';
 import '../auth.css';
 
 import { useCart } from '../../context/CartContext';
@@ -12,17 +12,11 @@ export default function LoginPage() {
   const router = useRouter();
   const { loginUser } = useCart();
   const [form, setForm] = useState({ email: '', password: '' });
+  const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
   const handleChange = (e) => setForm({ ...form, [e.target.name]: e.target.value });
-
-  const fillDemoAccount = () => {
-    setForm({
-      email: 'rajpoddar8907@gmail.com',
-      password: 'password123'
-    });
-  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -39,7 +33,7 @@ export default function LoginPage() {
       const data = await res.json();
 
       if (!res.ok || !data.success) {
-        setError(data.error || 'Invalid credentials. Please verify your email and password.');
+        setError(data.error || 'Invalid email or password. Please try again.');
         return;
       }
 
@@ -87,28 +81,6 @@ export default function LoginPage() {
           <h1 className="auth-title">Welcome Back</h1>
           <p className="auth-subtitle">Sign in to your account to continue learning</p>
 
-          {/* Quick Demo Fill Pill */}
-          <div 
-            onClick={fillDemoAccount}
-            style={{
-              background: 'rgba(207, 168, 86, 0.1)',
-              border: '1px dashed var(--accent-gold-border)',
-              borderRadius: '12px',
-              padding: '10px 14px',
-              marginBottom: '20px',
-              cursor: 'pointer',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'space-between',
-              fontSize: '0.82rem',
-              color: 'var(--accent-gold)'
-            }}
-            title="Click to pre-fill test scholar credentials"
-          >
-            <span>✨ <strong>Demo Account:</strong> rajpoddar8907@gmail.com</span>
-            <span style={{ textDecoration: 'underline', fontWeight: 600 }}>Click to Fill</span>
-          </div>
-
           {error && <div className="auth-error">{error}</div>}
 
           <form className="auth-form" onSubmit={handleSubmit}>
@@ -124,20 +96,32 @@ export default function LoginPage() {
                 required
               />
             </div>
+
             <div className="auth-field">
               <div className="auth-label-row">
                 <label className="auth-label">Password</label>
                 <Link href="/forgot-password" className="auth-forgot">Forgot password?</Link>
               </div>
-              <input
-                type="password"
-                name="password"
-                value={form.password}
-                onChange={handleChange}
-                placeholder="••••••••"
-                className="auth-input"
-                required
-              />
+              <div className="auth-password-wrapper">
+                <input
+                  type={showPassword ? 'text' : 'password'}
+                  name="password"
+                  value={form.password}
+                  onChange={handleChange}
+                  placeholder="••••••••"
+                  className="auth-input auth-password-input"
+                  required
+                />
+                <button
+                  type="button"
+                  className="auth-password-toggle"
+                  onClick={() => setShowPassword(!showPassword)}
+                  aria-label={showPassword ? 'Hide password' : 'Show password'}
+                  title={showPassword ? 'Hide password' : 'Show password'}
+                >
+                  {showPassword ? <IconEyeOff size={18} /> : <IconEye size={18} />}
+                </button>
+              </div>
             </div>
 
             <button type="submit" className="auth-submit-btn" disabled={loading}>
@@ -155,9 +139,9 @@ export default function LoginPage() {
             <button 
               type="button" 
               className="auth-social-btn google"
-              onClick={fillDemoAccount}
+              onClick={() => alert("Google Sign-In integration is enabled for production domain.")}
             >
-              <IconGoogle size={18} /> Quick Sign In Demo
+              <IconGoogle size={18} /> Continue with Google
             </button>
           </div>
 
