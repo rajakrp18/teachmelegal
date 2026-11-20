@@ -135,12 +135,7 @@ export default function EditBlogPage({ params }) {
               </div>
 
               <div className="admin-form-group">
-                <label className="admin-label" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                  <span>Category</span>
-                  <span style={{ fontSize: '0.72rem', color: 'var(--admin-text-sub)', textTransform: 'none', fontWeight: 500 }}>
-                    Badge Color: <strong style={{ color: form.categoryColor || '#cfa856' }}>{form.categoryColor || '#cfa856'}</strong>
-                  </span>
-                </label>
+                <label className="admin-label">Category</label>
                 <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
                   <select
                     value={form.category}
@@ -155,18 +150,35 @@ export default function EditBlogPage({ params }) {
                     <option value="Teachmelegal">Teachmelegal</option>
                   </select>
 
-                  {/* Elegant Modern Color Card */}
+                  {/* Compact Color Swatch Card */}
                   <label 
                     className="admin-color-card"
-                    title="Click to customize category badge color"
+                    title={`Badge Color: ${form.categoryColor || '#cfa856'} (Click to customize)`}
+                    style={{
+                      width: '38px',
+                      height: '38px',
+                      padding: 0,
+                      display: 'inline-flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      borderRadius: '8px',
+                      border: '1px solid var(--admin-border)',
+                      background: 'var(--admin-body-bg, #ffffff)',
+                      cursor: 'pointer',
+                      position: 'relative',
+                      flexShrink: 0
+                    }}
                   >
                     <span 
-                      className="admin-color-swatch-dot" 
-                      style={{ backgroundColor: form.categoryColor || '#cfa856' }} 
+                      style={{
+                        width: '20px',
+                        height: '20px',
+                        borderRadius: '6px',
+                        backgroundColor: form.categoryColor || '#cfa856',
+                        border: '1px solid rgba(0,0,0,0.15)',
+                        boxShadow: '0 1px 3px rgba(0,0,0,0.1)'
+                      }} 
                     />
-                    <span className="admin-color-hex">
-                      {(form.categoryColor || '#cfa856').toUpperCase()}
-                    </span>
                     <input
                       type="color"
                       value={form.categoryColor || '#cfa856'}
@@ -183,37 +195,6 @@ export default function EditBlogPage({ params }) {
                       title="Choose custom badge color"
                     />
                   </label>
-                </div>
-
-                {/* Quick Palette Swatches */}
-                <div style={{ display: 'flex', alignItems: 'center', gap: '6px', marginTop: '6px' }}>
-                  <span style={{ fontSize: '0.7rem', color: 'var(--admin-text-sub)', fontWeight: 600 }}>Palette:</span>
-                  {[
-                    { name: 'Luxury Gold', color: '#cfa856' },
-                    { name: 'Supreme Blue', color: '#3b82f6' },
-                    { name: 'Criminal Red', color: '#ef4444' },
-                    { name: 'Corporate Emerald', color: '#10b981' },
-                    { name: 'Judicial Purple', color: '#8b5cf6' },
-                    { name: 'Slate Gray', color: '#64748b' }
-                  ].map((swatch) => (
-                    <button
-                      key={swatch.color}
-                      type="button"
-                      onClick={() => setForm({ ...form, categoryColor: swatch.color })}
-                      title={`${swatch.name} (${swatch.color})`}
-                      style={{
-                        width: '15px',
-                        height: '15px',
-                        borderRadius: '50%',
-                        backgroundColor: swatch.color,
-                        border: (form.categoryColor || '#cfa856').toLowerCase() === swatch.color.toLowerCase() ? '2px solid var(--admin-text-main)' : '1px solid rgba(0,0,0,0.2)',
-                        transform: (form.categoryColor || '#cfa856').toLowerCase() === swatch.color.toLowerCase() ? 'scale(1.25)' : 'none',
-                        cursor: 'pointer',
-                        padding: 0,
-                        transition: 'all 0.15s ease'
-                      }}
-                    />
-                  ))}
                 </div>
               </div>
             </div>
