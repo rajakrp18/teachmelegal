@@ -34,7 +34,29 @@ export async function generateStaticParams() {
 
 export default async function BlogPost({ params }) {
   const { slug } = await params;
-  const post = getPostBySlug(slug);
+  let post = getPostBySlug(slug);
+
+  if (!post) {
+    const adminUrl = process.env.ADMIN_BACKEND_URL || 'https://teachmelegal-teach-me-legal-admin-p.vercel.app';
+    if (adminUrl && !adminUrl.includes('localhost')) {
+      try {
+        const controller = new AbortController();
+        const timeout = setTimeout(() => controller.abort(), 3500);
+        const res = await fetch(`${adminUrl}/api/blogs`, {
+          cache: 'no-store',
+          headers: { 'Cache-Control': 'no-cache' },
+          signal: controller.signal
+        });
+        clearTimeout(timeout);
+        if (res.ok) {
+          const data = await res.json();
+          if (data.success && Array.isArray(data.posts)) {
+            post = data.posts.find(p => p.slug === slug || p.id === slug);
+          }
+        }
+      } catch (e) {}
+    }
+  }
 
   if (!post) {
     return (

@@ -1,5 +1,6 @@
 import fs from 'fs';
 import path from 'path';
+import os from 'os';
 
 let INITIAL_POSTS = [];
 try {
@@ -9,9 +10,12 @@ try {
   }
 } catch (e) {}
 
+const TMP_FILE = path.join(os.tmpdir(), 'teachmelegal-blogs.json');
+
 function getBlogFilePaths() {
   const currentDir = process.cwd();
   const candidates = [
+    TMP_FILE,
     path.join(currentDir, 'src', 'data', 'blogs.json'),
     path.resolve(currentDir, '..', 'TeachMeLegal-frontend', 'src', 'data', 'blogs.json'),
     path.resolve(currentDir, '..', 'TeachMeLegal-admin-panel', 'src', 'data', 'blogs.json'),
@@ -19,11 +23,28 @@ function getBlogFilePaths() {
     'c:/teachmelegal/TeachMeLegal-admin-panel/src/data/blogs.json'
   ];
   return [...new Set(candidates.map(p => path.resolve(p)))].filter(fp => {
-    return fs.existsSync(path.dirname(fp)) && (fp.includes('TeachMeLegal-frontend') || fp.includes('TeachMeLegal-admin-panel'));
+    return fp === path.resolve(TMP_FILE) || (fs.existsSync(path.dirname(fp)) && (fp.includes('TeachMeLegal-frontend') || fp.includes('TeachMeLegal-admin-panel')));
   });
 }
 
 function initStore() {
+  // If memory already has posts, never wipe them out with smaller/older disk data
+  if (global.__blogsStore && Array.isArray(global.__blogsStore) && global.__blogsStore.length > 0) {
+    try {
+      if (fs.existsSync(TMP_FILE)) {
+        const raw = fs.readFileSync(TMP_FILE, 'utf-8');
+        const parsed = JSON.parse(raw);
+        if (Array.isArray(parsed) && parsed.length > global.__blogsStore.length) {
+          const idMap = new Map();
+          parsed.forEach(p => idMap.set(p.id || p.slug, p));
+          global.__blogsStore.forEach(p => idMap.set(p.id || p.slug, p));
+          global.__blogsStore = Array.from(idMap.values());
+        }
+      }
+    } catch (e) {}
+    return global.__blogsStore;
+  }
+
   try {
     const filePaths = getBlogFilePaths();
     let bestData = null;
@@ -36,7 +57,11 @@ function initStore() {
           const raw = fs.readFileSync(fp, 'utf-8');
           const parsed = JSON.parse(raw);
           if (Array.isArray(parsed) && parsed.length > 0) {
-            if (!bestData || stats.mtimeMs > latestMtime || (parsed.length > bestData.length && Math.abs(stats.mtimeMs - latestMtime) < 10000)) {
+            if (
+              !bestData ||
+              parsed.length > bestData.length ||
+              (parsed.length === bestData.length && stats.mtimeMs > latestMtime)
+            ) {
               bestData = parsed;
               latestMtime = stats.mtimeMs;
             }
@@ -64,9 +89,19 @@ function initStore() {
 
 function saveToDisk() {
   try {
-    const filePaths = getBlogFilePaths();
     const dataStr = JSON.stringify(global.__blogsStore, null, 2);
+
+    // 1. Always write to OS tmp file (guaranteed writable on Vercel / AWS Lambda)
+    try {
+      fs.writeFileSync(TMP_FILE, dataStr, 'utf-8');
+    } catch (e) {
+      // ignore
+    }
+
+    // 2. Try writing to repo project paths (for local development)
+    const filePaths = getBlogFilePaths();
     for (const fp of filePaths) {
+      if (fp === path.resolve(TMP_FILE)) continue;
       try {
         const dir = path.dirname(fp);
         if (!fs.existsSync(dir)) {
@@ -74,7 +109,7 @@ function saveToDisk() {
         }
         fs.writeFileSync(fp, dataStr, 'utf-8');
       } catch (e) {
-        // ignore write error for individual non-existent dir
+        // Read-only filesystem in Vercel lambda is expected
       }
     }
   } catch (e) {

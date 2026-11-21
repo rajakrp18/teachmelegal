@@ -79,19 +79,48 @@ const INITIAL_COURSES = [
   }
 ];
 
-if (!global.__adminCoursesStore) {
-  global.__adminCoursesStore = [...INITIAL_COURSES];
-}
+import fs from 'fs';
+import path from 'path';
+import os from 'os';
 
-export function getAllCourses() {
+const TMP_COURSES = path.join(os.tmpdir(), 'teachmelegal-courses.json');
+
+function initCoursesStore() {
+  if (global.__adminCoursesStore && global.__adminCoursesStore.length > 0) {
+    return global.__adminCoursesStore;
+  }
+  try {
+    if (fs.existsSync(TMP_COURSES)) {
+      const raw = fs.readFileSync(TMP_COURSES, 'utf-8');
+      const parsed = JSON.parse(raw);
+      if (Array.isArray(parsed) && parsed.length > 0) {
+        global.__adminCoursesStore = parsed;
+        return global.__adminCoursesStore;
+      }
+    }
+  } catch (e) {}
+  global.__adminCoursesStore = [...INITIAL_COURSES];
   return global.__adminCoursesStore;
 }
 
+function saveCoursesToDisk() {
+  try {
+    fs.writeFileSync(TMP_COURSES, JSON.stringify(global.__adminCoursesStore, null, 2), 'utf-8');
+  } catch (e) {}
+}
+
+initCoursesStore();
+
+export function getAllCourses() {
+  return initCoursesStore();
+}
+
 export function getCourseById(id) {
-  return global.__adminCoursesStore.find(c => c.id === id);
+  return initCoursesStore().find(c => c.id === id);
 }
 
 export function createCourse(data) {
+  initCoursesStore();
   const newCourse = {
     id: `course-${Date.now()}`,
     title: data.title,
@@ -107,22 +136,27 @@ export function createCourse(data) {
     active: data.active !== false
   };
   global.__adminCoursesStore.unshift(newCourse);
+  saveCoursesToDisk();
   return newCourse;
 }
 
 export function updateCourse(id, data) {
+  initCoursesStore();
   const index = global.__adminCoursesStore.findIndex(c => c.id === id);
   if (index === -1) return null;
   global.__adminCoursesStore[index] = {
     ...global.__adminCoursesStore[index],
     ...data
   };
+  saveCoursesToDisk();
   return global.__adminCoursesStore[index];
 }
 
 export function deleteCourse(id) {
+  initCoursesStore();
   const index = global.__adminCoursesStore.findIndex(c => c.id === id);
   if (index === -1) return false;
   global.__adminCoursesStore.splice(index, 1);
+  saveCoursesToDisk();
   return true;
 }

@@ -13,8 +13,32 @@ export const metadata = {
   description: 'Read legal insights, landmark case analyses, and statutory guides by Advocate Prashant Jha.',
 };
 
-export default function BlogPage() {
-  const posts = getAllPosts(false);
+export default async function BlogPage() {
+  let posts = getAllPosts(false);
+
+  // Sync from admin backend on Vercel if deployed
+  const adminUrl = process.env.ADMIN_BACKEND_URL || 'https://teachmelegal-teach-me-legal-admin-p.vercel.app';
+  if (adminUrl && !adminUrl.includes('localhost')) {
+    try {
+      const controller = new AbortController();
+      const timeout = setTimeout(() => controller.abort(), 3500);
+      const res = await fetch(`${adminUrl}/api/blogs`, {
+        cache: 'no-store',
+        headers: { 'Cache-Control': 'no-cache' },
+        signal: controller.signal
+      });
+      clearTimeout(timeout);
+      if (res.ok) {
+        const data = await res.json();
+        if (data.success && Array.isArray(data.posts) && data.posts.length > 0) {
+          const idMap = new Map();
+          posts.forEach(p => idMap.set(p.id || p.slug, p));
+          data.posts.forEach(p => idMap.set(p.id || p.slug, p));
+          posts = Array.from(idMap.values());
+        }
+      }
+    } catch (e) {}
+  }
 
   return (
     <main className="blog-page-wrapper">

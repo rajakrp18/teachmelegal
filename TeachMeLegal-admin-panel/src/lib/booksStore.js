@@ -131,19 +131,48 @@ const INITIAL_BOOKS = [
   }
 ];
 
-if (!global.__adminBooksStore) {
-  global.__adminBooksStore = [...INITIAL_BOOKS];
-}
+import fs from 'fs';
+import path from 'path';
+import os from 'os';
 
-export function getAllBooks() {
+const TMP_BOOKS = path.join(os.tmpdir(), 'teachmelegal-books.json');
+
+function initBooksStore() {
+  if (global.__adminBooksStore && global.__adminBooksStore.length > 0) {
+    return global.__adminBooksStore;
+  }
+  try {
+    if (fs.existsSync(TMP_BOOKS)) {
+      const raw = fs.readFileSync(TMP_BOOKS, 'utf-8');
+      const parsed = JSON.parse(raw);
+      if (Array.isArray(parsed) && parsed.length > 0) {
+        global.__adminBooksStore = parsed;
+        return global.__adminBooksStore;
+      }
+    }
+  } catch (e) {}
+  global.__adminBooksStore = [...INITIAL_BOOKS];
   return global.__adminBooksStore;
 }
 
+function saveBooksToDisk() {
+  try {
+    fs.writeFileSync(TMP_BOOKS, JSON.stringify(global.__adminBooksStore, null, 2), 'utf-8');
+  } catch (e) {}
+}
+
+initBooksStore();
+
+export function getAllBooks() {
+  return initBooksStore();
+}
+
 export function getBookById(id) {
-  return global.__adminBooksStore.find(b => b.id === id);
+  return initBooksStore().find(b => b.id === id);
 }
 
 export function createBook(data) {
+  initBooksStore();
   const newBook = {
     id: `book-${Date.now()}`,
     title: data.title,
@@ -160,22 +189,27 @@ export function createBook(data) {
     active: data.active !== false
   };
   global.__adminBooksStore.unshift(newBook);
+  saveBooksToDisk();
   return newBook;
 }
 
 export function updateBook(id, data) {
+  initBooksStore();
   const index = global.__adminBooksStore.findIndex(b => b.id === id);
   if (index === -1) return null;
   global.__adminBooksStore[index] = {
     ...global.__adminBooksStore[index],
     ...data
   };
+  saveBooksToDisk();
   return global.__adminBooksStore[index];
 }
 
 export function deleteBook(id) {
+  initBooksStore();
   const index = global.__adminBooksStore.findIndex(b => b.id === id);
   if (index === -1) return false;
   global.__adminBooksStore.splice(index, 1);
+  saveBooksToDisk();
   return true;
 }
