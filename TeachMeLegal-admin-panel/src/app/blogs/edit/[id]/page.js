@@ -26,6 +26,16 @@ export default function EditBlogPage({ params }) {
   const [showPreviewModal, setShowPreviewModal] = useState(false);
 
   useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (e.key === 'Escape' && showPreviewModal) {
+        setShowPreviewModal(false);
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [showPreviewModal]);
+
+  useEffect(() => {
     async function fetchPost() {
       try {
         const res = await fetch(`/api/admin/blogs/${id}`);
@@ -334,61 +344,72 @@ export default function EditBlogPage({ params }) {
         </form>
       </main>
 
-      {/* Full Student Preview Modal */}
+      {/* Full-Screen Student Reader Preview */}
       {showPreviewModal && (
-        <div className="admin-modal-backdrop" onClick={() => setShowPreviewModal(false)}>
-          <div 
-            className="admin-modal-card" 
-            style={{ maxWidth: '960px', width: '95%', maxHeight: '92vh', padding: '36px' }}
+        <div 
+          className="admin-fullscreen-preview-overlay"
+          onClick={() => setShowPreviewModal(false)}
+        >
+          {/* Top Sticky Bar */}
+          <header 
+            className="admin-fullscreen-preview-header"
             onClick={(e) => e.stopPropagation()}
           >
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderBottom: '1px solid var(--admin-border)', paddingBottom: '16px', marginBottom: '24px' }}>
-              <div>
-                <span className="badge badge-exam" style={{ background: `${form.categoryColor || '#cfa856'}20`, color: form.categoryColor || '#cfa856' }}>
-                  {form.category}
-                </span>
-                <span style={{ fontSize: '0.82rem', color: 'var(--admin-text-sub)', marginLeft: '12px' }}>
-                  Simulated Student Reading Mode • {form.readTime}
-                </span>
-              </div>
-              <button 
-                type="button"
-                onClick={() => setShowPreviewModal(false)}
-                className="admin-modal-close"
-              >
-                ✕
-              </button>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '14px', flexWrap: 'wrap' }}>
+              <span className="badge badge-exam" style={{ background: `${form.categoryColor || '#cfa856'}20`, color: form.categoryColor || '#cfa856', fontWeight: 800 }}>
+                {form.category}
+              </span>
+              <span style={{ fontSize: '0.88rem', color: 'var(--admin-text-sub)', fontWeight: 600 }}>
+                Full-Screen Simulated Reader Preview • {form.readTime || '5 min read'}
+              </span>
             </div>
 
-            <article className="post-content">
-              <h1 style={{ fontSize: '2.1rem', fontWeight: 800, lineHeight: 1.25, margin: '0 0 16px', color: 'var(--admin-text-main)' }}>
-                {form.title || 'Untitled Legal Article'}
-              </h1>
-              
-              <div style={{ display: 'flex', gap: '18px', color: 'var(--admin-text-sub)', fontSize: '0.88rem', borderBottom: '1px solid var(--admin-border)', paddingBottom: '16px', marginBottom: '24px' }}>
-                <span>{form.author || 'Adv. Prashant Jha'}</span>
-                <span>Published</span>
-                <span>{form.readTime}</span>
-              </div>
-
-              {form.excerpt && (
-                <div style={{ background: 'rgba(207, 168, 86, 0.08)', borderLeft: '3.5px solid var(--admin-gold)', padding: '14px 20px', borderRadius: '0 10px 10px 0', marginBottom: '28px', fontStyle: 'italic', fontSize: '1.02rem' }}>
-                  {form.excerpt}
-                </div>
-              )}
-
-              <div dangerouslySetInnerHTML={{ __html: form.content || '<p style="color: #94a3b8; font-style: italic;">No content.</p>' }} />
-            </article>
-
-            <div style={{ marginTop: '28px', textAlign: 'right', borderTop: '1px solid var(--admin-border)', paddingTop: '16px' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+              <span style={{ fontSize: '0.78rem', color: 'var(--admin-text-sub)', background: 'var(--admin-body-bg)', padding: '5px 12px', borderRadius: '6px', border: '1px solid var(--admin-border)' }}>
+                Press <kbd style={{ fontWeight: 800 }}>ESC</kbd> to exit
+              </span>
               <button 
                 type="button"
                 onClick={() => setShowPreviewModal(false)}
                 className="admin-btn admin-btn-primary"
+                style={{ padding: '8px 20px', fontSize: '0.86rem', fontWeight: 700 }}
               >
                 ← Back to Editing Canvas
               </button>
             </div>
+          </header>
+
+          {/* Expansive Reading Container */}
+          <div 
+            className="admin-fullscreen-preview-container"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <article className="post-content">
+              <h1 style={{ fontSize: '2.4rem', fontWeight: 900, lineHeight: 1.25, margin: '0 0 16px', color: 'var(--admin-text-main)', letterSpacing: '-0.02em' }}>
+                {form.title || 'Untitled Legal Article'}
+              </h1>
+              
+              <div style={{ display: 'flex', gap: '20px', color: 'var(--admin-text-sub)', fontSize: '0.92rem', borderBottom: '1px solid var(--admin-border)', paddingBottom: '18px', marginBottom: '26px', flexWrap: 'wrap', alignItems: 'center' }}>
+                <span style={{ fontWeight: 700, color: 'var(--admin-text-main)' }}>By {form.author || 'Adv. Prashant Jha'}</span>
+                <span>•</span>
+                <span>Category: <strong style={{ color: form.categoryColor || 'var(--admin-gold)' }}>{form.category}</strong></span>
+                <span>•</span>
+                <span>Read Time: {form.readTime || '5 min read'}</span>
+                <span>•</span>
+                <span>Status: Published</span>
+              </div>
+
+              {form.excerpt && (
+                <div style={{ background: 'rgba(207, 168, 86, 0.08)', borderLeft: '4px solid var(--admin-gold)', padding: '16px 24px', borderRadius: '0 12px 12px 0', marginBottom: '32px', fontStyle: 'italic', fontSize: '1.05rem', lineHeight: 1.7 }}>
+                  {form.excerpt}
+                </div>
+              )}
+
+              <div 
+                className="article-full-body"
+                dangerouslySetInnerHTML={{ __html: form.content || '<p style="color: #94a3b8; font-style: italic;">No content available to preview.</p>' }} 
+              />
+            </article>
           </div>
         </div>
       )}

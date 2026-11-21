@@ -27,6 +27,46 @@ export default function AdminCoursesPage() {
     active: true
   });
 
+  const [uploadingImage, setUploadingImage] = useState(false);
+  const [uploadingPdf, setUploadingPdf] = useState(false);
+
+  const handleFileUpload = async (e, type) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    const isPdf = type === 'pdf';
+    if (isPdf) setUploadingPdf(true);
+    else setUploadingImage(true);
+
+    try {
+      const formData = new FormData();
+      formData.append('file', file);
+      formData.append('folder', isPdf ? 'courses/documents' : 'courses/covers');
+
+      const res = await fetch('/api/admin/upload', {
+        method: 'POST',
+        body: formData
+      });
+      const data = await res.json();
+      if (data.success && data.url) {
+        if (isPdf) {
+          setForm(prev => ({ ...prev, driveUrl: data.url }));
+        } else {
+          setForm(prev => ({ ...prev, image: data.url }));
+        }
+      } else {
+        alert(data.error || 'Failed to upload file.');
+      }
+    } catch (err) {
+      console.error('File upload error:', err);
+      alert('An error occurred during file upload.');
+    } finally {
+      if (isPdf) setUploadingPdf(false);
+      else setUploadingImage(false);
+      e.target.value = '';
+    }
+  };
+
   const fetchCourses = async () => {
     setLoading(true);
     try {
@@ -481,19 +521,51 @@ export default function AdminCoursesPage() {
                     </div>
 
                     <div className="admin-form-group" style={{ marginBottom: '8px' }}>
-                      <label className="admin-label" style={{ fontSize: '0.74rem', marginBottom: '3px' }}>
-                        Direct Google Drive Link / Video URL
-                      </label>
+                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '3px' }}>
+                        <label className="admin-label" style={{ fontSize: '0.74rem', margin: 0 }}>
+                          Drive Link / PDF Material
+                        </label>
+                        <label 
+                          style={{ 
+                            fontSize: '0.72rem', 
+                            color: 'var(--admin-gold)', 
+                            fontWeight: 700, 
+                            cursor: 'pointer',
+                            display: 'inline-flex',
+                            alignItems: 'center',
+                            gap: '4px',
+                            background: 'rgba(207, 168, 86, 0.1)',
+                            padding: '2px 8px',
+                            borderRadius: '6px',
+                            border: '1px solid rgba(207, 168, 86, 0.3)'
+                          }}
+                        >
+                          {uploadingPdf ? '⏳ Uploading...' : '📄 Upload PDF'}
+                          <input 
+                            type="file" 
+                            accept=".pdf,.doc,.docx" 
+                            style={{ display: 'none' }}
+                            disabled={uploadingPdf}
+                            onChange={(e) => handleFileUpload(e, 'pdf')}
+                          />
+                        </label>
+                      </div>
                       <input
                         type="url"
                         value={form.driveUrl || ''}
                         onChange={(e) => setForm({ ...form, driveUrl: e.target.value })}
-                        placeholder="https://drive.google.com/file/d/... or https://..."
+                        placeholder="https://drive.google.com/... or uploaded syllabus PDF"
                         className="admin-input"
                         style={{ padding: '7px 11px', fontSize: '0.83rem', borderRadius: '8px' }}
                       />
                       <span style={{ fontSize: '0.7rem', color: 'var(--admin-text-sub)', marginTop: '2px', display: 'block' }}>
-                        Direct Drive download or student access link.
+                        {form.driveUrl ? (
+                          <span style={{ color: 'var(--admin-gold)', fontWeight: 600 }}>
+                            ✓ File attached: {form.driveUrl.startsWith('/') ? form.driveUrl.split('/').pop() : 'External link configured'}
+                          </span>
+                        ) : (
+                          'Upload a course syllabus/PDF directly or paste a Drive/video link.'
+                        )}
                       </span>
                     </div>
                   </div>
@@ -501,14 +573,51 @@ export default function AdminCoursesPage() {
                   {/* Right Column */}
                   <div>
                     <div className="admin-form-group" style={{ marginBottom: '10px' }}>
-                      <label className="admin-label" style={{ fontSize: '0.74rem', marginBottom: '3px' }}>Cover Image URL</label>
-                      <input
-                        type="url"
-                        value={form.image}
-                        onChange={(e) => setForm({ ...form, image: e.target.value })}
-                        className="admin-input"
-                        style={{ padding: '7px 11px', fontSize: '0.85rem', borderRadius: '8px' }}
-                      />
+                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '3px' }}>
+                        <label className="admin-label" style={{ fontSize: '0.74rem', margin: 0 }}>Cover Image</label>
+                        <label 
+                          style={{ 
+                            fontSize: '0.72rem', 
+                            color: 'var(--admin-gold)', 
+                            fontWeight: 700, 
+                            cursor: 'pointer',
+                            display: 'inline-flex',
+                            alignItems: 'center',
+                            gap: '4px',
+                            background: 'rgba(207, 168, 86, 0.1)',
+                            padding: '2px 8px',
+                            borderRadius: '6px',
+                            border: '1px solid rgba(207, 168, 86, 0.3)'
+                          }}
+                        >
+                          {uploadingImage ? '⏳ Uploading...' : '📁 Upload Image'}
+                          <input 
+                            type="file" 
+                            accept="image/*" 
+                            style={{ display: 'none' }}
+                            disabled={uploadingImage}
+                            onChange={(e) => handleFileUpload(e, 'image')}
+                          />
+                        </label>
+                      </div>
+                      <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
+                        <input
+                          type="url"
+                          value={form.image || ''}
+                          onChange={(e) => setForm({ ...form, image: e.target.value })}
+                          placeholder="https://... or uploaded image URL"
+                          className="admin-input"
+                          style={{ padding: '7px 11px', fontSize: '0.85rem', borderRadius: '8px', flex: 1 }}
+                        />
+                        {form.image && (
+                          <div style={{ width: '32px', height: '32px', borderRadius: '6px', overflow: 'hidden', border: '1px solid var(--admin-border)', flexShrink: 0, background: '#f1f5f9' }}>
+                            <img src={form.image} alt="Preview" style={{ width: '100%', height: '100%', objectFit: 'cover' }} onError={(e) => e.target.style.display = 'none'} />
+                          </div>
+                        )}
+                      </div>
+                      <span style={{ fontSize: '0.68rem', color: 'var(--admin-text-sub)', marginTop: '2px', display: 'block' }}>
+                        Upload a local course banner (PNG, JPG, WebP) or paste an image URL.
+                      </span>
                     </div>
 
                     <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px', marginBottom: '10px' }}>

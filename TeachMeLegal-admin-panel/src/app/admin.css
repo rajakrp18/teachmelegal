@@ -874,6 +874,27 @@ body {
   position: relative;
 }
 
+.admin-targeting-modal-card {
+  background: var(--admin-card-bg);
+  border: 1px solid var(--admin-border);
+  border-radius: 20px;
+  max-width: 1160px;
+  width: 94%;
+  max-height: 92vh;
+  overflow: hidden;
+  padding: 24px 32px;
+  box-shadow: 0 25px 70px rgba(0, 0, 0, 0.35);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+}
+
+[data-theme='dark'] .admin-targeting-modal-card {
+  background: #0d1a29;
+  border-color: rgba(255, 255, 255, 0.08);
+}
+
 .admin-modal-header {
   display: flex;
   justify-content: space-between;
@@ -1049,4 +1070,85 @@ body {
   letter-spacing: 0.03em;
   font-family: monospace;
 }
+
+/* ── Fullscreen Student Preview Overlay (Zero-Cutoff) ── */
+.admin-fullscreen-preview-overlay {
+  position: fixed !important;
+  inset: 0 !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  z-index: 9999 !important;
+  background: var(--admin-body-bg, #fbfaf7) !important;
+  overflow-y: auto !important;
+  display: flex !important;
+  flex-direction: column !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  box-sizing: border-box;
+}
+
+[data-theme='dark'] .admin-fullscreen-preview-overlay {
+  background: #040911 !important;
+}
+
+.admin-fullscreen-preview-header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: var(--admin-card-bg, #ffffff);
+  border-bottom: 1.5px solid var(--admin-border, #e2e8f0);
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.06);
+  padding: 16px 40px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  backdrop-filter: blur(12px);
+  box-sizing: border-box;
+}
+
+[data-theme='dark'] .admin-fullscreen-preview-header {
+  background: #0a111e;
+  border-bottom-color: rgba(255, 255, 255, 0.08);
+}
+
+.admin-fullscreen-preview-container {
+  width: 100%;
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 44px 36px 140px;
+  flex: 1;
+  box-sizing: border-box;
+}
+
+.admin-fullscreen-preview-container .post-content {
+  background: var(--admin-card-bg, #ffffff);
+  border: 1px solid var(--admin-border, #e2e8f0);
+  border-radius: 20px;
+  padding: 48px 56px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.04);
+}
+
+[data-theme='dark'] .admin-fullscreen-preview-container .post-content {
+  background: #0d1a29;
+  border-color: rgba(255, 255, 255, 0.08);
+}
+
+/* Ensure wide statutory tables never get cut off */
+.post-content .table-responsive,
+.article-full-body .table-responsive {
+  width: 100% !important;
+  overflow-x: auto !important;
+  margin: 24px 0 !important;
+  border-radius: 12px !important;
+  -webkit-overflow-scrolling: touch !important;
+}
+
+.post-content table,
+.article-full-body table {
+  width: 100% !important;
+  min-width: 620px;
+  border-collapse: collapse !important;
+}
+
 

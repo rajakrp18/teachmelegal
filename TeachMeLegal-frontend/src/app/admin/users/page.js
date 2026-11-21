@@ -207,18 +207,21 @@ export default function AdminUsersPage() {
         }}>
           <div style={{
             background: '#ffffff',
-            borderRadius: '16px',
-            maxWidth: '650px',
-            width: '100%',
-            maxHeight: '90vh',
-            overflowY: 'auto',
-            padding: '28px',
-            boxShadow: '0 20px 40px rgba(0,0,0,0.2)'
+            borderRadius: '20px',
+            maxWidth: '1160px',
+            width: '94%',
+            maxHeight: '92vh',
+            overflowY: 'hidden',
+            padding: '24px 32px',
+            boxShadow: '0 25px 70px rgba(0,0,0,0.25)',
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '18px'
           }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px', borderBottom: '1px solid #e2e8f0', paddingBottom: '14px' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderBottom: '1px solid #e2e8f0', paddingBottom: '16px', flexWrap: 'wrap', gap: '14px' }}>
               <div>
-                <h2 style={{ fontSize: '1.35rem', fontWeight: 800, color: '#0f172a' }}>{selectedUser.name}</h2>
-                <p style={{ color: '#64748b', fontSize: '0.85rem' }}>{selectedUser.email} • Member since {selectedUser.memberSince}</p>
+                <h2 style={{ fontSize: '1.35rem', fontWeight: 800, color: '#0f172a', margin: 0 }}>{selectedUser.name}</h2>
+                <p style={{ color: '#64748b', fontSize: '0.82rem', margin: '3px 0 0' }}>{selectedUser.email} • Member since {selectedUser.memberSince} • ID: {selectedUser.id}</p>
               </div>
               <button
                 onClick={() => setSelectedUser(null)}
@@ -236,69 +239,78 @@ export default function AdminUsersPage() {
               </button>
             </div>
 
-            <div style={{ marginBottom: '20px' }}>
-              <h3 style={{ fontSize: '0.95rem', fontWeight: 700, color: '#334155', marginBottom: '8px', textTransform: 'uppercase' }}>Academic & Exam Profile</h3>
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px', background: '#f8fafc', padding: '14px', borderRadius: '10px', fontSize: '0.88rem' }}>
-                <div><strong>Phone:</strong> {selectedUser.phone || 'N/A'}</div>
-                <div><strong>Target Exam:</strong> {selectedUser.targetExam || 'N/A'}</div>
-                <div><strong>Profession:</strong> {selectedUser.profession || 'N/A'}</div>
-                <div><strong>Year of Study:</strong> {selectedUser.yearOfStudy || 'N/A'}</div>
-                <div><strong>University:</strong> {selectedUser.university || 'N/A'}</div>
-                <div><strong>State:</strong> {selectedUser.state || 'N/A'}</div>
+            <div style={{ display: 'grid', gridTemplateColumns: '1.1fr 1fr', gap: '22px', alignItems: 'start' }}>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+                <div>
+                  <h3 style={{ fontSize: '0.78rem', fontWeight: 800, color: '#c5a059', marginBottom: '8px', textTransform: 'uppercase' }}>Academic & Exam Profile</h3>
+                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px', background: '#f8fafc', padding: '12px 14px', borderRadius: '10px', fontSize: '0.83rem' }}>
+                    <div><strong>Phone:</strong> {selectedUser.phone || 'N/A'}</div>
+                    <div><strong>Target Exam:</strong> <span style={{ color: '#c5a059', fontWeight: 700 }}>{selectedUser.targetExam || 'N/A'}</span></div>
+                    <div><strong>Profession:</strong> {selectedUser.profession || 'N/A'}</div>
+                    <div><strong>Year of Study:</strong> {selectedUser.yearOfStudy || 'N/A'}</div>
+                    <div><strong>University:</strong> {selectedUser.university || 'N/A'}</div>
+                    <div><strong>State:</strong> {selectedUser.state || 'N/A'}</div>
+                  </div>
+                </div>
+                {selectedUser.bio && (
+                  <div style={{ fontSize: '0.83rem', color: '#475569', background: '#f8fafc', padding: '12px 14px', borderRadius: '10px', borderLeft: '3px solid #c5a059' }}>
+                    <strong style={{ display: 'block', color: '#0f172a', marginBottom: '4px' }}>Scholar Bio:</strong>
+                    {selectedUser.bio}
+                  </div>
+                )}
               </div>
-              {selectedUser.bio && (
-                <div style={{ marginTop: '10px', fontSize: '0.85rem', color: '#475569', background: '#f1f5f9', padding: '10px 14px', borderRadius: '8px' }}>
-                  <strong>Bio:</strong> {selectedUser.bio}
-                </div>
-              )}
-            </div>
 
-            <div style={{ marginBottom: '20px' }}>
-              <h3 style={{ fontSize: '0.95rem', fontWeight: 700, color: '#334155', marginBottom: '8px', textTransform: 'uppercase' }}>
-                Enrolled Materials ({selectedUser.enrolledCourses?.length || 0})
-              </h3>
-              {(!selectedUser.enrolledCourses || selectedUser.enrolledCourses.length === 0) ? (
-                <p style={{ fontSize: '0.85rem', color: '#94a3b8' }}>No courses or notes currently enrolled.</p>
-              ) : (
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                  {selectedUser.enrolledCourses.map((c, i) => (
-                    <div key={i} style={{ border: '1px solid #e2e8f0', padding: '10px 14px', borderRadius: '8px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                      <div>
-                        <div style={{ fontWeight: 600, fontSize: '0.88rem' }}>{c.title}</div>
-                        <div style={{ fontSize: '0.75rem', color: '#64748b' }}>{c.category} • Enrolled: {c.enrolledDate}</div>
-                      </div>
-                      <span className="badge" style={{ background: '#f0fdf4', color: '#15803d' }}>Active</span>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+                <div>
+                  <h3 style={{ fontSize: '0.78rem', fontWeight: 800, color: '#c5a059', marginBottom: '8px', textTransform: 'uppercase' }}>
+                    Enrolled Materials ({selectedUser.enrolledCourses?.length || 0})
+                  </h3>
+                  {(!selectedUser.enrolledCourses || selectedUser.enrolledCourses.length === 0) ? (
+                    <p style={{ fontSize: '0.82rem', color: '#94a3b8', margin: 0 }}>No courses or notes currently enrolled.</p>
+                  ) : (
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
+                      {selectedUser.enrolledCourses.map((c, i) => (
+                        <div key={i} style={{ border: '1px solid #e2e8f0', padding: '8px 12px', borderRadius: '8px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                          <div>
+                            <div style={{ fontWeight: 600, fontSize: '0.84rem' }}>{c.title}</div>
+                            <div style={{ fontSize: '0.74rem', color: '#64748b' }}>{c.category} • Enrolled: {c.enrolledDate}</div>
+                          </div>
+                          <span className="badge" style={{ background: '#f0fdf4', color: '#15803d', fontSize: '0.72rem' }}>Active</span>
+                        </div>
+                      ))}
                     </div>
-                  ))}
+                  )}
                 </div>
-              )}
-            </div>
 
-            <div>
-              <h3 style={{ fontSize: '0.95rem', fontWeight: 700, color: '#334155', marginBottom: '8px', textTransform: 'uppercase' }}>
-                Order History ({selectedUser.orderHistory?.length || 0})
-              </h3>
-              {(!selectedUser.orderHistory || selectedUser.orderHistory.length === 0) ? (
-                <p style={{ fontSize: '0.85rem', color: '#94a3b8' }}>No past purchase transactions found.</p>
-              ) : (
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                  {selectedUser.orderHistory.map((o, i) => (
-                    <div key={i} style={{ border: '1px solid #e2e8f0', padding: '10px 14px', borderRadius: '8px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                      <div>
-                        <div style={{ fontWeight: 700, fontSize: '0.85rem', color: '#0f172a' }}>{o.id} • {o.amount}</div>
-                        <div style={{ fontSize: '0.78rem', color: '#64748b' }}>{o.items} • {o.date}</div>
-                      </div>
-                      <span className="badge badge-published">{o.status || 'PAID'}</span>
+                <div>
+                  <h3 style={{ fontSize: '0.78rem', fontWeight: 800, color: '#c5a059', marginBottom: '8px', textTransform: 'uppercase' }}>
+                    Order History ({selectedUser.orderHistory?.length || 0})
+                  </h3>
+                  {(!selectedUser.orderHistory || selectedUser.orderHistory.length === 0) ? (
+                    <p style={{ fontSize: '0.82rem', color: '#94a3b8', margin: 0 }}>No past purchase transactions found.</p>
+                  ) : (
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
+                      {selectedUser.orderHistory.map((o, i) => (
+                        <div key={i} style={{ border: '1px solid #e2e8f0', padding: '8px 12px', borderRadius: '8px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                          <div>
+                            <div style={{ fontWeight: 700, fontSize: '0.82rem', color: '#0f172a' }}>{o.id} • {o.amount}</div>
+                            <div style={{ fontSize: '0.74rem', color: '#64748b' }}>{o.items} • {o.date}</div>
+                          </div>
+                          <span className="badge badge-published" style={{ fontSize: '0.72rem' }}>{o.status || 'PAID'}</span>
+                        </div>
+                      ))}
                     </div>
-                  ))}
+                  )}
                 </div>
-              )}
+              </div>
             </div>
 
-            <div style={{ marginTop: '24px', textAlign: 'right' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderTop: '1px solid #e2e8f0', paddingTop: '12px' }}>
+              <span style={{ fontSize: '0.78rem', color: '#64748b' }}>Targeting Status: <strong style={{ color: '#10b981' }}>100% Ready</strong></span>
               <button
                 onClick={() => setSelectedUser(null)}
                 className="admin-btn admin-btn-primary"
+                style={{ padding: '6px 18px', fontSize: '0.82rem' }}
               >
                 Close Window
               </button>

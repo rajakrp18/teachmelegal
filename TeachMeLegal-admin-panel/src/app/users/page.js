@@ -23,6 +23,16 @@ export default function AdminUsersPage() {
   const [copiedPhone, setCopiedPhone] = useState(false);
 
   useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (e.key === 'Escape' && selectedUser) {
+        setSelectedUser(null);
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [selectedUser]);
+
+  useEffect(() => {
     async function fetchUsers() {
       try {
         const res = await fetch('/api/admin/users');
@@ -364,113 +374,158 @@ export default function AdminUsersPage() {
         </div>
       </main>
 
-      {/* Targeting & Outreach Modal */}
+      {/* Targeting & Outreach Modal (Wide 2-Column Zero-Scroll Layout) */}
       {selectedUser && (
         <div className="admin-modal-backdrop" onClick={() => setSelectedUser(null)}>
-          <div className="admin-modal-card" onClick={(e) => e.stopPropagation()}>
-            <div className="admin-modal-header">
+          <div 
+            className="admin-targeting-modal-card" 
+            onClick={(e) => e.stopPropagation()}
+            style={{
+              width: '94%',
+              maxWidth: '1160px',
+              padding: '24px 32px',
+              borderRadius: '20px',
+              display: 'flex',
+              flexDirection: 'column',
+              gap: '18px'
+            }}
+          >
+            {/* Top Bar: Scholar Profile on Left, Targeting Channels + Close on Right */}
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderBottom: '1px solid var(--admin-border)', paddingBottom: '16px', flexWrap: 'wrap', gap: '14px' }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
-                <div className="admin-scholar-avatar large">
+                <div className="admin-scholar-avatar large" style={{ width: '48px', height: '48px', fontSize: '1.2rem' }}>
                   {(selectedUser.name || selectedUser.email || 'S').charAt(0).toUpperCase()}
                 </div>
                 <div>
-                  <h2 style={{ fontSize: '1.4rem', fontWeight: 800, margin: 0 }}>{selectedUser.name}</h2>
-                  <p style={{ margin: '2px 0 0', fontSize: '0.85rem', color: 'var(--admin-text-sub)' }}>
-                    {selectedUser.email} • Joined {selectedUser.memberSince}
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                    <h2 style={{ fontSize: '1.35rem', fontWeight: 800, margin: 0, color: 'var(--admin-text-main)' }}>{selectedUser.name}</h2>
+                    <span className="badge badge-published" style={{ fontSize: '0.74rem' }}>{selectedUser.role}</span>
+                  </div>
+                  <p style={{ margin: '3px 0 0', fontSize: '0.82rem', color: 'var(--admin-text-sub)' }}>
+                    {selectedUser.email} • Joined {selectedUser.memberSince} • ID: {selectedUser.id}
                   </p>
                 </div>
               </div>
-              <button onClick={() => setSelectedUser(null)} className="admin-modal-close">✕</button>
+
+              {/* Outreach Targeting Channels in Header */}
+              <div style={{ display: 'flex', alignItems: 'center', gap: '10px', flexWrap: 'wrap' }}>
+                <button 
+                  onClick={() => copyToClipboard(selectedUser.phone || selectedUser.email)}
+                  className="admin-btn-pill"
+                  style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', fontSize: '0.8rem', padding: '6px 14px' }}
+                >
+                  <span>📞</span>
+                  <span>{copiedPhone ? 'Phone Copied!' : `Call / WhatsApp: ${selectedUser.phone || 'N/A'}`}</span>
+                </button>
+                <a 
+                  href={`mailto:${selectedUser.email}?subject=Exclusive Judicial Mentorship - TeachMeLegal`}
+                  className="admin-btn-pill"
+                  style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', fontSize: '0.8rem', padding: '6px 14px' }}
+                >
+                  <span>✉️</span>
+                  <span>Send Judicial Guidance Email</span>
+                </a>
+                <button 
+                  onClick={() => setSelectedUser(null)} 
+                  className="admin-modal-close"
+                  style={{ marginLeft: '6px' }}
+                  title="Close Inspector (Esc)"
+                >
+                  ✕
+                </button>
+              </div>
             </div>
 
-            {/* Quick Outreach Targeting Action Buttons */}
-            <div className="admin-targeting-bar">
-              <span style={{ fontSize: '0.85rem', fontWeight: 700, color: 'var(--admin-gold)' }}>
-                Targeting Channels:
+            {/* Main 2-Column Content Grid */}
+            <div style={{ display: 'grid', gridTemplateColumns: '1.1fr 1fr', gap: '22px', alignItems: 'start' }}>
+              {/* Left Column: Credentials & Bio */}
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+                <div className="admin-modal-section" style={{ margin: 0 }}>
+                  <h3 className="admin-modal-section-title" style={{ fontSize: '0.78rem', marginBottom: '8px' }}>
+                    Judicial Scholar Credentials
+                  </h3>
+                  <div className="admin-details-grid" style={{ padding: '12px 14px', gap: '10px', fontSize: '0.83rem', borderRadius: '12px' }}>
+                    <div><strong>Target Exam:</strong> <span style={{ color: 'var(--admin-gold)', fontWeight: 700 }}>{selectedUser.targetExam || 'N/A'}</span></div>
+                    <div><strong>Current Status:</strong> <span>{selectedUser.profession || 'N/A'}</span></div>
+                    <div><strong>Law School:</strong> <span>{selectedUser.university || 'N/A'}</span></div>
+                    <div><strong>Year / Bar:</strong> <span>{selectedUser.yearOfStudy || 'N/A'}</span></div>
+                    <div><strong>State:</strong> <span>{selectedUser.state || 'N/A'}</span></div>
+                    <div><strong>Outreach Ready:</strong> <span style={{ color: '#10b981', fontWeight: 700 }}>Verified & Active</span></div>
+                  </div>
+                </div>
+
+                {selectedUser.bio && (
+                  <div className="admin-bio-box" style={{ margin: 0, padding: '12px 16px', borderRadius: '12px' }}>
+                    <strong style={{ fontSize: '0.8rem', color: 'var(--admin-gold)', display: 'block', marginBottom: '4px' }}>
+                      Scholar Focus & Chambers Bio:
+                    </strong>
+                    <p style={{ margin: 0, fontSize: '0.83rem', lineHeight: 1.5, color: 'var(--admin-text-main)' }}>{selectedUser.bio}</p>
+                  </div>
+                )}
+              </div>
+
+              {/* Right Column: Enrolled Items & Orders */}
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+                {/* Enrolled Courses */}
+                <div className="admin-modal-section" style={{ margin: 0 }}>
+                  <h3 className="admin-modal-section-title" style={{ fontSize: '0.78rem', marginBottom: '8px' }}>
+                    Enrolled Notes & Masterclasses ({selectedUser.enrolledCourses?.length || 0})
+                  </h3>
+                  {(!selectedUser.enrolledCourses || selectedUser.enrolledCourses.length === 0) ? (
+                    <p style={{ fontSize: '0.82rem', color: 'var(--admin-text-sub)', margin: 0 }}>No study materials enrolled yet.</p>
+                  ) : (
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
+                      {selectedUser.enrolledCourses.map((c, i) => (
+                        <div key={i} className="admin-item-row" style={{ padding: '8px 12px', borderRadius: '10px' }}>
+                          <div>
+                            <div style={{ fontWeight: 700, fontSize: '0.84rem' }}>{c.title}</div>
+                            <div style={{ fontSize: '0.74rem', color: 'var(--admin-text-sub)' }}>
+                              {c.category} • Enrolled: {c.enrolledDate}
+                            </div>
+                          </div>
+                          <span className="badge badge-published" style={{ fontSize: '0.72rem', padding: '3px 8px' }}>Active Access</span>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </div>
+
+                {/* Order History */}
+                <div className="admin-modal-section" style={{ margin: 0 }}>
+                  <h3 className="admin-modal-section-title" style={{ fontSize: '0.78rem', marginBottom: '8px' }}>
+                    Purchase History & Receipts ({selectedUser.orderHistory?.length || 0})
+                  </h3>
+                  {(!selectedUser.orderHistory || selectedUser.orderHistory.length === 0) ? (
+                    <p style={{ fontSize: '0.82rem', color: 'var(--admin-text-sub)', margin: 0 }}>No past purchase transactions.</p>
+                  ) : (
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
+                      {selectedUser.orderHistory.map((o, i) => (
+                        <div key={i} className="admin-item-row" style={{ padding: '8px 12px', borderRadius: '10px' }}>
+                          <div>
+                            <div style={{ fontWeight: 700, fontSize: '0.82rem' }}>{o.id} • {o.amount}</div>
+                            <div style={{ fontSize: '0.74rem', color: 'var(--admin-text-sub)' }}>
+                              {o.items} • {o.date}
+                            </div>
+                          </div>
+                          <span className="badge badge-orders" style={{ fontSize: '0.72rem', padding: '3px 8px' }}>{o.status || 'PAID'}</span>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              </div>
+            </div>
+
+            {/* Bottom Footer */}
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderTop: '1px solid var(--admin-border)', paddingTop: '14px', marginTop: '4px' }}>
+              <span style={{ fontSize: '0.78rem', color: 'var(--admin-text-sub)' }}>
+                Targeting Status: <strong style={{ color: '#10b981' }}>100% Outreach Ready</strong>
               </span>
               <button 
-                onClick={() => copyToClipboard(selectedUser.phone || selectedUser.email)}
-                className="admin-btn-pill"
+                onClick={() => setSelectedUser(null)} 
+                className="admin-btn admin-btn-primary"
+                style={{ padding: '6px 20px', fontSize: '0.82rem' }}
               >
-                {copiedPhone ? 'Phone Copied' : `Call / WhatsApp: ${selectedUser.phone || 'N/A'}`}
-              </button>
-              <a 
-                href={`mailto:${selectedUser.email}?subject=Exclusive Judicial Mentorship - TeachMeLegal`}
-                className="admin-btn-pill"
-              >
-                Send Judicial Guidance Email
-              </a>
-            </div>
-
-            {/* Profile Grid */}
-            <div className="admin-modal-section">
-              <h3 className="admin-modal-section-title">Judicial Scholar Credentials</h3>
-              <div className="admin-details-grid">
-                <div><strong>Target Examination:</strong> <span>{selectedUser.targetExam || 'N/A'}</span></div>
-                <div><strong>Current Legal Status:</strong> <span>{selectedUser.profession || 'N/A'}</span></div>
-                <div><strong>University / Law School:</strong> <span>{selectedUser.university || 'N/A'}</span></div>
-                <div><strong>Year of Study / Bar:</strong> <span>{selectedUser.yearOfStudy || 'N/A'}</span></div>
-                <div><strong>State / Jurisdiction:</strong> <span>{selectedUser.state || 'N/A'}</span></div>
-                <div><strong>Verified Role:</strong> <span className="badge badge-published">{selectedUser.role}</span></div>
-              </div>
-              {selectedUser.bio && (
-                <div className="admin-bio-box">
-                  <strong>Scholar Focus & Chambers Bio:</strong>
-                  <p style={{ margin: '4px 0 0', lineHeight: 1.5 }}>{selectedUser.bio}</p>
-                </div>
-              )}
-            </div>
-
-            {/* Enrolled Courses */}
-            <div className="admin-modal-section">
-              <h3 className="admin-modal-section-title">
-                Enrolled Notes & Masterclasses ({selectedUser.enrolledCourses?.length || 0})
-              </h3>
-              {(!selectedUser.enrolledCourses || selectedUser.enrolledCourses.length === 0) ? (
-                <p style={{ fontSize: '0.88rem', color: 'var(--admin-text-sub)' }}>No study materials enrolled yet.</p>
-              ) : (
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                  {selectedUser.enrolledCourses.map((c, i) => (
-                    <div key={i} className="admin-item-row">
-                      <div>
-                        <div style={{ fontWeight: 700, fontSize: '0.9rem' }}>{c.title}</div>
-                        <div style={{ fontSize: '0.78rem', color: 'var(--admin-text-sub)' }}>
-                          {c.category} • Enrolled: {c.enrolledDate}
-                        </div>
-                      </div>
-                      <span className="badge badge-published">Active Access</span>
-                    </div>
-                  ))}
-                </div>
-              )}
-            </div>
-
-            {/* Order History */}
-            <div className="admin-modal-section">
-              <h3 className="admin-modal-section-title">
-                Purchase History & Receipts ({selectedUser.orderHistory?.length || 0})
-              </h3>
-              {(!selectedUser.orderHistory || selectedUser.orderHistory.length === 0) ? (
-                <p style={{ fontSize: '0.88rem', color: 'var(--admin-text-sub)' }}>No past purchase transactions.</p>
-              ) : (
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                  {selectedUser.orderHistory.map((o, i) => (
-                    <div key={i} className="admin-item-row">
-                      <div>
-                        <div style={{ fontWeight: 700, fontSize: '0.88rem' }}>{o.id} • {o.amount}</div>
-                        <div style={{ fontSize: '0.78rem', color: 'var(--admin-text-sub)' }}>
-                          {o.items} • {o.date}
-                        </div>
-                      </div>
-                      <span className="badge badge-orders">{o.status || 'PAID'}</span>
-                    </div>
-                  ))}
-                </div>
-              )}
-            </div>
-
-            <div style={{ marginTop: '24px', textAlign: 'right' }}>
-              <button onClick={() => setSelectedUser(null)} className="admin-btn admin-btn-primary">
                 Close Inspector
               </button>
             </div>

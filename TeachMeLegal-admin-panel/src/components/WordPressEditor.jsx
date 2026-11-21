@@ -49,9 +49,22 @@ export default function WordPressEditor({ value = '', onChange }) {
   const [tableRows, setTableRows] = useState(3);
   const [tableHeader, setTableHeader] = useState(true);
 
+  // Fullscreen Canvas mode
+  const [isFullscreen, setIsFullscreen] = useState(false);
+
   const visualRef = useRef(null);
   const textareaRef = useRef(null);
   const savedRange = useRef(null);
+
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (e.key === 'Escape' && isFullscreen) {
+        setIsFullscreen(false);
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [isFullscreen]);
 
   useEffect(() => {
     setContent(value);
@@ -514,13 +527,13 @@ export default function WordPressEditor({ value = '', onChange }) {
   const listCount = (content.match(/<(ul|ol)/g) || []).length;
 
   return (
-    <div className="wp-editor-wrapper" onClick={closeAllPopovers}>
+    <div className={`wp-editor-wrapper ${isFullscreen ? 'wp-fullscreen-mode' : ''}`} onClick={closeAllPopovers}>
       {/* WordPress Editor Header & Mode Tabs */}
       <div className="wp-editor-header" onClick={(e) => e.stopPropagation()}>
         <div className="wp-editor-title-row">
           <span className="wp-badge">WORDPRESS ARTICLE BUILDER</span>
           <span className="wp-hint">
-            Full-width canvas • Insert legal fonts, statutory bullets, and interactive tables anywhere in paragraphs.
+            {isFullscreen ? 'FULLSCREEN CANVAS MODE • 100% monitor width for editing legal statutes and tables without clipping.' : 'Full-width canvas • Insert legal fonts, statutory bullets, and interactive tables anywhere in paragraphs.'}
           </span>
         </div>
 
@@ -556,6 +569,37 @@ export default function WordPressEditor({ value = '', onChange }) {
             title="Full-width simulated student reader view"
           >
             Full Reader Preview
+          </button>
+
+          {/* Fullscreen Canvas Toggle */}
+          <button
+            type="button"
+            className={`wp-tab-btn wp-tab-btn-fullscreen ${isFullscreen ? 'active' : ''}`}
+            onClick={() => setIsFullscreen(!isFullscreen)}
+            title={isFullscreen ? "Exit Fullscreen Canvas (Esc)" : "Expand Canvas to 100% Fullscreen"}
+            style={{
+              marginLeft: 'auto',
+              background: isFullscreen ? 'var(--admin-gold, #cfa856)' : 'rgba(207, 168, 86, 0.1)',
+              color: isFullscreen ? '#ffffff' : 'var(--admin-gold, #cfa856)',
+              borderColor: 'var(--admin-gold, #cfa856)',
+              fontWeight: 800,
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '6px',
+              padding: '6px 14px'
+            }}
+          >
+            {isFullscreen ? (
+              <>
+                <span style={{ fontSize: '1rem', lineHeight: 1 }}>⤓</span>
+                <span>Exit Fullscreen</span>
+              </>
+            ) : (
+              <>
+                <span style={{ fontSize: '1rem', lineHeight: 1 }}>⛶</span>
+                <span>Fullscreen Canvas</span>
+              </>
+            )}
           </button>
         </div>
       </div>

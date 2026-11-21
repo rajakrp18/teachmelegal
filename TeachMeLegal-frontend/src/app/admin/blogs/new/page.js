@@ -86,7 +86,7 @@ export default function NewBlogPage() {
         </div>
       </header>
 
-      <main className="admin-content" style={{ maxWidth: '960px' }}>
+      <main className="admin-content" style={{ maxWidth: '100%', width: '100%' }}>
         {error && (
           <div style={{ background: '#fef2f2', border: '1px solid #fca5a5', color: '#dc2626', padding: '14px 20px', borderRadius: '10px', marginBottom: '24px' }}>
             ⚠️ {error}
