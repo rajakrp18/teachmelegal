@@ -13,7 +13,7 @@ export default function EditBlogPage({ params }) {
     title: '',
     slug: '',
     category: 'Banking Law',
-    categoryColor: '#3b82f6',
+    categoryColor: '#cfa856',
     author: 'Advocate Prashant Jha',
     readTime: '5 min read',
     excerpt: '',
@@ -23,6 +23,17 @@ export default function EditBlogPage({ params }) {
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState('');
+  const [showPreviewModal, setShowPreviewModal] = useState(false);
+
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (e.key === 'Escape' && showPreviewModal) {
+        setShowPreviewModal(false);
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [showPreviewModal]);
 
   useEffect(() => {
     async function fetchPost() {
@@ -86,6 +97,7 @@ export default function EditBlogPage({ params }) {
   if (loading) {
     return (
       <main className="admin-content" style={{ textAlign: 'center', padding: '100px 0' }}>
+        <div className="admin-loading-spinner" style={{ margin: '0 auto 16px' }} />
         Loading article data...
       </main>
     );
@@ -94,23 +106,55 @@ export default function EditBlogPage({ params }) {
   return (
     <>
       <header className="admin-header">
-        <h1 className="admin-header-title">Edit Article: {form.title}</h1>
+        <div>
+          <h1 className="admin-header-title">Edit Article: {form.title}</h1>
+          <p className="admin-header-subtitle">
+            Update statutory citations, sections, case laws, and courtroom ratio.
+          </p>
+        </div>
         <div className="admin-header-actions">
+          <button
+            type="button"
+            onClick={() => setShowPreviewModal(true)}
+            className="admin-btn admin-btn-secondary"
+            title="Preview how this article looks to students on TeachMeLegal"
+          >
+            Live Student Preview
+          </button>
           <Link href="/admin/blogs" className="admin-btn admin-btn-secondary">
             ← Back to Blogs
           </Link>
+          <button 
+            type="button" 
+            onClick={handleSubmit} 
+            className="admin-btn admin-btn-primary" 
+            disabled={saving}
+          >
+            {saving ? 'Saving...' : 'Save Changes'}
+          </button>
         </div>
       </header>
 
-      <main className="admin-content" style={{ maxWidth: '100%', width: '100%' }}>
+      {/* Main Full-Width Content Canvas */}
+      <main className="admin-content" style={{ width: '100%', maxWidth: '100%' }}>
         {error && (
-          <div style={{ background: '#fef2f2', border: '1px solid #fca5a5', color: '#dc2626', padding: '14px 20px', borderRadius: '10px', marginBottom: '24px' }}>
-            ⚠️ {error}
+          <div style={{ background: '#fef2f2', border: '1px solid #fca5a5', color: '#dc2626', padding: '14px 20px', borderRadius: '12px', marginBottom: '8px' }}>
+            {error}
           </div>
         )}
 
         <form onSubmit={handleSubmit}>
-          <div className="admin-card" style={{ padding: '32px' }}>
+          {/* Metadata Card */}
+          <div className="admin-card" style={{ marginBottom: '24px' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px', borderBottom: '1px solid var(--admin-border)', paddingBottom: '14px' }}>
+              <h2 className="admin-card-title" style={{ fontSize: '1.15rem' }}>
+                Article Metadata & Classification
+              </h2>
+              <span style={{ fontSize: '0.82rem', color: 'var(--admin-gold)', fontWeight: 700 }}>
+                Editing Post ID: {id}
+              </span>
+            </div>
+
             <div className="admin-form-group">
               <label className="admin-label">Blog Title *</label>
               <input
@@ -118,11 +162,12 @@ export default function EditBlogPage({ params }) {
                 value={form.title}
                 onChange={(e) => setForm({ ...form, title: e.target.value })}
                 className="admin-input"
+                style={{ fontSize: '1.05rem', fontWeight: 600 }}
                 required
               />
             </div>
 
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px' }}>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '18px' }}>
               <div className="admin-form-group">
                 <label className="admin-label">URL Slug</label>
                 <input
@@ -163,7 +208,7 @@ export default function EditBlogPage({ params }) {
                       justifyContent: 'center',
                       borderRadius: '8px',
                       border: '1px solid var(--admin-border)',
-                      background: 'var(--admin-body-bg, #ffffff)',
+                      background: 'var(--admin-body-bg)',
                       cursor: 'pointer',
                       position: 'relative',
                       flexShrink: 0
@@ -197,9 +242,7 @@ export default function EditBlogPage({ params }) {
                   </label>
                 </div>
               </div>
-            </div>
 
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '20px' }}>
               <div className="admin-form-group">
                 <label className="admin-label">Author Name</label>
                 <input
@@ -223,7 +266,7 @@ export default function EditBlogPage({ params }) {
               <div className="admin-form-group">
                 <label className="admin-label">
                   Article Views
-                  <span style={{ fontSize: '0.75rem', color: '#64748b', fontWeight: 400, marginLeft: '6px' }}>
+                  <span style={{ fontSize: '0.75rem', color: 'var(--admin-text-sub)', fontWeight: 400, marginLeft: '6px' }}>
                     (Live reader count)
                   </span>
                 </label>
@@ -238,42 +281,138 @@ export default function EditBlogPage({ params }) {
               </div>
             </div>
 
-            <div className="admin-form-group">
+            <div className="admin-form-group" style={{ marginBottom: 0 }}>
               <label className="admin-label">Short Excerpt / Summary</label>
               <textarea
                 value={form.excerpt}
                 onChange={(e) => setForm({ ...form, excerpt: e.target.value })}
                 className="admin-textarea"
-                style={{ minHeight: '80px' }}
+                style={{ minHeight: '68px' }}
               />
             </div>
+          </div>
 
-            <div className="admin-form-group">
-              <label className="admin-label">Article Content (WordPress Style Visual & Code Editor) *</label>
-              <WordPressEditor
-                value={form.content}
-                onChange={(content) => setForm(prev => ({ ...prev, content }))}
-              />
+          {/* Full Canvas Editor Card */}
+          <div className="admin-card">
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px', flexWrap: 'wrap', gap: '12px' }}>
+              <div>
+                <h2 className="admin-card-title" style={{ fontSize: '1.15rem' }}>
+                  Article Content Canvas
+                </h2>
+                <span style={{ fontSize: '0.84rem', color: 'var(--admin-text-sub)' }}>
+                  Use <strong>Split View</strong> to edit on the left while observing the real-time student layout on the right.
+                </span>
+              </div>
             </div>
 
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginTop: '30px', paddingTop: '20px', borderTop: '1px solid #e2e8f0' }}>
-              <label style={{ display: 'flex', alignItems: 'center', gap: '10px', cursor: 'pointer', fontWeight: 600 }}>
+            <WordPressEditor
+              value={form.content}
+              onChange={(html) => setForm(prev => ({ ...prev, content: html }))}
+            />
+
+            {/* Bottom Actions */}
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginTop: '28px', paddingTop: '20px', borderTop: '1px solid var(--admin-border)', flexWrap: 'wrap', gap: '16px' }}>
+              <label style={{ display: 'flex', alignItems: 'center', gap: '10px', cursor: 'pointer', fontWeight: 700, fontSize: '0.92rem' }}>
                 <input
                   type="checkbox"
                   checked={form.published}
                   onChange={(e) => setForm({ ...form, published: e.target.checked })}
-                  style={{ width: '18px', height: '18px', accentColor: '#c5a059' }}
+                  style={{ width: '18px', height: '18px', accentColor: '#cfa856', cursor: 'pointer' }}
                 />
-                <span>Published</span>
+                <span>Published on teachmelegal.com</span>
               </label>
 
-              <button type="submit" className="admin-btn admin-btn-primary" disabled={saving} style={{ padding: '12px 30px' }}>
-                {saving ? 'Saving...' : '💾 Save Changes'}
-              </button>
+              <div style={{ display: 'flex', gap: '12px' }}>
+                <button
+                  type="button"
+                  onClick={() => setShowPreviewModal(true)}
+                  className="admin-btn admin-btn-secondary"
+                >
+                  Live Student Preview
+                </button>
+                <button 
+                  type="submit" 
+                  className="admin-btn admin-btn-primary" 
+                  disabled={saving} 
+                  style={{ padding: '12px 34px' }}
+                >
+                  {saving ? 'Saving...' : 'Save Changes'}
+                </button>
+              </div>
             </div>
           </div>
         </form>
       </main>
+
+      {/* Full-Screen Student Reader Preview */}
+      {showPreviewModal && (
+        <div 
+          className="admin-fullscreen-preview-overlay"
+          onClick={() => setShowPreviewModal(false)}
+        >
+          {/* Top Sticky Bar */}
+          <header 
+            className="admin-fullscreen-preview-header"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div style={{ display: 'flex', alignItems: 'center', gap: '14px', flexWrap: 'wrap' }}>
+              <span className="badge badge-exam" style={{ background: `${form.categoryColor || '#cfa856'}20`, color: form.categoryColor || '#cfa856', fontWeight: 800 }}>
+                {form.category}
+              </span>
+              <span style={{ fontSize: '0.88rem', color: 'var(--admin-text-sub)', fontWeight: 600 }}>
+                Full-Screen Simulated Reader Preview • {form.readTime || '5 min read'}
+              </span>
+            </div>
+
+            <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+              <span style={{ fontSize: '0.78rem', color: 'var(--admin-text-sub)', background: 'var(--admin-body-bg)', padding: '5px 12px', borderRadius: '6px', border: '1px solid var(--admin-border)' }}>
+                Press <kbd style={{ fontWeight: 800 }}>ESC</kbd> to exit
+              </span>
+              <button 
+                type="button"
+                onClick={() => setShowPreviewModal(false)}
+                className="admin-btn admin-btn-primary"
+                style={{ padding: '8px 20px', fontSize: '0.86rem', fontWeight: 700 }}
+              >
+                ← Back to Editing Canvas
+              </button>
+            </div>
+          </header>
+
+          {/* Expansive Reading Container */}
+          <div 
+            className="admin-fullscreen-preview-container"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <article className="post-content">
+              <h1 style={{ fontSize: '2.4rem', fontWeight: 900, lineHeight: 1.25, margin: '0 0 16px', color: 'var(--admin-text-main)', letterSpacing: '-0.02em' }}>
+                {form.title || 'Untitled Legal Article'}
+              </h1>
+              
+              <div style={{ display: 'flex', gap: '20px', color: 'var(--admin-text-sub)', fontSize: '0.92rem', borderBottom: '1px solid var(--admin-border)', paddingBottom: '18px', marginBottom: '26px', flexWrap: 'wrap', alignItems: 'center' }}>
+                <span style={{ fontWeight: 700, color: 'var(--admin-text-main)' }}>By {form.author || 'Adv. Prashant Jha'}</span>
+                <span>•</span>
+                <span>Category: <strong style={{ color: form.categoryColor || 'var(--admin-gold)' }}>{form.category}</strong></span>
+                <span>•</span>
+                <span>Read Time: {form.readTime || '5 min read'}</span>
+                <span>•</span>
+                <span>Status: Published</span>
+              </div>
+
+              {form.excerpt && (
+                <div style={{ background: 'rgba(207, 168, 86, 0.08)', borderLeft: '4px solid var(--admin-gold)', padding: '16px 24px', borderRadius: '0 12px 12px 0', marginBottom: '32px', fontStyle: 'italic', fontSize: '1.05rem', lineHeight: 1.7 }}>
+                  {form.excerpt}
+                </div>
+              )}
+
+              <div 
+                className="article-full-body"
+                dangerouslySetInnerHTML={{ __html: form.content || '<p style="color: #94a3b8; font-style: italic;">No content available to preview.</p>' }} 
+              />
+            </article>
+          </div>
+        </div>
+      )}
     </>
   );
 }

@@ -4,12 +4,12 @@ import Link from 'next/link';
 import { 
   IconEye, 
   IconClock, 
-  IconUser, 
+  IconUsers, 
   IconSearch, 
   IconBookOpen, 
   IconArrowUpRight,
-  IconScales 
-} from '../../../components/Icons';
+  IconAnalytics 
+} from '@/components/Icons';
 
 export default function AdminAnalyticsPage() {
   const [stats, setStats] = useState(null);
@@ -83,7 +83,7 @@ export default function AdminAnalyticsPage() {
               <div className="admin-stat-trend">High Platform Retention</div>
             </div>
             <div className="admin-stat-icon-wrap green">
-              <IconUser size={22} />
+              <IconUsers size={22} />
             </div>
           </div>
 
@@ -175,15 +175,17 @@ export default function AdminAnalyticsPage() {
                           </div>
                         </td>
                         <td style={{ textAlign: 'center' }}>
-                          <Link
-                            href={`/blog/${post.slug}`}
+                          <a
+                            href={`http://localhost:3000/blog/${post.slug}`}
+                            target="_blank"
+                            rel="noopener noreferrer"
                             className="admin-btn admin-btn-secondary"
                             style={{ padding: '4px 10px', fontSize: '0.76rem', display: 'inline-flex', gap: '4px' }}
                             title="Open live article on student frontend"
                           >
                             <span>Live</span>
                             <IconArrowUpRight size={12} />
-                          </Link>
+                          </a>
                         </td>
                       </tr>
                     ))
