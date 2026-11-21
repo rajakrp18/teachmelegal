@@ -199,7 +199,8 @@ export function CartProvider({ children }) {
           id: item.id || `item-${Date.now()}-${Math.random().toString(36).substr(2, 4)}`,
           title: item.title,
           category: item.category || 'Study Material',
-          pdfUrl: item.pdfUrl || '/books/sample.pdf',
+          pdfUrl: item.pdfUrl || item.driveUrl || '/books/sample.pdf',
+          driveUrl: item.driveUrl || '',
           enrolledDate: new Date().toLocaleDateString('en-US', { day: 'numeric', month: 'short', year: 'numeric' })
         }));
 

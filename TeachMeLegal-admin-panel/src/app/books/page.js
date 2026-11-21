@@ -460,7 +460,7 @@ export default function AdminBooksPage() {
                 </button>
               </div>
 
-              <form onSubmit={handleSubmit}>
+              <form onSubmit={handleSubmit} noValidate>
                 <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px 20px' }}>
                   {/* Left Column */}
                   <div>
@@ -562,7 +562,7 @@ export default function AdminBooksPage() {
                         </label>
                       </div>
                       <input
-                        type="url"
+                        type="text"
                         value={form.driveUrl || ''}
                         onChange={(e) => setForm({ ...form, driveUrl: e.target.value })}
                         placeholder="https://drive.google.com/file/d/... or uploaded PDF"

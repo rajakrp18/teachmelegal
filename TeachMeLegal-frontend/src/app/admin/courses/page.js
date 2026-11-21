@@ -242,7 +242,7 @@ export default function AdminCoursesPage() {
                 <div className="admin-form-group">
                   <label className="admin-label">Cover Image URL</label>
                   <input
-                    type="url"
+                    type="text"
                     value={form.image}
                     onChange={(e) => setForm({ ...form, image: e.target.value })}
                     className="admin-input"

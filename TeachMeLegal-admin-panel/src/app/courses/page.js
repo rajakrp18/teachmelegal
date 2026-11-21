@@ -450,7 +450,7 @@ export default function AdminCoursesPage() {
                 </button>
               </div>
 
-              <form onSubmit={handleSubmit}>
+              <form onSubmit={handleSubmit} noValidate>
                 <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px 20px' }}>
                   {/* Left Column */}
                   <div>
@@ -551,7 +551,7 @@ export default function AdminCoursesPage() {
                         </label>
                       </div>
                       <input
-                        type="url"
+                        type="text"
                         value={form.driveUrl || ''}
                         onChange={(e) => setForm({ ...form, driveUrl: e.target.value })}
                         placeholder="https://drive.google.com/... or uploaded syllabus PDF"
@@ -602,10 +602,10 @@ export default function AdminCoursesPage() {
                       </div>
                       <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
                         <input
-                          type="url"
+                          type="text"
                           value={form.image || ''}
                           onChange={(e) => setForm({ ...form, image: e.target.value })}
-                          placeholder="https://... or uploaded image URL"
+                          placeholder="/courses/covers/... or https://..."
                           className="admin-input"
                           style={{ padding: '7px 11px', fontSize: '0.85rem', borderRadius: '8px', flex: 1 }}
                         />
